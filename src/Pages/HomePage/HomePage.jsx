@@ -1,6 +1,14 @@
 import React from 'react'
 
 export function HomePage() {
+
+  const scroll=() => {
+    const element=document.getElementById('info-section');
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   return (
     <>
 
@@ -11,13 +19,13 @@ export function HomePage() {
         <div className="max-w-md">
           <h1 className="mb-5 text-4xl font-bold font-raleway">Un vistazo a las obras de arte de la Universidad Metropolitana</h1>
           <p className="mb-5  text-lg font-baskervville">¡Descubre todos los tours que tenemos para ofrecerte!</p>
-          <button className="btn btn-wide btn-primary font-montserrat text-[#dd8d58] normal-case text-base">Ver más</button>
+          <button className="btn btn-wide btn-primary font-montserrat text-[#dd8d58] normal-case text-base" onClick={scroll}>Ver más</button>
         </div>
       </div>
     </div>
 
     {/*Content*/}
-    <section className='text-center'>
+    <section className='text-center' id='info-section'>
       <div className='p-10'>
         <h1 className='mb-5 text-4xl font-bold font-raleway text-[#C14C00]'>Conoce, aprende, comenta</h1>
         <p className='mb-5  text-lg font-baskervville text-justify'>Las obras de arte nos ayudan a expresar nuestras emociones creando piezas que pueden resultar simbólicas y atractivas para otras personas, dándoles un significado único. Es por ello que el Departamento de Cultura te invita a visitar las obras alojadas en la Universidad. ¡Anímate a aprender sobre las obras y sus historias reservando un tour!</p>
