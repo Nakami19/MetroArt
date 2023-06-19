@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
@@ -9,8 +10,12 @@ export default function Navbar() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="white"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M4 6h16M4 12h8m-8 6h16" /></svg>
             </label>
             <ul tabIndex={0} className="menu menu-sm font-montserrat dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a>Inicio</a></li>
-                <li><a>Tours</a></li>
+                <li><Link to={"/"}>
+                <a>Inicio</a>
+                </Link></li>
+                <li><Link to={"/tours"}>
+                    <a>Tours</a>
+                    </Link></li>
                 <li><a>Perfil</a></li>
                 <li><a>Opiniones</a></li>
             </ul>
@@ -21,15 +26,23 @@ export default function Navbar() {
         </div>
         <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 text-white font-montserrat">
-            <li><a>Inicio</a></li>
-                <li><a>Tours</a></li>
+            <li>
+                <Link to={"/"}>
+                <a>Inicio</a>
+                </Link>
+            </li>
+                <li>
+                    <Link to={"/tours"}>
+                    <a>Tours</a>
+                    </Link>
+                    </li>
                 <li><a>Perfil</a></li>
                 <li><a>Opiniones</a></li>
             </ul>
         </div>
         <div className="navbar-end gap-x-2">
-            <a className="btn btn-sm bg-[#FF8C42] normal-case font-montserrat text-white">Registrarse</a>
-            <a className="btn btn-sm bg-[#FF8C42] normal-case font-montserrat text-white">Iniciar sesión</a>
+            <a className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Registrarse</a>
+            <a className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Iniciar sesión</a>
         </div>
         </div>
   )
