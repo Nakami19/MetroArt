@@ -1,7 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export function TourCard() {
   return (
+    <Link to={"/artdetails"}>
     <div className='bg-[#4E598C] w-40 h-fit rounded-lg relative'>
                 <div className='absolute p-2 w-full'>
                     <div className='bg-white w-fit rounded-md'>
@@ -23,5 +25,6 @@ export function TourCard() {
                 <img className="w-40 h-44 rounded-lg" src="./src/assets/Doña Laura Singre.jpg"/>
                 <p className='text-white font-montserrat text-center text-xs p-2'>Paseo en la biblioteca Pedro Grases</p>
     </div>
+    </Link>
   )
 }
