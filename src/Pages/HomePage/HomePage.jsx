@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { db } from '../../firebase/config';
+import { collection } from 'firebase/firestore';
+import { doc, setDoc, addDoc, updateDoc, getDoc, getDocs } from "firebase/firestore";
+
 
 export function HomePage() {
 
@@ -8,6 +12,20 @@ export function HomePage() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
+
+  const getDocuments= async ()=>{
+    const mmm= collection(db, "obras")
+    const lol = await getDocs(mmm);
+    lol.forEach((doc) => {
+      // doc.data() nunca es undefined en este caso
+      console.log(doc.id, " siiiiuu => ", doc.data().autor);
+    });
+  }
+
+  useEffect(()=>{
+getDocuments()
+  },[])
+  
 
   return (
     <>
@@ -39,15 +57,15 @@ export function HomePage() {
         <figure><img src="https://images.pexels.com/photos/2859169/pexels-photo-2859169.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="tour" /></figure>
         <div className="card-body text-center">
           <h2 className='font-bold font-raleway text-2xl text-accent'>Tours</h2>
-          <p className=' font-montserrat text-justify'>Reserva tus tours desde la comodidad de tu casa para no perderte de ninguna obra de arte</p>
+          <p className=' font-montserrat text-justify md:text-center'>Reserva tus tours desde la comodidad de tu casa para no perderte de ninguna obra de arte</p>
         </div>
       </div>
 
       <div className="card w-50 shadow-xl bg-[#C2C9E7]">
-        <figure><img src="https://images.pexels.com/photos/2859169/pexels-photo-2859169.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="ObraArte" /></figure>
+        <figure><img src="https://images.pexels.com/photos/1604991/pexels-photo-1604991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="ObraArte" /></figure>
         <div className="card-body text-center">
           <h2 className='font-bold font-raleway text-2xl text-accent'>Obras de arte</h2>
-          <p className=' font-montserrat text-justify'>Diviértete conociendo las historias que quiere transmitir cada pieza</p>
+          <p className=' font-montserrat text-justify md:text-center'>Diviértete conociendo las historias que quiere transmitir cada pieza</p>
         </div>
       </div>
 
@@ -55,7 +73,7 @@ export function HomePage() {
         <figure><img src="https://images.pexels.com/photos/5622557/pexels-photo-5622557.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="tour" /></figure>
         <div className="card-body text-center">
           <h2 className='font-bold font-raleway text-2xl text-accent'>Feedback</h2>
-          <p className=' font-montserrat text-justify'>Comparte tu experiencia con los otros usuarios y conoce las suyas.</p>
+          <p className=' font-montserrat text-justify md:text-center'>Comparte tu experiencia con los otros usuarios y conoce las suyas.</p>
         </div>
       </div>
     </section>
