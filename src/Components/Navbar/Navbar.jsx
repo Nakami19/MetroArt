@@ -11,13 +11,13 @@ export default function Navbar() {
             </label>
             <ul tabIndex={0} className="menu menu-sm font-montserrat dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                 <li><Link to={"/"}>
-                <a>Inicio</a>
+                <p>Inicio</p>
                 </Link></li>
                 <li><Link to={"/tours"}>
-                    <a>Tours</a>
+                    <p>Tours</p>
                     </Link></li>
-                <li><a>Perfil</a></li>
-                <li><a>Opiniones</a></li>
+                <li><p>Perfil</p></li>
+                <li><p>Opiniones</p></li>
             </ul>
             </div>
             <img src="./src/assets/blanquito (1).png" className='h-12'/>
@@ -28,21 +28,21 @@ export default function Navbar() {
             <ul className="menu menu-horizontal px-1 text-white font-montserrat">
             <li>
                 <Link to={"/"}>
-                <a>Inicio</a>
+                <p>Inicio</p>
                 </Link>
             </li>
                 <li>
                     <Link to={"/tours"}>
-                    <a>Tours</a>
+                    <p>Tours</p>
                     </Link>
                     </li>
-                <li><a>Perfil</a></li>
-                <li><a>Opiniones</a></li>
+                <li><p>Perfil</p></li>
+                <li><p>Opiniones</p></li>
             </ul>
         </div>
         <div className="navbar-end gap-x-2">
-            <a className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Registrarse</a>
-            <a className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Iniciar sesión</a>
+            <p className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Registrarse</p>
+            <p className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Iniciar sesión</p>
         </div>
         </div>
   )
