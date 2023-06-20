@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export function TourCard() {
   return (
-    <Link to={"/artdetails"}>
+    <Link to={"/tourdetails"}>
     <div className='bg-[#4E598C] w-40 h-fit rounded-lg relative'>
                 <div className='absolute p-2 w-full'>
                     <div className='bg-white w-fit rounded-md'>
