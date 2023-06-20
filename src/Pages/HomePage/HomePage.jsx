@@ -13,18 +13,18 @@ export function HomePage() {
     }
   }
 
-  const getDocuments= async ()=>{
-    const mmm= collection(db, "obras")
-    const lol = await getDocs(mmm);
-    lol.forEach((doc) => {
-      // doc.data() nunca es undefined en este caso
-      console.log(doc.id, " siiiiuu => ", doc.data().autor);
-    });
-  }
+//   const getDocuments= async ()=>{
+//     const mmm= collection(db, "obras")
+//     const lol = await getDocs(mmm);
+//     lol.forEach((doc) => {
+//       // doc.data() nunca es undefined en este caso
+//       console.log(doc.id, " siiiiuu => ", doc.data().autor);
+//     });
+//   }
 
-  useEffect(()=>{
-getDocuments()
-  },[])
+//   useEffect(()=>{
+// getDocuments()
+//   },[])
   
 
   return (
