@@ -23,7 +23,7 @@ export default function Navbar() {
                 <li><h1>Opiniones</h1></li>
             </ul>
             </div>
-            <img src="./src/assets/blanquito (1).png" className='h-12'/>
+            <img src="https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Fblanquito%20(1).png?alt=media&token=e40fe06a-7de3-4520-8b06-a20b054a9ef8" className='h-12'/>
             <h1 className="btn btn-ghost font-montserrat normal-case text-xl text-white invisible md:visible"> 
             Metro Art Collection</h1>
         </div>

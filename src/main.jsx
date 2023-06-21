@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={HOME_URL} element={<HomePage/>}/> 
         <Route path={TOURS_URL} element={<ToursPage/>}/>
         <Route path={ARTDETAIL_URL} element={<ArtDetailsPage/>}/>
-        <Route path={TOURDETAILS_URL} element={<TourDetailsPage/>}/>
+        <Route path={'/tours/:tourId'} element={<TourDetailsPage/>}/>
         <Route path={LOGIN_URL} element={<LoginPage/>}/>
         <Route path={REGISTER_URL} element={<SignupPage/>}/>
         <Route path={PROFILE_URL} element={<ProfilePage/>}/>

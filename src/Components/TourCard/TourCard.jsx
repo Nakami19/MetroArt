@@ -5,7 +5,7 @@ import { TOURDETAILS_URL } from '../../constants/url'
 
 export function TourCard({tour}) {
   return (
-    <Link to={TOURDETAILS_URL}>
+    <Link to={`/tours/${tour.id}`}>
     <div className='bg-[#4E598C] w-40 h-fit rounded-lg relative'>
                 <div className='absolute p-2 w-full'>
                     <div className='bg-white w-fit rounded-md'>
