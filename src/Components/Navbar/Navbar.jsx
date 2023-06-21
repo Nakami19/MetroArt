@@ -4,7 +4,7 @@ import { HOME_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL } from '../..
 
 export default function Navbar() {
   return (
-    <div className="navbar bg-[#4E598C]">
+    <div className="navbar bg-[#4E598C] z-10">
         <div className="navbar-start">
             <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -20,7 +20,6 @@ export default function Navbar() {
                 <li><Link to={PROFILE_URL}>
                     <h1>Perfil</h1>
                     </Link></li>
-                <li><h1>Opiniones</h1></li>
             </ul>
             </div>
             <img src="https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Fblanquito%20(1).png?alt=media&token=e40fe06a-7de3-4520-8b06-a20b054a9ef8" className='h-12'/>
@@ -42,7 +41,6 @@ export default function Navbar() {
                     <li><Link to={PROFILE_URL}>
                     <h1>Perfil</h1>
                     </Link></li>
-                <li><h1>Opiniones</h1></li>
             </ul>
         </div>
         <div className="navbar-end gap-x-2">

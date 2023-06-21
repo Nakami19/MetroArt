@@ -15,7 +15,7 @@ export function TourCard({tour}) {
                         </h1>
                     </div>
                 </div>
-                <div className='absolute p-2 w-full flex justify-end'>
+                <div className='absolute p-2 z-10 w-full flex justify-end'>
                     <div className='bg-[#4E598C] w-fit rounded-md opacity-80'>
                         <h1 className='p-1 text-xs text-white font-montserrat font-bold items-center'>
                                 <p>{tour.id}</p>
@@ -24,8 +24,14 @@ export function TourCard({tour}) {
                         <div>
                     </div>
                 </div>
-                <img className="w-40 h-44 rounded-lg" src={tour.url}/>
-                <p className='text-white font-montserrat text-center text-xs p-2'>{tour.name}</p>
+                <div className="avatar">
+                    <div className="w-40 rounded">
+                        <img src={tour.url} />
+                    </div>
+                </div>
+                <div className='h-1/4 flex items-center justify-center'>
+                <p className='text-white font-montserrat text-center text-xs'>{tour.name}</p>
+                </div>
     </div>
     </Link>
   )

@@ -5,3 +5,4 @@ export const PROFILE_URL = "/profile";
 export const TOURS_URL = '/tours'
 export const ARTDETAIL_URL='/artdetails'
 export const TOURDETAILS_URL='/tourdetails'
+export const RESERVATION_URL  = '/reserve'

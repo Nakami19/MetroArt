@@ -29,7 +29,7 @@ export function ToursPage() {
         </div>
 
         <h1 className='p-6 font-raleway font-bold text-[#C14C00] text-2xl'>Tours</h1>
-        <div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-7'>
+        <div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-6 xl:grid-cols-7'>
             {
                 tours.map((tour)=>{
                     return (
