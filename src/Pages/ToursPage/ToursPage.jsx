@@ -37,12 +37,6 @@ export function ToursPage() {
                     )
                 })
             }
-            {/* <TourCard/>
-            <TourCard/>
-            <TourCard/>
-            <TourCard/>
-            <TourCard/>
-            <TourCard/> */}
         </div>
     </>
   )

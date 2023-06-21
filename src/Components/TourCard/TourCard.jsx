@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TOURDETAIL_URL } from '../../constants/url'
+import { TOURDETAILS_URL } from '../../constants/url'
+
 
 export function TourCard({tour}) {
   return (
-    <Link to={TOURDETAIL_URL}>
+    <Link to={TOURDETAILS_URL}>
     <div className='bg-[#4E598C] w-40 h-fit rounded-lg relative'>
                 <div className='absolute p-2 w-full'>
                     <div className='bg-white w-fit rounded-md'>
