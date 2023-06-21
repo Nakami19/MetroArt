@@ -10,17 +10,25 @@ export function ProfilePage() {
             </div>
         </div>
     </div>
-        <input type="file" className="file-input-xs file-input-ghost w-1/4 max-w-xs mt-16 ml-6" />
-        <div className='min-h-screen flex'>
+        <div className="relative w-48 lg:ml-48 lg:mt-6 md: ml-36 md: mt-3">
+            <label title="Click to upload" htmlFor="button2" className="cursor-pointer ">
+            <div className="w-max relative">
+                <img className="w-8" src="https://svgsilh.com/svg/1294842.svg" alt="file upload icon" />
+            </div>
+            </label>
+            <input hidden="true" type="file" name="button2" id="button2"/>
+        </div>
+
+        
+        
+        <div className='min-h-screen lg:flex lg:mt-14 md: mt-8'>
+
+            <div className=' lg:w-1/3 md: w-full lg:min-h-screen p-3'>
+                <h1 className='font-raleway font-bold text-2xl lg:ml-8 md: ml-4'>Perfil de Usuario</h1>
 
 
 
-            <div className=' w-1/3 min-h-screen p-3'>
-                <h1 className='font-raleway font-bold text-2xl ml-4'>Perfil de Usuario</h1>
-
-
-
-                <div className="bg-white overflow-hidden shadow rounded-lg border mt-6">
+                <div className="bg-white overflow-hidden shadow rounded-lg border lg:ml-4 lg:mt-6 md: mt-3">
                     <div className="px-4 py-5 sm:px-6">
                         
                         <p className="mt-1 max-w-2xl text-sm text-gray-500">
@@ -61,7 +69,7 @@ export function ProfilePage() {
 
 
 
-            <div className=' w-2/3 min-h-screen p-5'>
+            <div className=' lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'>
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             
