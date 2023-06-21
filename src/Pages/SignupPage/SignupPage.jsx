@@ -3,7 +3,7 @@ import React from 'react'
 export function SignupPage() {
   return (
     // <!-- component -->
-    <div className="min-h-screen  bg-[url('src/assets/Images/fondo2.png')] bg-no-repeat lg: bg-left bg-contain bg-[#4E598C] ">
+    <div className="min-h-screen  bg-[url('https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Ffondo2.png?alt=media&token=8ee412b6-5d37-4c7a-8310-f5ff7ecd68c0')] bg-no-repeat lg: bg-left bg-contain bg-[#4E598C] ">
     
                 <div className="flex flex-col items-center justify-center ">
 
