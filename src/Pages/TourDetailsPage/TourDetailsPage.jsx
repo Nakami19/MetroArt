@@ -7,15 +7,22 @@ import { useParams } from 'react-router';
 export function TourDetailsPage() {
 
     const {tourId}=useParams();
-    const {tour, getOneTour}=useTours();
+    const {tour, getOneTour, isLoading}=useTours();
 
-    console.log(tour.obras)
+    
 
     useEffect(()=>{
         getOneTour(tourId);
     },[])
 
-  return (
+    if(isLoading) {
+        return (
+            <>
+            <h1>Cargando...</h1>
+            </>
+        )
+    } else if (!isLoading && tour.obras) {
+        return (
     <>
 
     {/*Detalles del tour*/}
@@ -60,23 +67,16 @@ export function TourDetailsPage() {
 
         {/*Card*/}
         <div className='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 lg:h-80 lg:gap-10 overflow-y-scroll h-72'>
-            {tour.obras.map((obra)=>{
-                console.log(obra)
+            {
+            tour.obras.map((obra)=>{
+                console.log(obra.id)
+    
                 return (
                     <ArtCard obra={obra} key={obra.id}/>
                 )
                 
-            })}
-            {/* <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/> */}
+            })
+            }
         </div>
         
     </section>
@@ -97,4 +97,7 @@ export function TourDetailsPage() {
 
     </>
   )
+    }
+
+  
 }
