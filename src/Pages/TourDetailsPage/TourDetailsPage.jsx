@@ -8,6 +8,7 @@ export function TourDetailsPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
+    let component=null;
 
     
 
@@ -15,13 +16,15 @@ export function TourDetailsPage() {
         getOneTour(tourId);
     },[])
 
-    if(isLoading) {
-        return (
-            <>
-            <h1>Cargando...</h1>
-            </>
-        )
-    } else if (!isLoading && tour.obras) {
+    if(tour.disponible) {
+        component= <><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
+        <p>Disponible</p></>
+    } else {
+        component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>
+        <p>No Disponible</p></>
+    }
+
+ if (!isLoading && tour.obras) {
         return (
     <>
 
@@ -40,9 +43,10 @@ export function TourDetailsPage() {
                     <img className='h-4' src="https://img.icons8.com/?size=512&id=19295&format=png"/>
                     <p>{tour.rating}</p>
                 </div>
-                <div className='flex gap-1 items-center'>
-                    <div className=' bg-green-800 w-3 h-3 rounded-full'></div>
-                    <p>Disponible</p>
+                <div className='flex gap-1 items-center'> 
+                    {component}
+                    {/* <div className=' bg-green-800 w-3 h-3 rounded-full'></div>
+                    <p>Disponible</p> */}
                 </div>
                 <div>
                     <p>Duración: {tour.duration} minutos</p>
@@ -69,8 +73,6 @@ export function TourDetailsPage() {
         <div className='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 lg:h-80 lg:gap-10 overflow-y-scroll h-72'>
             {
             tour.obras.map((obra)=>{
-                console.log(obra.id)
-    
                 return (
                     <ArtCard obra={obra} key={obra.id}/>
                 )
@@ -87,9 +89,18 @@ export function TourDetailsPage() {
         <div className='bg-[#4E598C]/25 rounded-lg p-4 flex flex-col gap-3 md:w-2/4'>
             <h1 className='font-bold font-raleway'>Comentarios</h1>
             <div className='h-72 flex flex-col gap-2 overflow-y-scroll'>
+                {
+                    tour.feedbacks.map((comment)=>{
+                        console.log(comment)
+                        return (
+                           <ComentContainer comment={comment}/>  
+                        )
+                        
+                    })
+                }
+                {/* <ComentContainer/> 
                 <ComentContainer/> 
-                <ComentContainer/> 
-                <ComentContainer/> 
+                <ComentContainer/>  */}
             </div>
         </div>
         <div className="md:w-2/4 md:rounded-2xl md:bg-[url('https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]"></div>
@@ -97,6 +108,12 @@ export function TourDetailsPage() {
 
     </>
   )
+    } else {
+        return (
+            <>
+            <h1>Cargando...</h1>
+            </>
+        )
     }
 
   
