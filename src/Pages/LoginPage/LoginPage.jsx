@@ -9,7 +9,7 @@ export function LoginPage() {
             
             <div className="bg-white shadow  lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:h-screen lg:ms-auto relative md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-24">
                 
-                <div className="position">
+                <div className="scale-90">
 
 
                 <p tabIndex="0" className="focus:outline-none text-sm mt-10 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/signup"   className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
