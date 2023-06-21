@@ -4,10 +4,11 @@ import { HomePage } from './Pages/HomePage/HomePage'
 import './index.css'
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Layout from './Components/Layout/Layout';
-import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, TOURS_URL } from './constants/url';
+import { ARTDETAIL_URL, HOME_URL, RESERVATION_URL, TOURDETAILS_URL, TOURS_URL } from './constants/url';
 import { ToursPage } from './Pages/ToursPage/ToursPage';
 import { ArtDetailsPage } from './Pages/ArtDetailsPage/ArtDetailsPage';
 import { TourDetailsPage } from './Pages/TourDetailsPage/TourDetailsPage';
+import { ReservationPage } from './Pages/ReservationPage/ReservationPage';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={TOURS_URL} element={<ToursPage/>}/>
         <Route path={ARTDETAIL_URL} element={<ArtDetailsPage/>}/>
         <Route path={TOURDETAILS_URL} element={<TourDetailsPage/>}/>
+        <Route path={RESERVATION_URL} element={<ReservationPage/>}/>
     </Route>
     </Routes>
     </BrowserRouter>
