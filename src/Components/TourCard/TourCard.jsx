@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { TOURDETAIL_URL } from '../../constants/url'
 
 export function TourCard({tour}) {
   return (
-    <Link to={"/artdetails"}>
+    <Link to={TOURDETAIL_URL}>
     <div className='bg-[#4E598C] w-40 h-fit rounded-lg relative'>
                 <div className='absolute p-2 w-full'>
                     <div className='bg-white w-fit rounded-md'>
@@ -22,7 +23,7 @@ export function TourCard({tour}) {
                         <div>
                     </div>
                 </div>
-                <img className="w-40 h-44 rounded-lg" src="./src/assets/Doña Laura Singre.jpg"/>
+                <img className="w-40 h-44 rounded-lg" src={tour.url}/>
                 <p className='text-white font-montserrat text-center text-xs p-2'>{tour.name}</p>
     </div>
     </Link>
