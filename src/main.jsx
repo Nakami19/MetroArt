@@ -4,11 +4,12 @@ import { HomePage } from './Pages/HomePage/HomePage'
 import './index.css'
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Layout from './Components/Layout/Layout';
-import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL } from './constants/url';
+import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL, COMPLETE_URL } from './constants/url';
 import { ToursPage } from './Pages/ToursPage/ToursPage';
 import { ArtDetailsPage } from './Pages/ArtDetailsPage/ArtDetailsPage';
 import { SignupPage } from './Pages/SignupPage/SignupPage'
 import { LoginPage } from './Pages/LoginPage/LoginPage'
+import { CompletePage } from './Pages/CompletePage/CompletePage'
 import { ProfilePage } from './Pages/ProfilePage/ProfilePage'
 import { TourDetailsPage } from './Pages/TourDetailsPage/TourDetailsPage';
 import { ReservationPage } from './Pages/ReservationPage/ReservationPage';
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={'/tours/:tourId'} element={<TourDetailsPage/>}/>
         <Route path={LOGIN_URL} element={<LoginPage/>}/>
         <Route path={REGISTER_URL} element={<SignupPage/>}/>
+        <Route path={COMPLETE_URL} element={<CompletePage/>}/>
         <Route path={PROFILE_URL} element={<ProfilePage/>}/>
         <Route path={RESERVATION_URL} element={<ReservationPage/>}/>
     </Route>

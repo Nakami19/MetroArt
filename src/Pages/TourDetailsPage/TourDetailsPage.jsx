@@ -18,7 +18,7 @@ export function TourDetailsPage() {
     if(isLoading) {
         return (
             <>
-            <h1>Cargando...</h1>
+            <span className="loading loading-spinner loading-lg"></span>
             </>
         )
     } else if (!isLoading && tour.obras) {
