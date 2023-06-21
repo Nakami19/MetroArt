@@ -1,6 +1,58 @@
-import React from 'react'
+import { useNavigate } from "react-router-dom";
+import { HOME_URL } from "../../constants/url";
+import {
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from "../../firebase/auth-service";
+import { useState } from "react";
+
 
 export function SignupPage() {
+
+  const navigate = useNavigate();
+  const [formData, setData] = useState({});
+
+
+  const onSuccess = () => {
+    navigate(HOME_URL);
+  };
+    
+      const onFail = (_error) => {
+        alert("REGISTRO FALLIDO!");
+      };
+    
+      const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (formData.name == ''){
+        alert("Rellene el campo 'Nombre de usuario'")}
+        else if (formData.email == ''){
+        alert("Rellene el campo 'Correo electrónico'")}
+        else if (formData.usertype == ''){
+        alert("Rellene el campo 'Tipo de usuario'")}
+        else if (formData.password == ''){
+        alert("Rellene el campo 'Contraseña")}
+        else if (formData.name!= '' && formData.usertype!= '' && formData.password!= '' && formData.email!=''){
+        await registerWithEmailAndPassword({
+          userData: formData,
+          onSuccess,
+          onFail,
+        });
+      }};
+    
+      const handleGoogleClick = async () => {
+        await signInWithGoogle({
+          onSuccess: () => navigate(HOME_URL),
+        });
+      };    
+
+    
+      const onChange = (event) => {
+        setData((oldData) => ({
+          ...oldData,
+          [event.target.name]: event.target.value,
+        }));
+      };
+
   return (
     // <!-- component -->
     <div className="min-h-screen  bg-[url('src/assets/Images/fondo2.png')] bg-no-repeat lg: bg-left bg-contain bg-[#4E598C] ">
@@ -17,26 +69,27 @@ export function SignupPage() {
                         {/* Inputs */}
 
                             <div className='mt-6'>
-                                <label id="email" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
+                                <label id="email" className="text-sm font-medium leading-none text-gray-800 font-montserrat" >
                                     Correo electrónico
                                 </label>
-                                <input aria-labelledby="email" type="email" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"/>
+                                <input aria-labelledby="email" type="email" name="email" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" id="email" placeholder="Ej. simoncito@email.com" onChange={onChange}/>
                             </div>
 
                             <div className='mt-4'>
                                 <label id="username" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Nombre de usuario
                                 </label>
-                                <input aria-labelledby="email" type="email" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"/>
+                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simón Bolívar" name="name" onChange={onChange}/>
+
                             </div>
 
 
                             <div className='mt-4'>
-                                <label id="usertype" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
+                                <label className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Tipo de usuario
                                 </label>
-                                <select className="select w-full bg-gray-200 mt-2">
-                                    <option value={""}></option>
+                                <select className="select w-full bg-gray-200 mt-2" onChange={onChange} id="usertype" name="usertype" >
+                                    <option></option>
                                     <option>Visitante</option>
                                     <option>Administrador</option>
                                 </select>
@@ -48,7 +101,7 @@ export function SignupPage() {
                                     Contraseña
                                 </label>
                                <div className="relative flex items-center justify-center">
-                                <input id="pass" type="password" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"/>
+                                <input id="pass" type="password" name="password" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"  placeholder="********" onChange={onChange}/>
                                 <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                         
                                 </div>
@@ -59,7 +112,7 @@ export function SignupPage() {
                         {/* Botones */}
 
                             <div className="mt-8">
-                                <button role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-700 py-4 w-full">Registrarse</button>
+                                <button type="submit" role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-black border rounded hover:bg-gray-700 py-4 w-full"  onClick={handleSubmit}>Registrarse</button>
                             </div>
                 
                         
@@ -70,7 +123,7 @@ export function SignupPage() {
                         </div>
 
 
-                        <button aria-label="Continue with google" role="button" className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-3">
+                        <button aria-label="Continue with google" role="button" className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-3" onClick={handleGoogleClick}>
                             <img className="h-5 w-5" src="src/assets/Images/google.svg" alt="Google Logo" />
                             
                             <p className="text-base font-medium ml-4 text-gray-700 font-montserrat">Continuar con Google</p>
@@ -78,7 +131,7 @@ export function SignupPage() {
                         
 
 
-                        <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4">
+                        <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4" >
                             <img className="h-5 w-5" src="src/assets/Images/facebook.svg" alt="Facebook Logo" />
                                 
                             <p className="text-base font-medium ml-3 text-gray-700 font-montserrat">Continuar con Facebook</p>
