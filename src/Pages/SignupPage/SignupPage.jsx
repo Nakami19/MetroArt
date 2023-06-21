@@ -71,7 +71,7 @@ export function SignupPage() {
 
 
                         <button aria-label="Continue with google" role="button" className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-3">
-                            <img class="h-5 w-5" src="src/assets/Images/google.svg" alt="Google Logo" />
+                            <img className="h-5 w-5" src="src/assets/Images/google.svg" alt="Google Logo" />
                             
                             <p className="text-base font-medium ml-4 text-gray-700 font-montserrat">Continuar con Google</p>
                         </button>
@@ -79,7 +79,7 @@ export function SignupPage() {
 
 
                         <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4">
-                            <img class="h-5 w-5" src="src/assets/Images/facebook.svg" alt="Facebook Logo" />
+                            <img className="h-5 w-5" src="src/assets/Images/facebook.svg" alt="Facebook Logo" />
                                 
                             <p className="text-base font-medium ml-3 text-gray-700 font-montserrat">Continuar con Facebook</p>
                         </button>    
