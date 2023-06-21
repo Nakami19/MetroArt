@@ -36,7 +36,7 @@ export function SignupPage() {
                                     Tipo de usuario
                                 </label>
                                 <select className="select w-full bg-gray-200 mt-2">
-                                    <option></option>
+                                    <option value={""}></option>
                                     <option>Visitante</option>
                                     <option>Administrador</option>
                                 </select>

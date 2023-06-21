@@ -1,4 +1,5 @@
 import React from 'react'
+import { REGISTER_URL } from '../../constants/url'
 
 export function LoginPage() {
   return (
@@ -12,6 +13,7 @@ export function LoginPage() {
                 <div className="scale-90">
 
 
+                <p tabIndex="0" className="focus:outline-none text-sm mt-10 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/register"  className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
                 <p tabIndex="0" className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/signup"   className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
                 <p tabIndex="0" className="focus:outline-none text-3xl font-extrabold leading-6 font-raleway text-[#001A72] text-center lg:mt-24 md: mt-10">Iniciar sesión</p>
 
