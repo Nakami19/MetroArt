@@ -5,9 +5,9 @@ import { TOURDETAILS_URL } from '../../constants/url'
 
 export function TourCard({tour}) {
   return (
-    <Link to={TOURDETAILS_URL}>
-    <div className='bg-[#4E598C] w-40 h-56 rounded-lg relative'>
-                <div className='absolute z-10 p-2 w-full'>
+    <Link to={`/tours/${tour.id}`}>
+    <div className='bg-[#4E598C] w-40 h-fit rounded-lg relative'>
+                <div className='absolute p-2 w-full'>
                     <div className='bg-white w-fit rounded-md'>
                         <h1 className='p-1 flex text-xs font-montserrat font-bold items-center gap-x-1'>
                             <img className ="h-4"src='https://img.icons8.com/?size=512&id=19295&format=png'/>

@@ -16,7 +16,7 @@ export function ProfilePage() {
                 <img className="w-8" src="https://svgsilh.com/svg/1294842.svg" alt="file upload icon" />
             </div>
             </label>
-            <input hidden="true" type="file" name="button2" id="button2"/>
+            <input hidden={true} type="file" name="button2" id="button2"/>
         </div>
 
         

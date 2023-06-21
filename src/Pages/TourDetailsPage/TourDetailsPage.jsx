@@ -1,16 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { ComentContainer } from '../../Components/ComentContainer/ComentContainer'
+import { useTours } from '../../hooks/useTours';
+import { useParams } from 'react-router';
 
 export function TourDetailsPage() {
-  return (
+
+    const {tourId}=useParams();
+    const {tour, getOneTour, isLoading}=useTours();
+
+    
+
+    useEffect(()=>{
+        getOneTour(tourId);
+    },[])
+
+    if(isLoading) {
+        return (
+            <>
+            <h1>Cargando...</h1>
+            </>
+        )
+    } else if (!isLoading && tour.obras) {
+        return (
     <>
 
     {/*Detalles del tour*/}
     <section className='p-7 flex flex-col gap-5 md:flex-row lg:justify-center'>
         <div className='flex flex-col gap-5 w-full lg:items-center lg:w-72'>
-            <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>El paseo de esculturas</h1>
-            <img className='w-full lg:full' src="./src/assets/Doña Laura Singre.jpg"/>
+            <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>{tour.name}</h1>
+            <img className='w-full lg:full' src={tour.url}/>
         </div>
         <div className='font-montserrat flex flex-col gap-2 lg:w-7/12 md:justify-evenly'>
             <div className='flex flex-col gap-2 lg:gap-4'>
@@ -19,23 +38,23 @@ export function TourDetailsPage() {
                 <div className='text-xs flex gap-4 font-bold items-center'>
                 <div className='flex gap-1 items-center'>
                     <img className='h-4' src="https://img.icons8.com/?size=512&id=19295&format=png"/>
-                    <p>5.0</p>
+                    <p>{tour.rating}</p>
                 </div>
                 <div className='flex gap-1 items-center'>
                     <div className=' bg-green-800 w-3 h-3 rounded-full'></div>
                     <p>Disponible</p>
                 </div>
                 <div>
-                    <p>Duración: 40 minutos</p>
+                    <p>Duración: {tour.duration} minutos</p>
                 </div>
             </div>
             </div>
             
             <div className='text-xs flex flex-col gap-2 text-justify'>
                 <p className='font-bold'>Descripción</p>
-                <p>Las obras de arte nos ayudan a expresar nuestras emociones creando piezas que pueden resultar simbólicas y atractivas para otras personas, dándoles un significado único. Es por ello que el Departamento de Cultura te invita a visitar las obras alojadas en la Universidad. ¡Anímate a aprender sobre las obras y sus historias reservando un tour!</p>
+                <p>{tour.description}</p>
                 <p className='font-bold'>Lugares importantes</p>
-                <p>Universidad Metropolitana, Eugenio Mendoza, Biblioteca Pedro Grases.</p>
+                <p>{tour.important_places}</p>
             </div>
             <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Reservar</button>
         </div>
@@ -48,16 +67,16 @@ export function TourDetailsPage() {
 
         {/*Card*/}
         <div className='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 lg:h-80 lg:gap-10 overflow-y-scroll h-72'>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
-            <ArtCard/>
+            {
+            tour.obras.map((obra)=>{
+                console.log(obra.id)
+    
+                return (
+                    <ArtCard obra={obra} key={obra.id}/>
+                )
+                
+            })
+            }
         </div>
         
     </section>
@@ -78,4 +97,7 @@ export function TourDetailsPage() {
 
     </>
   )
+    }
+
+  
 }
