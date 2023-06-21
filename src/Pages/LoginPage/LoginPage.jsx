@@ -13,8 +13,7 @@ export function LoginPage() {
                 <div className="scale-90">
 
 
-                <p tabIndex="0" className="focus:outline-none text-sm mt-10 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/register"  className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
-                <p tabIndex="0" className="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/signup"   className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
+                <p tabIndex="0" className="focus:outline-none text-sm mt-8 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/register"  className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
                 <p tabIndex="0" className="focus:outline-none text-3xl font-extrabold leading-6 font-raleway text-[#001A72] text-center lg:mt-24 md: mt-10">Iniciar sesión</p>
 
                         {/* Inputs */}
@@ -68,7 +67,7 @@ export function LoginPage() {
                         <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4">
                             <img className="h-5 w-5" src="src/assets/Images/facebook.svg" alt="Facebook Logo" />
                                 
-                            <p className="text-base font-medium ml-4 text-gray-700 font-montserrat">Continuar con Facebook</p>
+                            <p className="text-base font-medium ml-3 text-gray-700 font-montserrat">Continuar con Facebook</p>
                         </button>    
 
                         </div>
