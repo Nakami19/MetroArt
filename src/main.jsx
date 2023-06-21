@@ -8,6 +8,9 @@ import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, TOURS_URL } from './constants
 import { ToursPage } from './Pages/ToursPage/ToursPage';
 import { ArtDetailsPage } from './Pages/ArtDetailsPage/ArtDetailsPage';
 import { TourDetailsPage } from './Pages/TourDetailsPage/TourDetailsPage';
+import { SignupPage } from './Pages/SignupPage/SignupPage'
+import { LoginPage } from './Pages/LoginPage/LoginPage'
+import { ProfilePage } from './Pages/ProfilePage/ProfilePage'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -18,7 +21,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={TOURS_URL} element={<ToursPage/>}/>
         <Route path={ARTDETAIL_URL} element={<ArtDetailsPage/>}/>
         <Route path={TOURDETAILS_URL} element={<TourDetailsPage/>}/>
-    </Route>
+      <Route path="/profile" element={<ProfilePage/>}  /> 
+    
+      <Route path="/signup" element={<SignupPage/>}  /> 
+      <Route path="/login" element={<LoginPage/>}  /> 
+      </Route>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>,
