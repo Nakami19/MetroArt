@@ -12,32 +12,44 @@ export function ProfilePage() {
     </div>
         <input type="file" className="file-input-xs file-input-ghost w-1/4 max-w-xs mt-16 ml-6" />
         <div className='min-h-screen flex'>
-            <div className='bg-gray-300 w-1/4 min-h-screen'>
 
-                <div class="bg-white overflow-hidden shadow rounded-lg border">
-                    <div class="px-4 py-5 sm:px-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            Perfil de usuario
-                        </h3>
-                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                            Visitante
+
+
+            <div className=' w-1/3 min-h-screen p-3'>
+                <h1 className='font-raleway font-bold text-2xl ml-4'>Perfil de Usuario</h1>
+
+
+
+                <div className="bg-white overflow-hidden shadow rounded-lg border mt-6">
+                    <div className="px-4 py-5 sm:px-6">
+                        
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                            (Visitante)
                         </p>
                     </div>
-                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                        <dl class="sm:divide-y sm:divide-gray-200">
-                            <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">
+                    <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+                        <dl className="sm:divide-y sm:divide-gray-200">
+                            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-sm font-medium text-gray-500 font-montserrat">
+                                    Username
+                                </dt>
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
+                                    @nombredeusuario
+                                </dd>
+                            </div>
+                            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
+                                <dt className="text-sm font-medium text-gray-500">
                                     Nombre
                                 </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
                                     Tu nombre
                                 </dd>
                             </div>
-                            <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium text-gray-500">
+                            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
+                                <dt className="text-sm font-medium text-gray-500">
                                     Correo electrónico
                                 </dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
                                     tucorreo@example.com
                                 </dd>
                             </div>
@@ -45,15 +57,19 @@ export function ProfilePage() {
                         </dl>
                     </div>
             </div>
-
-
             </div>
-            <div className='bg-gray-500 w-3/4 min-h-screen'>
-                <a href='#' class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="src/assets/Images/fondo2.png" alt=""/>
-                    <div class="flex flex-col justify-between p-4 leading-normal">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Paseo de Esculturas</h5>
-                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+
+
+
+            <div className=' w-2/3 min-h-screen p-5'>
+            <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
+
+            
+                <a href='#' className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow mt-6 md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="src/assets/Images/fondo2.png" alt=""/>
+                    <div className="flex flex-col justify-between p-4 leading-normal">
+                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-raleway">Paseo de Esculturas</h5>
+                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
                     </div>
                 </a>
             </div>
