@@ -8,7 +8,7 @@ export function LoginPage() {
     
             <div className="flex flex-col items-center justify-center">
             
-            <div className="bg-white shadow relative  lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:h-screen lg:ms-auto md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-24">
+            <div className="bg-white shadow relative  lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:min-h-screen lg:ms-auto md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-24">
                 
                 <div className="scale-90">
 
