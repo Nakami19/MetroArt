@@ -7,7 +7,7 @@ export function PrivateRoute({ children }) {
   const { user, isLoading } = useUserContext();
 
   if (isLoading) {
-    return <h1 className={styles.loadingScreen}>Cargando...</h1>;
+    return <h1 className={styles.loadingScreen}>CARGANDO...</h1>;
   }
 
   if (!isLoading && !user) {
