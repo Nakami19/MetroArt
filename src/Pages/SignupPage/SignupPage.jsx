@@ -9,7 +9,7 @@ export function SignupPage() {
 
                     
     
-                    <div className="bg-white shadow  lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:h-screen lg:absolute lg:inset-y-0 right-0 md: relative md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-10">
+                    <div className="bg-white shadow relative lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:min-h-screen lg:ms-auto md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-10">
                      <div className="scale-90">   
                         <p tabIndex="0" className="focus:outline-none text-sm mt-1 font-medium leading-none text-gray-500 font-montserrat text-right">¿Ya tienes una cuenta? <a href="/login"   className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Inicia sesión</a></p>
                         <p tabIndex="0" className="focus:outline-none text-3xl font-extrabold leading-6  font-raleway text-[#001A72] text-center lg:mt-14 md: mt-10">Registrarse</p>
