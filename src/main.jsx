@@ -13,6 +13,8 @@ import { CompletePage } from './Pages/CompletePage/CompletePage'
 import { ProfilePage } from './Pages/ProfilePage/ProfilePage'
 import { TourDetailsPage } from './Pages/TourDetailsPage/TourDetailsPage';
 import { ReservationPage } from './Pages/ReservationPage/ReservationPage';
+import { PrivateRoute } from './Components/PrivateRoute/PrivateRoute';
+import { PublicRoute } from './Components/PublicRoute/PublicRoute';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

@@ -1,9 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 import { HOME_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL } from '../../constants/url'
+import { useUserContext } from '../../contexts/UserContext';
+import { logout } from "../../firebase/auth-service";
 
 export default function Navbar() {
-  return (
+    const navigate = useNavigate();
+    const { user, isLoadingUser } = useUserContext(); 
+
+    const handleLogout = async () => {
+        await logout(() => navigate(HOME_URL));
+      };
+
+    return (
     <div className="navbar bg-[#4E598C]">
         <div className="navbar-start">
             <div className="dropdown z-10">
