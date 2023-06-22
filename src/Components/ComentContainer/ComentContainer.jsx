@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function ComentContainer() {
+export function ComentContainer({comment}) {
   return (
     <div className='bg-white border border-[#29487D] rounded-xl flex flex-col gap-2 w-full p-4 text-xs font-montserrat'>
                     <div className='flex items-center justify-between'>
@@ -10,11 +10,11 @@ export function ComentContainer() {
                                     <img src="https://images.pexels.com/photos/3775168/pexels-photo-3775168.jpeg?auto=compress&cs=tinysrgb&w=600" />
                                 </div>
                             </div>
-                            <p className='font-bold text-[#29487D]'>Name</p>
+                            <p className='font-bold text-[#29487D]'>{comment.user}</p>
                         </div>
-                        <div>Estrellas</div>
+                        <div>{comment.rating} Estrellas</div>
                     </div>
-                    <p className='text-justify'>¡Me encantó el tour de las esculturas! Fue una experiencia inolvidable y sin duda mi favorita fue *Inserte nombre*. Fue un paseo muy interesante ideal para aquellos que desean una tarde diferente.</p>
+                    <p className='text-justify'>{comment.comment}</p>
                 </div>
   )
 }

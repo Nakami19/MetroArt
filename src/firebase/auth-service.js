@@ -5,8 +5,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   getAdditionalUserInfo,
+  FacebookAuthProvider ,
 } from "firebase/auth";
-import { auth, googleProvider } from "./config";
+import { auth, facebookProvider, googleProvider } from "./config";
 import { createUser } from "./users-service.js";
 
 export const signInWithGoogle = async ({ onSuccess, onFail }) => {
@@ -47,6 +48,43 @@ export const signInWithGoogle = async ({ onSuccess, onFail }) => {
   }
 };
 
+export const signInWithFacebook = async ({ onSuccess, onFail }) => {
+  try {
+    const result = await signInWithPopup(auth, facebookProvider);
+    const { isNewUser } = getAdditionalUserInfo(result);
+
+    if (isNewUser) {
+      const { uid, email, displayName } = result.user;
+      await createUser({
+        uid,
+        email,
+        name: displayName,
+        usertype:"",
+        "reservas":[],
+    });
+    }
+
+    if (onSuccess) {
+      onSuccess();
+    }
+  } catch (error) {
+    const errorCode = error?.code;
+    const errorMessage = error?.message;
+    const email = error?.email;
+    const credential = FacebookAuthProvider.credentialFromError(error);
+
+    if (onFail) {
+      onFail();
+    }
+
+    console.error("FAILED SIGN IN WITH FACEBOOK", {
+      errorCode,
+      errorMessage,
+      email,
+      credential,
+    });
+  }
+};
 
 
 // HANDLE REGISTER WITH EMAIL AND PASSWORD
@@ -67,7 +105,6 @@ export const registerWithEmailAndPassword = async ({
       ...restData,
       email,
       uid: firebaseResult.user.uid,
-      usertype:"",
       "reservas":[],
     });
 
