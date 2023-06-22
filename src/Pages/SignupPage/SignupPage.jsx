@@ -3,47 +3,71 @@ import { HOME_URL } from "../../constants/url";
 import {
   registerWithEmailAndPassword,
   signInWithGoogle,
+  signInWithFacebook
 } from "../../firebase/auth-service";
 import { useState } from "react";
 
 
 export function SignupPage() {
-
-  const navigate = useNavigate();
+  const [errors, setErrors] = useState({
+    usertype: "",
+  });  const navigate = useNavigate();
   const [formData, setData] = useState({});
 
+  const newErrors = {};
 
   const onSuccess = () => {
     navigate(HOME_URL);
   };
     
       const onFail = (_error) => {
-        alert("REGISTRO FALLIDO!");
+        newErrors.email = "El correo electrónico ya ha sido tomado";
       };
     
       const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formData.name == ''){
-        alert("Rellene el campo 'Nombre de usuario'")}
-        else if (formData.email == ''){
-        alert("Rellene el campo 'Correo electrónico'")}
-        else if (formData.usertype == ''){
-        alert("Rellene el campo 'Tipo de usuario'")}
-        else if (formData.password == ''){
-        alert("Rellene el campo 'Contraseña")}
-        else if (formData.name!= '' && formData.usertype!= '' && formData.password!= '' && formData.email!=''){
+        if (!formData.email) {
+          newErrors.email = "El correo electrónico es obligatorio";
+        }
+        if (!formData.name) {
+          newErrors.name = "El nombre de usuario es obligatorio";
+        }
+        if (!formData.password) {
+          newErrors.password = "La contraseña es obligatoria";
+        } else if(formData.password.length < 8){
+          newErrors.password="Verifica que la contraseña contenga 8 dígitos"
+        }
+        if (!formData.usertype) {
+          newErrors.usertype = "El tipo de usuario es obligatorio";
+        }
+        
+        if (Object.keys(newErrors).length > 0) {
+          setErrors(newErrors);
+          return;
+        }
         await registerWithEmailAndPassword({
           userData: formData,
           onSuccess,
           onFail,
         });
-      }};
+        if (Object.keys(newErrors).length > 0) {
+          setErrors(newErrors);
+          return;
+        }
+      };
     
       const handleGoogleClick = async () => {
+        
         await signInWithGoogle({
           onSuccess: () => navigate(HOME_URL),
         });
       };    
+
+      const handleFacebookClick = async () => {
+        await signInWithFacebook({
+          onSuccess: () => navigate(HOME_URL),
+        });
+      }
 
     
       const onChange = (event) => {
@@ -73,6 +97,7 @@ export function SignupPage() {
                                     Correo electrónico
                                 </label>
                                 <input aria-labelledby="email" type="email" name="email" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" id="email" placeholder="Ej. simoncito@email.com" onChange={onChange}/>
+                                {errors.email && (<p className="text-red-500 text-xs mt-1">{errors.email}</p>)}
                             </div>
 
                             <div className='mt-4'>
@@ -80,7 +105,7 @@ export function SignupPage() {
                                     Nombre de usuario
                                 </label>
                                 <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simón Bolívar" name="name" onChange={onChange}/>
-
+                                {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name}</p>)}
                             </div>
 
 
@@ -93,6 +118,7 @@ export function SignupPage() {
                                     <option>Visitante</option>
                                     <option>Administrador</option>
                                 </select>
+                                {errors.usertype && (<p className="text-red-500 text-xs mt-1">{errors.usertype}</p>)}
                             </div>
 
 
@@ -105,7 +131,10 @@ export function SignupPage() {
                                 <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                         
                                 </div>
+                                
                                </div>
+                               {errors.password && (<p className="text-red-500 text-xs mt-1">{errors.password}</p>)}
+
                             </div>
 
 
@@ -130,10 +159,8 @@ export function SignupPage() {
                         </button>
                         
 
-
-                        <button aria-label="Continue with facebook" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4" >
-                            <img className="h-5 w-5" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/768px-Facebook_f_logo_%282021%29.svg.png?20210818083032" alt="Facebook Logo" />
-                                
+                        <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4" onClick={handleFacebookClick}>
+                            <img className="h-5 w-5" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/768px-Facebook_f_logo_%282021%29.svg.png?20210818083032" alt="Facebook Logo" />     
                             <p className="text-base font-medium ml-3 text-gray-700 font-montserrat">Continuar con Facebook</p>
                         </button>    
                         </div>
