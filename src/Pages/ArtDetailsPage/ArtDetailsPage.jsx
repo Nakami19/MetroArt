@@ -1,6 +1,12 @@
 import React from 'react'
+import { useParams } from 'react-router'
 
 export function ArtDetailsPage() {
+
+    const {obraId}=useParams();
+    
+
+
   return (
     <div className='p-10 flex flex-col items-center gap-y-7 md:flex-row'>
         <div className='flex flex-col gap-5 md:w-full lg:w-2/4'>
