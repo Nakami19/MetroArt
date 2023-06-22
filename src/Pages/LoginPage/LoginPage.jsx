@@ -4,7 +4,7 @@ import { REGISTER_URL } from '../../constants/url'
 export function LoginPage() {
   return (
     // <!-- component -->
-    <div className="min-h-screen  bg-[url('src/assets/Images/fondo2.png')] bg-no-repeat lg: bg-left bg-contain bg-[#4E598C] ">
+    <div className="min-h-screen  bg-[url('https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Ffondo2.png?alt=media&token=8ee412b6-5d37-4c7a-8310-f5ff7ecd68c0')] bg-no-repeat lg: bg-left lg:bg-contain bg-[#4E598C] md: bg-cover">
     
             <div className="flex flex-col items-center justify-center">
             
@@ -57,7 +57,7 @@ export function LoginPage() {
 
 
                         <button aria-label="Continue with google" role="button" className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4">
-                            <img className="h-5 w-5" src="src/assets/Images/google.svg" alt="Google Logo" />
+                            <img className="h-5 w-5" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/882px-Google_%22G%22_Logo.svg.png?20230305195327" alt="Google Logo" />
                             
                             <p className="text-base font-medium ml-4 text-gray-700 font-montserrat">Continuar con Google</p>
                         </button>
@@ -65,7 +65,7 @@ export function LoginPage() {
 
 
                         <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4">
-                            <img className="h-5 w-5" src="src/assets/Images/facebook.svg" alt="Facebook Logo" />
+                            <img className="h-5 w-5" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/768px-Facebook_f_logo_%282021%29.svg.png?20210818083032" alt="Facebook Logo" />
                                 
                             <p className="text-base font-medium ml-3 text-gray-700 font-montserrat">Continuar con Facebook</p>
                         </button>    
