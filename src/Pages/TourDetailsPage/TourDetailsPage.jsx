@@ -101,9 +101,8 @@ export function TourDetailsPage() {
             <div className='h-72 flex flex-col gap-2 overflow-y-scroll'>
                 {
                     tour.feedbacks.map((comment)=>{
-                        console.log(comment)
                         return (
-                           <ComentContainer comment={comment}/>  
+                           <ComentContainer comment={comment} key={comment.id}/>  
                         )
                         
                     })
