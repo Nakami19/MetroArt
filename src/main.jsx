@@ -17,6 +17,7 @@ import { PrivateRoute } from './Components/PrivateRoute/PrivateRoute';
 import { PublicRoute } from './Components/PublicRoute/PublicRoute';
 import { AddArtworkPage } from './Pages/AddArtworkPage/AddArtWorkPage';
 import { EditArtworkPage } from './Pages/EditArtworkPage/EditArtWorkPage';
+import { EditTourPage } from './Pages/EditTourPage/EditTourPage';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={TOURS_URL} element={<ToursPage/>}/>
         <Route path={'/obras/:artId'} element={<ArtDetailsPage/>}/>
         <Route path={'/tours/:tourId'} element={<TourDetailsPage/>}/>
+        <Route path={'/toursedit/:tourId'} element={<EditTourPage/>}/>
         <Route path={LOGIN_URL} element={<LoginPage/>}/>
         <Route path={REGISTER_URL} element={<SignupPage/>}/>
         <Route path={COMPLETE_URL} element={<CompletePage/>}/>

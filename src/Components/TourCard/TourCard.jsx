@@ -4,8 +4,8 @@ import { TOURDETAILS_URL } from '../../constants/url'
 
 
 export function TourCard({tour, user}) {
-    console.log(user.usertype)
-    if (user.usertype == "Visitante"){
+
+    if (!user  || user.usertype == "Visitante"){
         return (
     
             <Link to={`/tours/${tour.id}`}>
@@ -44,7 +44,9 @@ export function TourCard({tour, user}) {
                         <div className='h-fit relative'>
                             <div className='absolute z-10 p-3 gap-3 flex justify-between items-end h-full'>
                                 <div className=''>
-                                    <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Editar</button>
+                                    <Link to={`/toursedit/${tour.id}`}>
+                                        <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Editar</button>
+                                    </Link>
                                 </div>
                                 <div className=''>
                                     <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</button>
