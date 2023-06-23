@@ -20,9 +20,6 @@ export function TourDetailsPage() {
         }
     }
 
-    
-    
-
     useEffect(()=>{
         getOneTour(tourId);
     },[])
@@ -42,6 +39,9 @@ export function TourDetailsPage() {
             </>
         )
     } else if (!isLoading && tour.obras) {
+        // tour.obras.autor.map((autor)=>{
+        //     autores+=autor+"\n"
+        // })
         return (
     <>
 
