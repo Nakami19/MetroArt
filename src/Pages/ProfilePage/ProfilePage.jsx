@@ -29,7 +29,7 @@ export function ProfilePage() {
 
 
 
-                <div className="bg-white overflow-hidden shadow rounded-lg border lg:ml-4 lg:mt-6 md: mt-3">
+                <div className="bg-white overflow-hidden shadow rounded-lg border lg:ml-4 lg:mt-10 md: mt-3">
                     <div className="px-4 py-5 sm:px-6">
                         
                         <p className="mt-1 max-w-2xl text-sm text-gray-500">
@@ -42,24 +42,27 @@ export function ProfilePage() {
                                 <dt className="text-sm font-medium text-gray-500 font-montserrat">
                                     Username
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
                                     @nombredeusuario
+                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg"/></button></div>
                                 </dd>
                             </div>
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     Nombre
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
                                     Tu nombre
+                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg"/></button></div>
                                 </dd>
                             </div>
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     E-mail
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
                                     tucorreo@example.com
+                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg"/></button></div>
                                 </dd>
                             </div>
                             

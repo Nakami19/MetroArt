@@ -4,7 +4,7 @@ import { HomePage } from './Pages/HomePage/HomePage'
 import './index.css'
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Layout from './Components/Layout/Layout';
-import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL, COMPLETE_URL } from './constants/url';
+import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL, COMPLETE_URL, ADDARTWORK_URL } from './constants/url';
 import { ToursPage } from './Pages/ToursPage/ToursPage';
 import { ArtDetailsPage } from './Pages/ArtDetailsPage/ArtDetailsPage';
 import { SignupPage } from './Pages/SignupPage/SignupPage'
@@ -13,6 +13,9 @@ import { CompletePage } from './Pages/CompletePage/CompletePage'
 import { ProfilePage } from './Pages/ProfilePage/ProfilePage'
 import { TourDetailsPage } from './Pages/TourDetailsPage/TourDetailsPage';
 import { ReservationPage } from './Pages/ReservationPage/ReservationPage';
+import { PrivateRoute } from './Components/PrivateRoute/PrivateRoute';
+import { PublicRoute } from './Components/PublicRoute/PublicRoute';
+import { AddArtworkPage } from './Pages/AddArtworkPage/AddArtWorkPage';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -28,6 +31,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={COMPLETE_URL} element={<CompletePage/>}/>
         <Route path={PROFILE_URL} element={<ProfilePage/>}/>
         <Route path={RESERVATION_URL} element={<ReservationPage/>}/>
+        <Route path={ADDARTWORK_URL} element={<AddArtworkPage/>}/>
+        <Route path='*' element={<h1 className='my-80 text-3xl'>NOT FOUND!</h1>}></Route>
     </Route>
     </Routes>
     </BrowserRouter>
