@@ -50,7 +50,7 @@ export function TourCard({tour, user}) {
                                     <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</button>
                                 </div>
                             </div>
-                            <div className="avatar">
+                            <div className="avatar contrast-75 saturate-150	brightness-50">
                                 <div className="w-40 rounded">
                                     <img src={tour.url} />
                                 </div>
