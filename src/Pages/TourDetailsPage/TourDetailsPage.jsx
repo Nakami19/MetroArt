@@ -9,8 +9,16 @@ export function TourDetailsPage() {
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
     let component=null;
+    let rating=0;
 
-    
+    if (tour.feedbacks) {
+        if(tour.feedbacks.length!=0) {
+           tour.feedbacks.map((comentario)=>{
+                rating+=comentario.rating
+            }) 
+        rating=rating/tour.feedbacks.length    
+        }
+    }
 
     useEffect(()=>{
         getOneTour(tourId);
@@ -31,6 +39,9 @@ export function TourDetailsPage() {
             </>
         )
     } else if (!isLoading && tour.obras) {
+        // tour.obras.autor.map((autor)=>{
+        //     autores+=autor+"\n"
+        // })
         return (
     <>
 
@@ -51,7 +62,7 @@ export function TourDetailsPage() {
                 <div className='text-xs flex gap-4 font-bold items-center'>
                 <div className='flex gap-1 items-center'>
                     <img className='h-4' src="https://img.icons8.com/?size=512&id=19295&format=png"/>
-                    <p>{tour.rating}</p>
+                    <p>{rating}</p>
                 </div>
                 <div className='flex gap-1 items-center'> 
                     {component}
@@ -101,9 +112,8 @@ export function TourDetailsPage() {
             <div className='h-72 flex flex-col gap-2 overflow-y-scroll'>
                 {
                     tour.feedbacks.map((comment)=>{
-                        console.log(comment)
                         return (
-                           <ComentContainer comment={comment}/>  
+                           <ComentContainer comment={comment} key={comment.id}/>  
                         )
                         
                     })

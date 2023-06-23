@@ -9,50 +9,55 @@ import {
 } from "../../firebase/auth-service";
 
 export function LoginPage() {
-    const [errors, setErrors] = useState({});
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-      email: "",
-      password: "",
-    });
-  
-    const onSuccess = () => {
-      navigate(HOME_URL);
-    };
-  
-    const onFail = (_error) => {
-      alert("Inicio de sesión fallido");
-    };
-  
-    const onSubmit = async (event) => {
-      event.preventDefault();
-      const newErrors = {};
-      if (!formData.email) {
-        newErrors.email = "El correo electrónico es obligatorio";
-      }
-      if (!formData.password) {
-        newErrors.password = "La contraseña es obligatoria";
-      }
-      if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-        return;
-      }
-      await loginWithEmailAndPassword({ userData: formData, onSuccess, onFail });
-    };
-  
-    const onChange = (event) => {
-      const { name, value } = event.target;
-  
-      setFormData((oldData) => ({ ...oldData, [name]: value }));
-    };
-  
-    const handleGoogleClick = async () => {
-      await signInWithGoogle({
-        onSuccess: () => navigate(HOME_URL),
-      });
-    };
+  const newErrors = {};
 
-  return (
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const onSuccess = () => {
+    navigate(HOME_URL);
+  };
+
+  const onFail = (_error) => {
+      newErrors.password = "Incio de sesión fallido, verifica los datos ingresados";
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (!formData.email) {
+      newErrors.email = "El correo electrónico es obligatorio";
+    }
+    if (!formData.password) {
+      newErrors.password = "La contraseña es obligatoria";
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    await loginWithEmailAndPassword({ userData: formData, onSuccess, onFail });
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+  };
+
+  const onChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((oldData) => ({ ...oldData, [name]: value }));
+  };
+
+  const handleGoogleClick = async () => {
+    await signInWithGoogle({
+      onSuccess: () => navigate(HOME_URL),
+    });
+  };
+
+return (
     // <!-- component -->
     <div className="min-h-screen  bg-[url('https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Ffondo2.png?alt=media&token=8ee412b6-5d37-4c7a-8310-f5ff7ecd68c0')] bg-no-repeat lg: bg-left lg:bg-contain bg-[#4E598C] md: bg-cover">
     

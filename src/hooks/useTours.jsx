@@ -18,8 +18,8 @@ export function useTours() {
 
     const getOneTour= async (TourId) => {
         setLoading(true)
-        const tour= await getToursDocuments();
-        tour.map((one)=>{
+        const toure= await getToursDocuments();
+        toure.map((one)=>{
             if (one.id==TourId) {
                setTour(one)
             }  
