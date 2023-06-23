@@ -47,7 +47,7 @@ export function ReserveCard() {
                     <label className="label mt-5">
                         <span className="label-text font-montserrat">Comentario</span>
                     </label>
-                    <input type="text" placeholder="Escribe aquí" className="input input-bordered w-full " />
+                    <textarea placeholder="Escribe aquí" className="textarea textarea-bordered w-full " />
                     
                     </div>
             <div className="modal-action">
