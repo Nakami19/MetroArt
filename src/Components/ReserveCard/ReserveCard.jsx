@@ -51,7 +51,7 @@ export function ReserveCard() {
                     
                     </div>
             <div className="modal-action">
-            <a href="#" className="btn">Enviar</a>
+            <a href="#" className="btn normal-case">Enviar</a>
             </div>
         </div>
         </div>

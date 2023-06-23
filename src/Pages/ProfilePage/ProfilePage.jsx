@@ -1,7 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { ReserveCard } from '../../Components/ReserveCard/ReserveCard'
 
 export function ProfilePage() {
+
+    const [disableUser, setDisableUser] = useState(true);
+    const [disableName, setDisableName] = useState(true);
+    const [disableEmail, setDisableEmail] = useState(true);
+    const [style, setStyle] = useState("hidden");
+
+    const editUser = (event) => {
+        setDisableUser(false);
+        setStyle("mt-5 flex gap-3 lg:ms-auto")
+    };
+    const editName = (event) => {
+        setDisableName(false);
+        setStyle("mt-5 flex gap-3 lg:ms-auto")
+    };
+    const editEmail = (event) => {
+        setDisableEmail(false);
+        setStyle("mt-5 flex gap-3 lg:ms-auto")
+    };
+    const saveChanges = (event) => {
+        setDisableUser(true);
+        setDisableName(true);
+        setDisableEmail(true);
+        setStyle("hidden");
+    };
+    const cancelChanges = (event) => {
+        setDisableUser(true);
+        setDisableName(true);
+        setDisableEmail(true);
+        setStyle("hidden");
+    };
+
   return (
     <div>
     <div className="md: h-36 lg:h-48 w-full p-4 bg-[url('https://www.unimet.edu.ve/wp-content/uploads/2019/11/bannerdade-1200x630.jpg')]  justify-center rounded-3xl bg-clip-border mx-auto  bg-no-repeat bg-cover border-8 border-white">
@@ -43,8 +74,8 @@ export function ProfilePage() {
                                     Username
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                    @nombredeusuario
-                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg"/></button></div>
+                                    <input type="text" placeholder={"@nombredeusuario"} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableUser}/>
+                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editUser}/></button></div>
                                 </dd>
                             </div>
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
@@ -52,8 +83,8 @@ export function ProfilePage() {
                                     Nombre
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                    Tu nombre
-                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg"/></button></div>
+                                <input type="text" placeholder={"Tu nombre"} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableName}/>
+                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editName}/></button></div>
                                 </dd>
                             </div>
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
@@ -61,13 +92,17 @@ export function ProfilePage() {
                                     E-mail
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                    tucorreo@example.com
-                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg"/></button></div>
+                                <input type="text" placeholder={"tucorreo@example.com"} className="placeholder:truncate input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableEmail}/>
+                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg"onClick={editEmail}/></button></div>
                                 </dd>
                             </div>
                             
                         </dl>
                     </div>
+            </div>
+            <div className={style}>
+                <button className="btn md:btn-sm lg:btn-md normal-case" onClick={saveChanges}>Confirmar</button>
+                <button className="btn btn-error md:btn-sm lg:btn-md normal-case" onClick={cancelChanges}>Cancelar</button>
             </div>
             </div>
 
