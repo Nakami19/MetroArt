@@ -9,61 +9,66 @@ import {
 } from "../../firebase/auth-service";
 
 export function LoginPage() {
-    const [errors, setErrors] = useState({});
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-      email: "",
-      password: "",
-    });
-  
-    const onSuccess = () => {
-      navigate(HOME_URL);
-    };
-  
-    const onFail = (_error) => {
-      alert("Inicio de sesión fallido");
-    };
-  
-    const onSubmit = async (event) => {
-      event.preventDefault();
-      const newErrors = {};
-      if (!formData.email) {
-        newErrors.email = "El correo electrónico es obligatorio";
-      }
-      if (!formData.password) {
-        newErrors.password = "La contraseña es obligatoria";
-      }
-      if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-        return;
-      }
-      await loginWithEmailAndPassword({ userData: formData, onSuccess, onFail });
-    };
-  
-    const onChange = (event) => {
-      const { name, value } = event.target;
-  
-      setFormData((oldData) => ({ ...oldData, [name]: value }));
-    };
-  
-    const handleGoogleClick = async () => {
-      await signInWithGoogle({
-        onSuccess: () => navigate(HOME_URL),
-      });
-    };
+  const newErrors = {};
 
-  return (
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const onSuccess = () => {
+    navigate(HOME_URL);
+  };
+
+  const onFail = (_error) => {
+      newErrors.password = "Incio de sesión fallido, verifica los datos ingresados";
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (!formData.email) {
+      newErrors.email = "El correo electrónico es obligatorio";
+    }
+    if (!formData.password) {
+      newErrors.password = "La contraseña es obligatoria";
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    await loginWithEmailAndPassword({ userData: formData, onSuccess, onFail });
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+  };
+
+  const onChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((oldData) => ({ ...oldData, [name]: value }));
+  };
+
+  const handleGoogleClick = async () => {
+    await signInWithGoogle({
+      onSuccess: () => navigate(HOME_URL),
+    });
+  };
+
+return (
     // <!-- component -->
-    <div className="min-h-screen  bg-[url('src/assets/Images/fondo2.png')] bg-no-repeat lg: bg-left lg:bg-contain bg-[#4E598C] md: bg-cover">
+    <div className="min-h-screen  bg-[url('https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Ffondo2.png?alt=media&token=8ee412b6-5d37-4c7a-8310-f5ff7ecd68c0')] bg-no-repeat lg: bg-left lg:bg-contain bg-[#4E598C] md: bg-cover">
     
             <div className="flex flex-col items-center justify-center">
             
-            <div className="bg-white shadow  lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:h-screen lg:absolute lg:inset-y-0 right-0 md: relative md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-24">
+            <div className="bg-white shadow relative  lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:min-h-screen lg:ms-auto md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-24">
                 
-                <div className="position">
+                <div className="scale-90">
 
 
-                <p tabIndex="0" className="focus:outline-none text-sm mt-10 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/register"  className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
+                <p tabIndex="0" className="focus:outline-none text-sm mt-8 font-medium leading-none text-gray-500 font-montserrat text-right">¿No tienes una cuenta? <a href="/register"  className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Regístrate</a></p>
                 <p tabIndex="0" className="focus:outline-none text-3xl font-extrabold leading-6 font-raleway text-[#001A72] text-center lg:mt-24 md: mt-10">Iniciar sesión</p>
 
                         {/* Inputs */}
@@ -106,9 +111,8 @@ export function LoginPage() {
                              <hr className="w-full bg-gray-400  "></hr>
                         </div>
 
-
                         <button aria-label="Continue with google" role="button" className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4" onClick={handleGoogleClick}>
-                            <img className="h-5 w-5" src="src/assets/Images/google.svg" alt="Google Logo" />
+                            <img className="h-5 w-5" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/882px-Google_%22G%22_Logo.svg.png?20230305195327" alt="Google Logo" />
                             
                             <p className="text-base font-medium ml-4 text-gray-700 font-montserrat">Continuar con Google</p>
                         </button>
@@ -116,9 +120,9 @@ export function LoginPage() {
 
 
                         <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4">
-                            <img className="h-5 w-5" src="src/assets/Images/facebook.svg" alt="Facebook Logo" />
+                            <img className="h-5 w-5" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/768px-Facebook_f_logo_%282021%29.svg.png?20210818083032" alt="Facebook Logo" />
                                 
-                            <p className="text-base font-medium ml-4 text-gray-700 font-montserrat">Continuar con Facebook</p>
+                            <p className="text-base font-medium ml-3 text-gray-700 font-montserrat">Continuar con Facebook</p>
                         </button>    
 
                         </div>

@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TourCard } from '../../Components/TourCard/TourCard'
+import { useTours } from '../../hooks/useTours'
 
 export function ToursPage() {
+    const {tours, getTours} =useTours()
+
+    useEffect(()=>{
+        getTours();
+    },[])
+
   return (
     <>
         <div className="join flex justify-center p-6">
@@ -22,13 +29,14 @@ export function ToursPage() {
         </div>
 
         <h1 className='p-6 font-raleway font-bold text-[#C14C00] text-2xl'>Tours</h1>
-        <div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-7'>
-            <TourCard/>
-            <TourCard/>
-            <TourCard/>
-            <TourCard/>
-            <TourCard/>
-            <TourCard/>
+        <div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-6 xl:grid-cols-7'>
+            {
+                tours.map((tour)=>{
+                    return (
+                        <TourCard tour={tour} key={tour.id}/>
+                    )
+                })
+            }
         </div>
     </>
   )

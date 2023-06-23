@@ -1,0 +1,35 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "obras",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "autor",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "descripcion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "fecha",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "nombre",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "tipo",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "ubicacion",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

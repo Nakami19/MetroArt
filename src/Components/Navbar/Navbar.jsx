@@ -1,12 +1,40 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 import { HOME_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL } from '../../constants/url'
+import { useUserContext } from '../../contexts/UserContext';
+import { logout } from "../../firebase/auth-service";
+import { db } from '../../firebase/config';
+import {
+    doc,
+    onSnapshot ,
+  } from 'firebase/firestore';
+  import { useState, useEffect } from "react";
 
 export default function Navbar() {
-  return (
+    const navigate = useNavigate();
+    const { user, isLoadingUser } = useUserContext(); 
+    const [imagenFirebase, setImagenFirebase] = useState(null);
+
+    useEffect(() => {
+        if (user && user.id) {
+          const userDocRef = doc(db, "users", user.id);
+      
+          const unsubscribe = onSnapshot(userDocRef, (doc) => {
+            setImagenFirebase(doc.data().url);
+          });
+      
+          return () => unsubscribe();
+        }
+      }, [user]);
+
+    const handleLogout = async () => {
+        await logout(() => navigate(HOME_URL));
+      };
+
+    return (
     <div className="navbar bg-[#4E598C]">
         <div className="navbar-start">
-            <div className="dropdown">
+            <div className="dropdown z-10">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="white"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M4 6h16M4 12h8m-8 6h16" /></svg>
             </label>
@@ -17,13 +45,15 @@ export default function Navbar() {
                 <li><Link to={TOURS_URL}>
                     <h1>Tours</h1>
                     </Link></li>
-                <li><Link to={PROFILE_URL}>
+                {user && (
+                    <li><Link to={PROFILE_URL}>
                     <h1>Perfil</h1>
                     </Link></li>
-                <li><h1>Opiniones</h1></li>
+                )}
+                
             </ul>
             </div>
-            <img src="./src/assets/blanquito (1).png" className='h-12'/>
+            <img src="https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Fblanquito%20(1).png?alt=media&token=e40fe06a-7de3-4520-8b06-a20b054a9ef8" className='h-12'/>
             <h1 className="btn btn-ghost font-montserrat normal-case text-xl text-white invisible md:visible"> 
             Metro Art Collection</h1>
         </div>
@@ -38,20 +68,48 @@ export default function Navbar() {
                     <Link to={TOURS_URL}>
                     <h1>Tours</h1>
                     </Link>
+                </li>
+                {user && (
+                    <li>
+                        <Link to={PROFILE_URL}>
+                        <h1>Perfil</h1>
+                        </Link>
                     </li>
-                    <li><Link to={PROFILE_URL}>
-                    <h1>Perfil</h1>
-                    </Link></li>
-                <li><h1>Opiniones</h1></li>
+                )}
+                
             </ul>
         </div>
         <div className="navbar-end gap-x-2">
-            <Link to={REGISTER_URL}>
-            <h1 className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Registrarse</h1>
-            </Link> 
-            <Link to={LOGIN_URL}>
-            <h1 className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Iniciar sesión</h1>
-            </Link>
+            {!user && (
+                <>
+                <Link to={REGISTER_URL}>
+                <h1 className="btn btn-xs md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Registrarse</h1>
+                </Link> 
+                <Link to={LOGIN_URL}>
+                <h1 className="btn btn-xs whitespace-nowrap md:btn-sm bg-[#FF8C42] normal-case font-montserrat text-white hover:bg-[#a74d15]">Iniciar sesión</h1>
+                </Link>
+                </>
+            )}
+
+            {user && (
+                <>
+                <h1 className="btn btn-xs md:btn-sm whitespace-nowrap btn-ghost normal-case font-montserrat text-white " onClick={handleLogout}>Cerrar sesión</h1>
+                <div className='flex items-center gap-3'>
+                    <h1 className='font-montserrat text-white hidden md:flex'>{user.name}</h1>
+                    <div className="avatar">
+                        <div className="w-8 rounded-full ring ring-offset-base-100 ring-offset-2">
+                        {imagenFirebase ? (
+                        <img src={imagenFirebase} alt="Profile" />
+                        ) : (
+                        <img src="https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/perfil-imagenes%2Fperfil_generico.jpg?alt=media&token=f9f29c3c-7df8-479a-bb3b-3f0e02c6f83b" alt="Profile" />
+                        )}                        
+                        </div>
+                    </div>
+                </div>
+                </>
+            )}
+            
+            
         </div>
         </div>
   )
