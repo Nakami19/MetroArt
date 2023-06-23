@@ -30,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={COMPLETE_URL} element={<CompletePage/>}/>
         <Route path={PROFILE_URL} element={<ProfilePage/>}/>
         <Route path={RESERVATION_URL} element={<ReservationPage/>}/>
+        <Route path='*' element={<h1 className='my-80 text-3xl'>NOT FOUND!</h1>}></Route>
     </Route>
     </Routes>
     </BrowserRouter>
