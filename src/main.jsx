@@ -16,6 +16,7 @@ import { ReservationPage } from './Pages/ReservationPage/ReservationPage';
 import { PrivateRoute } from './Components/PrivateRoute/PrivateRoute';
 import { PublicRoute } from './Components/PublicRoute/PublicRoute';
 import { AddArtworkPage } from './Pages/AddArtworkPage/AddArtWorkPage';
+import { EditArtworkPage } from './Pages/EditArtworkPage/EditArtWorkPage';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={PROFILE_URL} element={<ProfilePage/>}/>
         <Route path={RESERVATION_URL} element={<ReservationPage/>}/>
         <Route path={ADDARTWORK_URL} element={<AddArtworkPage/>}/>
+        <Route path={'/editartwork/:artId'} element={<EditArtworkPage/>}/>
         <Route path='*' element={<h1 className='my-80 text-3xl'>NOT FOUND!</h1>}></Route>
     </Route>
     </Routes>
