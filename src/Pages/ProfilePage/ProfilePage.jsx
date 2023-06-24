@@ -1,8 +1,15 @@
 import React, {useState} from 'react'
 import { ReserveCard } from '../../Components/ReserveCard/ReserveCard'
+import { useUserContext } from '../../contexts/UserContext'
 
 export function ProfilePage() {
 
+    let isAdmin = false;
+
+    const { user, isLoadingUser } = useUserContext(); 
+
+    const [divPerfil, setDivPerfil] = useState(' lg:w-1/3 md: w-full lg:min-h-screen p-3');
+    
     const [disableUser, setDisableUser] = useState(true);
     const [disableName, setDisableName] = useState(true);
     const [disableEmail, setDisableEmail] = useState(true);
@@ -33,10 +40,21 @@ export function ProfilePage() {
         setStyle("hidden");
     };
 
+
+
+    if(!isLoadingUser){
+        try{
+            if(user.usertype == "Administrador"){
+                isAdmin = true
+            } 
+        }catch(error){
+    
+        }
+
   return (
     <div>
     <div className="md: h-36 lg:h-48 w-full p-4 bg-[url('https://www.unimet.edu.ve/wp-content/uploads/2019/11/bannerdade-1200x630.jpg')]  justify-center rounded-3xl bg-clip-border mx-auto  bg-no-repeat bg-cover border-8 border-white">
-        <div className="avatar">
+        <div className="avatar" on>
             <div className="lg:w-36 md: w-24 lg:mt-20 md: mt-16 lg:ml-12 md: ml-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2   transition duration-200 transform hover:scale-110">
                 <img src="https://user-images.githubusercontent.com/11250/39013954-f5091c3a-43e6-11e8-9cac-37cf8e8c8e4e.jpg" />
             </div>
@@ -55,7 +73,7 @@ export function ProfilePage() {
         
         <div className='min-h-screen lg:flex lg:mt-14 md: mt-8'>
 
-            <div className=' lg:w-1/3 md: w-full lg:min-h-screen p-3'>
+            <div className={divPerfil}>
                 <h1 className='font-raleway font-bold text-2xl lg:ml-8 md: ml-4'>Perfil de Usuario</h1>
 
 
@@ -108,7 +126,7 @@ export function ProfilePage() {
 
 
 
-            <div className=' lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'>
+            {!isAdmin && ( <div className={'lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'}>
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             
@@ -123,10 +141,9 @@ export function ProfilePage() {
                      <ReserveCard/>
                     </div>
                 </div>
-                
 
                </div>
-
+            )}
 
            
 
@@ -140,3 +157,4 @@ export function ProfilePage() {
   )
 }
 
+}
