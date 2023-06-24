@@ -4,7 +4,7 @@ import { useUserContext } from '../../contexts/UserContext';
 import { db } from '../../firebase/config';
 import {v4 as uuidv4} from 'uuid';
 import { storage } from '../../firebase/config';
-import { ref, uploadBytesResumable, getDownloadURL, deleteObject  } from "firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL  } from "firebase/storage";
 import {
     doc,
     updateDoc,
@@ -19,12 +19,20 @@ export function ProfilePage() {
     const { user, isLoadingUser } = useUserContext(); 
     const profilecollection = collection(db, 'users');
     const [imagenFirebase, setImagenFirebase] = useState(null);
+    const [tipodeuser, setTipodeuser] = useState(null);
+    const [nombreusuario, setNombreusuario] = useState(null);
+    const [correousuario, setCorreousuario] = useState(null);
+
 
     useEffect(() => {
         const userDocRef = doc(db, "users", user.id);
     
         const unsubscribe = onSnapshot(userDocRef, (doc) => {
             setImagenFirebase(doc.data().url);
+            setTipodeuser(doc.data().usertype);
+            setNombreusuario(doc.data().name);
+            setCorreousuario(doc.data().email);
+
         });
     
         return () => unsubscribe();
@@ -91,7 +99,7 @@ export function ProfilePage() {
                     <div className="px-4 py-5 sm:px-6">
                         
                         <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                            ({user.usertype})
+                            ({tipodeuser})
                         </p>
                     </div>
                     <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -101,7 +109,7 @@ export function ProfilePage() {
                                     Username
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
-                                    @{user.name}
+                                    @{nombreusuario}
                                 </dd>
                             </div>
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
@@ -117,7 +125,7 @@ export function ProfilePage() {
                                     Correo electrónico
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat">
-                                    {user.email}
+                                    {correousuario}
                                 </dd>
                             </div>
                             

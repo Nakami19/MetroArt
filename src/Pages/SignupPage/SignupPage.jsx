@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { HOME_URL } from "../../constants/url";
+import { HOME_URL , COMPLETE_URL} from "../../constants/url";
 import {
   registerWithEmailAndPassword,
   signInWithGoogle,
@@ -48,7 +48,6 @@ export function SignupPage() {
         }else if (formData.name.includes(" ")) { 
             newErrors.name = "El nombre de usuario no puede contener espacios en blanco";}
             usuarios.map((usuario)=>{
-            console.log(usuario.name)
           if (usuario.name == formData.name){
             newErrors.name = "El nombre de usuario ya ha sido registrado";}
           })
@@ -78,15 +77,14 @@ export function SignupPage() {
       };
     
       const handleGoogleClick = async () => {
-        
         await signInWithGoogle({
-          onSuccess: () => navigate(HOME_URL),
+          onSuccess: () => navigate(COMPLETE_URL),
         });
       };    
 
       const handleFacebookClick = async () => {
         await signInWithFacebook({
-          onSuccess: () => navigate(HOME_URL),
+          onSuccess: () => navigate(COMPLETE_URL),
         });
       }
 
@@ -125,7 +123,7 @@ export function SignupPage() {
                                 <label id="username" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Nombre de usuario
                                 </label>
-                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simón Bolívar" name="name" onChange={onChange}/>
+                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simoncito" name="name" onChange={onChange}/>
                                 {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name}</p>)}
                             </div>
 
