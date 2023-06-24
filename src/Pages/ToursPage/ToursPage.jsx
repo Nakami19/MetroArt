@@ -14,10 +14,10 @@ export function ToursPage() {
         <div className="join flex justify-center p-6">
             <div className=' w-28 md:w-10/12'>
                 <div>
-                <input className="input input-bordered bg-slate-100 join-item w-full" placeholder="Buscar..." onChange={handleChange}/>
+                <input className="input input-bordered bg-slate-100 join-item w-full" placeholder="Buscar..." />
                 </div>
             </div>
-            <select className="select select-bordered join-item" onChange={seleccion}>
+            <select className="select select-bordered join-item" >
                 <option>Todas las categorías</option>
                 <option>Nombre de obra</option>
                 <option>Nombre de tour</option>
