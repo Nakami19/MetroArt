@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TourCard } from '../../Components/TourCard/TourCard'
 import { useTours } from '../../hooks/useTours'
 
@@ -14,10 +14,10 @@ export function ToursPage() {
         <div className="join flex justify-center p-6">
             <div className=' w-28 md:w-10/12'>
                 <div>
-                <input className="input input-bordered bg-slate-100 join-item w-full" placeholder="Buscar..."/>
+                <input className="input input-bordered bg-slate-100 join-item w-full" placeholder="Buscar..." onChange={handleChange}/>
                 </div>
             </div>
-            <select className="select select-bordered join-item">
+            <select className="select select-bordered join-item" onChange={seleccion}>
                 <option>Todas las categorías</option>
                 <option>Nombre de obra</option>
                 <option>Nombre de tour</option>
