@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getToursDocuments } from "../firebase/info";
 
 
@@ -27,8 +27,47 @@ export function useTours() {
         setLoading(false)
     }
 
+    const getSearchTours=async (busqueda, option)=>{
+        let coincide=[];
+        setLoading(true)
+        const tour= await getToursDocuments();
+        busqueda=busqueda.toLowerCase();
+        if (option=="Nombre de tour" && busqueda!="" ){
+            console.log("aaaaaa  "+busqueda)
+            tour.map((one)=>{
+                if(one.name.toLowerCase().includes(busqueda)) {
+                    coincide.push(one)
+                }
+            })
+            setTours(coincide)
+        }
+        else if (option=="Id de tour"  && busqueda!="" ) { 
+            tour.map((one)=>{
+                if(one.id.toLowerCase().includes(busqueda)) {
+                    coincide.push(one)
+                }
+            })
+            setTours(coincide)
+
+        }
+        else if (option=="Ubicación"  && busqueda!="" ) {
+            tour.map((one)=>{
+                if(one.important_places.toLowerCase().includes(busqueda)) {
+                    coincide.push(one)
+                }
+            })
+            setTours(coincide)
+
+        }
+        else {
+           setTours(tour); 
+        }
+        
+        setLoading(false)
+    }
+
     return {
-        tours, getTours, tour, getOneTour, isLoading
+        tours, getTours, tour, getOneTour, isLoading, getSearchTours
     }
 
    
