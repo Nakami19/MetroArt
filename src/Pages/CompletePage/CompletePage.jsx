@@ -1,47 +1,71 @@
 import { useNavigate } from "react-router-dom";
 import { HOME_URL } from "../../constants/url";
+import { useState , useEffect} from "react";
+import { useUsers } from "../../hooks/useUsers";
 import {
-  registerWithEmailAndPassword,
-  signInWithGoogle,
-} from "../../firebase/auth-service";
-import { useState } from "react";
+  doc,
+  updateDoc,
+  collection,
+  onSnapshot ,
+} from 'firebase/firestore';
+import { useUserContext } from '../../contexts/UserContext';
+import { db } from '../../firebase/config';
 
 
 export function CompletePage() {
+  
+  const { user, isLoadingUser } = useUserContext(); 
+  const {usuarios, getUsuarios} = useUsers()
 
-  const navigate = useNavigate();
+  useEffect(()=>{
+    getUsuarios();
+  },[])
+
+
+
+  const [errors, setErrors] = useState({
+    usertype: "",
+  });  const navigate = useNavigate();
   const [formData, setData] = useState({});
 
+  const newErrors = {};
+  const profilecollection = collection(db, 'users');
 
-  const onSuccess = () => {
-    navigate(HOME_URL);
-  };
-    
-      const onFail = (_error) => {
-        alert("REGISTRO FALLIDO!");
-      };
+
     
       const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formData.name == ''){
-        alert("Rellene el campo 'Nombre de usuario'")}
-        
-        else if (formData.usertype == ''){
-        alert("Rellene el campo 'Tipo de usuario'")}
+        if (!formData.name) {
+          newErrors.name = "El nombre de usuario es obligatorio";
+        } else if(formData.name.length < 4){
+          newErrors.name="El mínimo de caracteres para el nombre de usuario es 4"
+        } else if(formData.name.length > 16){
+          newErrors.name="El límite es de 16 caracteres"
+        }else if (formData.name.includes(" ")) { 
+            newErrors.name = "El nombre de usuario no puede contener espacios en blanco";}
+            usuarios.map((usuario)=>{
+          if (usuario.name == formData.name){
+            newErrors.name = "El nombre de usuario ya ha sido registrado";}
+          })
 
-        else if (formData.name!= '' && formData.usertype!= ''){
-        await registerWithEmailAndPassword({
-          userData: formData,
-          onSuccess,
-          onFail,
-        });
-      }};
-    
-      const handleGoogleClick = async () => {
-        await signInWithGoogle({
-          onSuccess: () => navigate(HOME_URL),
-        });
-      };    
+        
+          if (!formData.usertype) {
+            newErrors.usertype = "El tipo de usuario es obligatorio";
+          }
+
+          if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+          }
+          try {
+            const userRef = doc(profilecollection, user.id);
+            await updateDoc(userRef, {"name": formData.name, "usertype": formData.usertype})
+            navigate(HOME_URL)
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
 
     
       const onChange = (event) => {
@@ -61,7 +85,6 @@ export function CompletePage() {
     
                     <div className="bg-white shadow relative lg:rounded-none md: rounded-xl lg:px-28 md: px-10 md: pb-10 lg:min-h-screen lg:ms-auto md: h-5/6 lg:w-1/2 md: w-5/6  lg:mt-0 md: mt-28">
                      <div className="scale-90">   
-                        <p tabIndex="0" className="focus:outline-none text-sm mt-1 font-medium leading-none text-gray-500 font-montserrat text-right">¿Ya tienes una cuenta? <a href="/login"   className="hover:text-orange-700 focus:text-orange-700 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none  text-orange-500 cursor-pointer font-montserrat"> Inicia sesión</a></p>
                         <p tabIndex="0" className="focus:outline-none text-3xl font-extrabold leading-6  font-raleway text-[#001A72] text-center lg:mt-48 md: mt-20">Completar registro</p>
 
                         {/* Inputs */}
@@ -72,8 +95,8 @@ export function CompletePage() {
                                 <label id="username" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Nombre de usuario
                                 </label>
-                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simón Bolívar" name="name" onChange={onChange}/>
-
+                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simoncito" name="name" onChange={onChange} />
+                                {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name}</p>)}
                             </div>
 
 
@@ -86,6 +109,7 @@ export function CompletePage() {
                                     <option>Visitante</option>
                                     <option>Administrador</option>
                                 </select>
+                                {errors.usertype && (<p className="text-red-500 text-xs mt-1">{errors.usertype}</p>)}
                             </div>
 
 
