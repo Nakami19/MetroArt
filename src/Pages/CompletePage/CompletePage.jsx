@@ -1,47 +1,71 @@
 import { useNavigate } from "react-router-dom";
 import { HOME_URL } from "../../constants/url";
+import { useState , useEffect} from "react";
+import { useUsers } from "../../hooks/useUsers";
 import {
-  registerWithEmailAndPassword,
-  signInWithGoogle,
-} from "../../firebase/auth-service";
-import { useState } from "react";
+  doc,
+  updateDoc,
+  collection,
+  onSnapshot ,
+} from 'firebase/firestore';
+import { useUserContext } from '../../contexts/UserContext';
+import { db } from '../../firebase/config';
 
 
 export function CompletePage() {
+  
+  const { user, isLoadingUser } = useUserContext(); 
+  const {usuarios, getUsuarios} = useUsers()
 
-  const navigate = useNavigate();
+  useEffect(()=>{
+    getUsuarios();
+  },[])
+
+
+
+  const [errors, setErrors] = useState({
+    usertype: "",
+  });  const navigate = useNavigate();
   const [formData, setData] = useState({});
 
+  const newErrors = {};
+  const profilecollection = collection(db, 'users');
 
-  const onSuccess = () => {
-    navigate(HOME_URL);
-  };
-    
-      const onFail = (_error) => {
-        alert("REGISTRO FALLIDO!");
-      };
+
     
       const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formData.name == ''){
-        alert("Rellene el campo 'Nombre de usuario'")}
-        
-        else if (formData.usertype == ''){
-        alert("Rellene el campo 'Tipo de usuario'")}
+        if (!formData.name) {
+          newErrors.name = "El nombre de usuario es obligatorio";
+        } else if(formData.name.length < 4){
+          newErrors.name="El mínimo de caracteres para el nombre de usuario es 4"
+        } else if(formData.name.length > 16){
+          newErrors.name="El límite es de 16 caracteres"
+        }else if (formData.name.includes(" ")) { 
+            newErrors.name = "El nombre de usuario no puede contener espacios en blanco";}
+            usuarios.map((usuario)=>{
+          if (usuario.name == formData.name){
+            newErrors.name = "El nombre de usuario ya ha sido registrado";}
+          })
 
-        else if (formData.name!= '' && formData.usertype!= ''){
-        await registerWithEmailAndPassword({
-          userData: formData,
-          onSuccess,
-          onFail,
-        });
-      }};
-    
-      const handleGoogleClick = async () => {
-        await signInWithGoogle({
-          onSuccess: () => navigate(HOME_URL),
-        });
-      };    
+        
+          if (!formData.usertype) {
+            newErrors.usertype = "El tipo de usuario es obligatorio";
+          }
+
+          if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+          }
+          try {
+            const userRef = doc(profilecollection, user.id);
+            await updateDoc(userRef, {"name": formData.name, "usertype": formData.usertype})
+            navigate(HOME_URL)
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
 
     
       const onChange = (event) => {
@@ -71,8 +95,8 @@ export function CompletePage() {
                                 <label id="username" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Nombre de usuario
                                 </label>
-                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simón Bolívar" name="name" onChange={onChange}/>
-
+                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simoncito" name="name" onChange={onChange} />
+                                {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name}</p>)}
                             </div>
 
 
@@ -85,6 +109,7 @@ export function CompletePage() {
                                     <option>Visitante</option>
                                     <option>Administrador</option>
                                 </select>
+                                {errors.usertype && (<p className="text-red-500 text-xs mt-1">{errors.usertype}</p>)}
                             </div>
 
 
