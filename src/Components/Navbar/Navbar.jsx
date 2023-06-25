@@ -3,10 +3,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { HOME_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL } from '../../constants/url'
 import { useUserContext } from '../../contexts/UserContext';
 import { logout } from "../../firebase/auth-service";
+import { db } from '../../firebase/config';
+import {
+    doc,
+    onSnapshot ,
+  } from 'firebase/firestore';
+  import { useState, useEffect } from "react";
 
 export default function Navbar() {
     const navigate = useNavigate();
     const { user, isLoadingUser } = useUserContext(); 
+    const [imagenFirebase, setImagenFirebase] = useState(null);
+    const [nombreusuario, setNombreusuario] = useState(null);
+
+    useEffect(() => {
+        if (user && user.id) {
+          const userDocRef = doc(db, "users", user.id);
+      
+          const unsubscribe = onSnapshot(userDocRef, (doc) => {
+            setImagenFirebase(doc.data().url);
+            setNombreusuario(doc.data().name)
+          });
+      
+          return () => unsubscribe();
+        }
+      }, [user]);
 
     const handleLogout = async () => {
         await logout(() => navigate(HOME_URL));
@@ -76,10 +97,14 @@ export default function Navbar() {
                 <>
                 <h1 className="btn btn-xs md:btn-sm whitespace-nowrap btn-ghost normal-case font-montserrat text-white " onClick={handleLogout}>Cerrar sesión</h1>
                 <div className='flex items-center gap-3'>
-                    <h1 className='font-montserrat text-white hidden md:flex'>{user.name}</h1>
+                    <h1 className='font-montserrat text-white hidden md:flex'>{nombreusuario}</h1>
                     <div className="avatar">
                         <div className="w-8 rounded-full ring ring-offset-base-100 ring-offset-2">
-                            <img src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2018/08/fotos-perfil-whatsapp_16.jpg?tf=3840x" />
+                        {imagenFirebase ? (
+                        <img src={imagenFirebase} alt="Profile" />
+                        ) : (
+                        <img src="https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/perfil-imagenes%2Fperfil_generico.jpg?alt=media&token=f9f29c3c-7df8-479a-bb3b-3f0e02c6f83b" alt="Profile" />
+                        )}
                         </div>
                     </div>
                 </div>
