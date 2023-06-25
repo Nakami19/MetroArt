@@ -25,9 +25,9 @@ export function ProfilePage() {
     const [nombreusuario, setNombreusuario] = useState(null);
     const [correousuario, setCorreousuario] = useState(null);
     const [nombrecompleto, setNombrecompleto] = useState(null);
-
+    const [formData, setData] = useState({name:"",
+    fullname:""});
     const [divPerfil, setDivPerfil] = useState(' lg:w-1/3 md: w-full lg:min-h-screen p-3');
-    const newErrors = {};
 
     const [errors, setErrors] = useState({});
 
@@ -81,55 +81,75 @@ export function ProfilePage() {
         setStyle("mt-5 flex gap-3 lg:ms-auto")
     };
 
+    const newErrors = {};
+
     const saveChanges = async (event) => {
-        setDisableUser(true);
-        setDisableName(true);
-        setDisableEmail(true);
-        setStyle("hidden");
+
 
         event.preventDefault();
-        if (!formData.name) {
-          newErrors.name = "El nombre de usuario es obligatorio";
-        } else if(formData.name.length < 4){
+        const userRef = doc(profilecollection, user.id);
+
+        if(formData.name !== ''){
+        if(formData.name.length < 4){
           newErrors.name="El mínimo de caracteres para el nombre de usuario es 4"
         } else if(formData.name.length > 16){
           newErrors.name="El límite es de 16 caracteres"
         }else if (formData.name.includes(" ")) { 
             newErrors.name = "El nombre de usuario no puede contener espacios en blanco";}
             usuarios.map((usuario)=>{
-          if (usuario.name == formData.name){
+          if (usuario.name == formData.name && user.name != usuario.name){
             newErrors.name = "El nombre de usuario ya ha sido registrado";}
-          })
-
+          })}
         
-          if (!formData.fullname) {
-            newErrors.fullname = "El tipo de usuario es obligatorio";
-          }
+        if( formData.fullname !== ''){
 
-          if (Object.keys(newErrors).length > 0) {
+        if (!/^[a-zA-Z\s]+$/.test(formData.fullname)) {
+            newErrors.fullname = "El nombre y apellido solo pueden contener letras y espacios en blanco";
+          }
+         else if (formData.fullname.trim().length !== formData.fullname.length) {
+          newErrors.fullname = "El nombre y apellido no pueden comenzar ni terminar con espacios en blanco";
+        }}
+
+
+        if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
+          } else {
+            setErrors({});
           }
 
-          try {
-            const userRef = doc(profilecollection, user.id);
-            if (!formData.name) {
-            await updateDoc(userRef, {"name": formData.name})}
-            if (!formData.fullname) {
-            await updateDoc(userRef, {"fullname": formData.fullname})}
-          } catch (error) {
-            console.error(error);
+          if(formData.name !== ''){
+            await updateDoc(userRef, { "name": formData.name });
           }
-        
-    };
+          
+          if( formData.fullname !== ''){
+            await updateDoc(userRef, { "fullname": formData.fullname });
+          }
+        setData({name:"",
+        fullname:""
+    });
+        setDisableUser(true);
+        setDisableName(true);
+        setDisableEmail(true);
+        setStyle("hidden");};
+
     const cancelChanges = (event) => {
+        setErrors({});
+        setData({name:"",
+        fullname:""});
         setDisableUser(true);
         setDisableName(true);
         setDisableEmail(true);
         setStyle("hidden");
     };
 
+    const onChange = (event) => {
+        setData((oldData) => ({
+          ...oldData,
+          [event.target.name]: event.target.value,
+        }));
 
+      };
 
     if(!isLoadingUser){
         try{
@@ -139,11 +159,10 @@ export function ProfilePage() {
         }catch(error){
     
         }
-
   return (
     <div>
     <div className="md: h-36 lg:h-48 w-full p-4 bg-[url('https://www.unimet.edu.ve/wp-content/uploads/2019/11/bannerdade-1200x630.jpg')]  justify-center rounded-3xl bg-clip-border mx-auto  bg-no-repeat bg-cover border-8 border-white">
-        <div className="avatar" on>
+        <div className="avatar" on="true">
             <div className="lg:w-36 md: w-24 lg:mt-20 md: mt-16 lg:ml-12 md: ml-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2   transition duration-200 transform hover:scale-110">
             {imagenFirebase ? (
                 <img src={imagenFirebase} alt="Profile" />
@@ -185,21 +204,21 @@ export function ProfilePage() {
                                     Username
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                    <input type="text" placeholder={"@"+nombreusuario} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableUser} name="name"/>
+                                    <input  id= "name" type="text" placeholder={"@"+nombreusuario} value={formData.name} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableUser} name="name" onChange={onChange}/>
                                     <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editUser}/></button></div>
                                 </dd>
                             </div>
-                            {errors.fullname && (<p className="text-red-500 text-xs mt-1">{errors.fullname}</p>)}
+                            {errors.name && (<p className="ml-3 text-red-500 text-xs mt-1">{errors.name}</p>)}
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     Nombre
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                <input type="text" placeholder={nombrecompleto} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableName} name="fullname"/>
+                                <input  id= "fullname" type="text" placeholder={nombrecompleto} value={formData.fullname} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableName} name="fullname" onChange={onChange}/>
                                     <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editName}/></button></div>
                                 </dd>
                             </div>
-                            {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name}</p>)}
+                            {errors.fullname && (<p className=" ml-3 text-red-500 text-xs mt-1">{errors.fullname}</p>)}
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     E-mail
