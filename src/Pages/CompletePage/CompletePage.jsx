@@ -14,6 +14,8 @@ import { db } from '../../firebase/config';
 
 export function CompletePage() {
   
+
+  
   const { user, isLoadingUser } = useUserContext(); 
   const {usuarios, getUsuarios} = useUsers()
 

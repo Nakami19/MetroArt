@@ -6,11 +6,18 @@ import {
   signInWithFacebook
 } from "../../firebase/auth-service";
 import { useState , useEffect} from "react";
-
+import {
+  doc,
+  onSnapshot ,
+} from 'firebase/firestore';
 import { useUsers } from "../../hooks/useUsers";
+import { db } from '../../firebase/config';
+import { useUserContext } from '../../contexts/UserContext'
 
 export function SignupPage() {
   const {usuarios, getUsuarios} = useUsers()
+  const [tipodeuser, setTipodeuser] = useState(null);
+  const { user } = useUserContext(); 
 
   useEffect(()=>{
     getUsuarios();
@@ -26,6 +33,17 @@ export function SignupPage() {
   const onSuccess = () => {
     navigate(HOME_URL); };
 
+    useEffect(() => {
+      if (user && user.id) {
+        const userDocRef = doc(db, "users", user.id);
+  
+        const unsubscribe = onSnapshot(userDocRef, (doc) => {
+          setTipodeuser(doc.data().usertype);
+        });
+  
+        return () => unsubscribe();
+      }
+    }, [user]);
     
       const onFail = (_error) => {
         newErrors.email = "El correo electrónico ya ha sido tomado";
@@ -83,17 +101,29 @@ export function SignupPage() {
     
       const handleGoogleClick = async () => {
         await signInWithGoogle({
-          onSuccess: () => navigate(COMPLETE_URL),
+          onSuccess: () => {
+            if (user.usertype === "") {
+              navigate(COMPLETE_URL);
+            } else {
+              navigate(HOME_URL);
+            }
+          },
         });
-      };    
+      };
 
-      const handleFacebookClick = async () => {
-        await signInWithFacebook({
-          onSuccess: () => navigate(COMPLETE_URL),
-        });
+
+
+  const handleFacebookClick = async () => {
+  await signInWithFacebook({
+    onSuccess: () => {
+      if (user.usertype === "") {
+        navigate(COMPLETE_URL);
+      } else {
+        navigate(HOME_URL);
       }
-
-    
+    },
+  });
+};
       const onChange = (event) => {
         setData((oldData) => ({
           ...oldData,
