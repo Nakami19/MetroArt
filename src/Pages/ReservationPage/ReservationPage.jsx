@@ -3,7 +3,6 @@ import { Calendar } from '../../Components/Calendar/Calendar'
 import { useState } from "react";
 
 export function ReservationPage() {
-    const [popupOpen, setPopupOpen] = useState(false);
 
     const openPopup = () => {
         const width = 600;
@@ -22,7 +21,7 @@ export function ReservationPage() {
         <div className='flex flex-col gap-3 lg:flex-row lg:justify-center lg:gap-7'>
             <div className='flex flex-col gap-2'>
                 <h2 className='font-bold text-center font-montserrat'>Nombre del tour</h2>
-                <img className='h-96'src="./src/assets/Doña Laura Singre.jpg"/>
+                <img className='h-96'src="https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/perfil-imagenes%2Fperfil_generico.jpg?alt=media&token=f9f29c3c-7df8-479a-bb3b-3f0e02c6f83b"/>
             </div>
             <form className='font-montserrat text-xs flex flex-col h-80 justify-evenly lg:h-96 lg:justify-center lg:gap-5'>
                 <div>
