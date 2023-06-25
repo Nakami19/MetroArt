@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import { db } from "./config";
-import { collection } from 'firebase/firestore';
+import { collection, deleteDoc } from 'firebase/firestore';
 import { doc, setDoc, addDoc, updateDoc, getDoc, getDocs } from "firebase/firestore";
 
 export const getToursDocuments= async ()=>{
@@ -21,6 +21,12 @@ export const AddTour=async (data) =>{
 
 export const UpdateTour=async (data, id) =>{
     await setDoc(doc(db, 'tours', id), data);
+}
+
+export const DeleteTour=async (id) => {
+    console.log('eliminando...')
+    console.log(id)
+    await deleteDoc(doc(db, "tours", id));
 }
 
 export const getArtDocuments=async () => {
