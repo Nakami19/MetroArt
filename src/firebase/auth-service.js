@@ -17,12 +17,17 @@ export const signInWithGoogle = async ({ onSuccess, onFail }) => {
 
     if (isNewUser) {
       const { uid, email, displayName } = result.user;
+      const codigo=uid.valueOf(uid);
+
       await createUser({
         uid,
         email,
-        name: displayName,
+        fullname: displayName,
+        name: "",
         usertype:"",
         "reservas":[],
+        url:"https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/perfil-imagenes%2Fperfil_generico.jpg?alt=media&token=f9f29c3c-7df8-479a-bb3b-3f0e02c6f83b",
+        id:codigo
     });
     }
 
@@ -55,12 +60,17 @@ export const signInWithFacebook = async ({ onSuccess, onFail }) => {
 
     if (isNewUser) {
       const { uid, email, displayName } = result.user;
+      const codigo=uid.valueOf(uid);
       await createUser({
         uid,
         email,
-        name: displayName,
+        fullname: displayName,
+        name: "",
         usertype:"",
         "reservas":[],
+        url:"https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/perfil-imagenes%2Fperfil_generico.jpg?alt=media&token=f9f29c3c-7df8-479a-bb3b-3f0e02c6f83b",
+        id:codigo
+
     });
     }
 
@@ -106,6 +116,8 @@ export const registerWithEmailAndPassword = async ({
       email,
       uid: firebaseResult.user.uid,
       "reservas":[],
+      url:"https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/perfil-imagenes%2Fperfil_generico.jpg?alt=media&token=f9f29c3c-7df8-479a-bb3b-3f0e02c6f83b",
+      id: firebaseResult.user.uid,
     });
 
     // SUCCESS CALLBACK
