@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { ComentContainer } from '../../Components/ComentContainer/ComentContainer'
 import { useTours } from '../../hooks/useTours';
-import { useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
 export function TourDetailsPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
+    const navigate = useNavigate();
     let component=null;
     let rating=0;
 
@@ -24,6 +25,10 @@ export function TourDetailsPage() {
         getOneTour(tourId);
     },[])
 
+    const handleReserva= ()=>{
+        navigate(`/reserve/${tour.id}`)
+    }
+
     if(tour.disponible) {
         component= <><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
         <p>Disponible</p></>
@@ -39,9 +44,7 @@ export function TourDetailsPage() {
             </>
         )
     } else if (!isLoading && tour.obras) {
-        // tour.obras.autor.map((autor)=>{
-        //     autores+=autor+"\n"
-        // })
+
         return (
     <>
 
@@ -66,8 +69,6 @@ export function TourDetailsPage() {
                 </div>
                 <div className='flex gap-1 items-center'> 
                     {component}
-                    {/* <div className=' bg-green-800 w-3 h-3 rounded-full'></div>
-                    <p>Disponible</p> */}
                 </div>
                 <div>
                     <p>Duración: {tour.duration} minutos</p>
@@ -81,7 +82,7 @@ export function TourDetailsPage() {
                 <p className='font-bold'>Lugares importantes</p>
                 <p>{tour.important_places}</p>
             </div>
-            <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Reservar</button>
+            <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleReserva}>Reservar</button>
         </div>
     </section>
 

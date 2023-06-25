@@ -1,9 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TOURDETAILS_URL } from '../../constants/url'
 
 
 export function TourCard({tour, user}) {
+
+    let rating=0;
+
+    if (tour.feedbacks) {
+        if(tour.feedbacks.length!=0) {
+           tour.feedbacks.map((comentario)=>{
+                rating+=comentario.rating
+            }) 
+        rating=rating/tour.feedbacks.length    
+        }
+    }
 
     if (!user  || user.usertype == "Visitante"){
         return (
@@ -14,7 +24,7 @@ export function TourCard({tour, user}) {
                             <div className='bg-white  w-fit rounded-md'>
                                 <h1 className='p-1 flex text-xs font-montserrat font-bold items-center gap-x-1'>
                                     <img className ="h-4"src='https://img.icons8.com/?size=512&id=19295&format=png'/>
-                                    <p>{tour.rating}</p>
+                                    <p>{rating}</p>
                                 </h1>
                             </div>
                         </div>

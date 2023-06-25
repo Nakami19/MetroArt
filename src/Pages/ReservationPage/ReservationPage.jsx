@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Calendar } from '../../Components/Calendar/Calendar'
 import { useState } from "react";
+import { useNavigate, useParams } from 'react-router';
+import { useTours } from '../../hooks/useTours';
+import { HOME_URL } from '../../constants/url';
 
 export function ReservationPage() {
     const [popupOpen, setPopupOpen] = useState(false);
+    const {tourId}=useParams();
+    const {tour, getOneTour, isLoading}=useTours();
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        getOneTour(tourId);
+    },[])
+
+    const handleConfirmar= ()=>{
+        navigate(HOME_URL)
+    }
 
     const openPopup = () => {
         const width = 600;
@@ -22,7 +36,7 @@ export function ReservationPage() {
         <div className='flex flex-col gap-3 lg:flex-row lg:justify-center lg:gap-7'>
             <div className='flex flex-col gap-2'>
                 <h2 className='font-bold text-center font-montserrat'>Nombre del tour</h2>
-                <img className='h-96'src="./src/assets/Doña Laura Singre.jpg"/>
+                <img className='h-96'src={tour.url}/>
             </div>
             <form className='font-montserrat text-xs flex flex-col h-80 justify-evenly lg:h-96 lg:justify-center lg:gap-5'>
                 <div>
@@ -40,7 +54,7 @@ export function ReservationPage() {
                 </div>
                 <div className='flex items-center justify-evenly'>
                     <button className='btn normal-case font-montserrat text-xs text-[#4E598C] btn-outline hover:bg-[#4E598C]'>Cancelar</button>
-                    <button className='btn normal-case font-montserrat text-white text-xs bg-[#4E598C] hover:bg-[#1c285f]'>Confirmar reserva</button>
+                    <button className='btn normal-case font-montserrat text-white text-xs bg-[#4E598C] hover:bg-[#1c285f]' onClick={handleConfirmar}>Confirmar reserva</button>
                 </div>
             </form>
         </div>
