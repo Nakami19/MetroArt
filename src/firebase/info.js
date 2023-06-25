@@ -15,7 +15,12 @@ export const getToursDocuments= async ()=>{
 
 export const AddTour=async (data) =>{
     const newTourRef = doc(collection(db, "tours"));
+    data.generated_id = newTourRef.id;
     await setDoc(newTourRef, data);
+}
+
+export const UpdateTour=async (data, id) =>{
+    await setDoc(doc(db, 'tours', id), data);
 }
 
 export const getArtDocuments=async () => {

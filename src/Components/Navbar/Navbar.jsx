@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { HOME_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL } from '../../constants/url'
+import { ARTPAGE_URL, HOME_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL } from '../../constants/url'
 import { useUserContext } from '../../contexts/UserContext';
 import { logout } from "../../firebase/auth-service";
 import { db } from '../../firebase/config';
@@ -63,7 +63,7 @@ export default function Navbar() {
                 )}
 
                 {isAdmin && (
-                    <li><Link to={PROFILE_URL}>
+                    <li><Link to={ARTPAGE_URL}>
                     <h1>Obras</h1>
                     </Link></li>
                 )}
@@ -95,7 +95,7 @@ export default function Navbar() {
                 )}
                 {isAdmin && (
                     <li>
-                        <Link to={PROFILE_URL}>
+                        <Link to={ARTPAGE_URL}>
                         <h1>Obras</h1>
                         </Link>
                     </li>

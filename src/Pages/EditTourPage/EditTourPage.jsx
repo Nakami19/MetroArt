@@ -3,20 +3,45 @@ import { useTours } from '../../hooks/useTours';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react'
 import { useArts } from '../../hooks/useArts';
+import { updateDoc } from '@firebase/firestore';
+import { UpdateTour } from '../../firebase/info';
+import { Link, useNavigate } from "react-router-dom";
+import { TOURS_URL } from '../../constants/url';
 
 export function EditTourPage() {
 
     const {tourId}=useParams();
+    const {arts, getArts, getSearchArt} =useArts();
     const {tour, getOneTour, isLoading}=useTours();
-    const {arts, getArts} =useArts();
-    const [checkedValues, setValue] = useState([])
-    
-    
-    let component=null;
+    const [checkedValues, setValue] = useState([]);
+    const [selectValue, setSelectValue] = useState("Disponible");
+    const [nameValue, setNameValue] = useState("");
+    const [durationValue, setDurationValue] = useState("45");
+    const [descriptionValue, setDescriptionValue] = useState("");
+    const [buscar, setBuscar]=useState("");
+    const [filtro, setFiltro]=useState("Nombre de obra");
+    const [cambio, setCambios] = useState(0)
 
-    function handleChange(event){
+    
+    
+
+
+    useEffect(()=>{},[buscar])
+
+    const handleChange= (e)=>{
+        const ey=e.target.value
+        setBuscar(ey);
+        getSearchArt(ey,filtro);     
+    }
+    const handlerBuscar= (e)=> {
+        const option=e.target.value
+        setFiltro(option)
+    }
+
+    function handleChangeInput(event){
 
         const {value, checked} = event.target
+        console.log(event.target)
 
         if(checked){
             setValue(pre => [...pre, value])
@@ -27,32 +52,63 @@ export function EditTourPage() {
 
     }
 
+
     function handleForm(){
-        let array = [];
+        let arrayobras = [];
+        let important = "";
         checkedValues.map((nameobra) => {
             arts.map((obra) => {
                 if(nameobra == obra.nombre){
-                    array.push(obra)
+                    arrayobras.push(obra)
+                    important+=(obra.ubicacion+' ')
                 }
             })
         })
-        console.log(array)
+        let disp = false
+        if(selectValue == 'Disponible'){
+            disp = true
+        }
+
+        const data = {
+            description: descriptionValue,
+            disponible: disp,
+            duration: durationValue,
+            feedbacks:[],
+            id:'1234',
+            generated_id : tour.generated_id,
+            important_places: important,
+            name: nameValue,
+            obras: arrayobras,
+            reviews: 0,
+            url: 'https://images.pexels.com/photos/1252983/pexels-photo-1252983.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+        }
+        console.log(data)
+        const aaaa = UpdateTour(data, tour.generated_id)
+
     }
 
-    console.log(checkedValues)
+    
 
     useEffect(()=>{
         getOneTour(tourId);
         getArts()
     },[])
 
-    if(tour.disponible) {
-        component= <><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
-        <p>Disponible</p></>
-    } else {
-        component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>
-        <p>No Disponible</p></>
-    }
+    useEffect(()=>{
+        setCambios(cambio+1)
+        try{
+            tour.obras.map((obra)=>{
+                console.log(obra)
+                setValue(pre => [...pre, obra.nombre])
+
+            })
+        }catch(error){}
+    },[tour])
+
+    console.log(checkedValues)
+
+    
+
 
     if(isLoading) {
         return (
@@ -62,6 +118,9 @@ export function EditTourPage() {
         )
     } else if (!isLoading && tour.obras) {
 
+        
+
+        
         return (
         <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
         <div className='flex flex-col gap-5 w-full lg:items-center lg:w-96'>
@@ -74,74 +133,87 @@ export function EditTourPage() {
         </div>
         <div className='font-montserrat flex flex-col gap-7 lg:w-7/12 md:justify-evenly'>
 
-            <div className='flex flex-col gap-2 lg:gap-4'>
-                <h1 className='font-bold'>Información del tour</h1>
-                <div className='bg-black w-full h-0.5 '></div>
-                
-                <div className='text-xs flex flex-col gap-3 font-bold '>
-                <div className='flex gap-2 items-center'> 
-                    <p>Disponibilidad:</p>
-                    <select className="select select-bordered select-sm max-w-xs text-xs">
-                        <option>Disponible</option>
-                        <option>No disponible</option>
-                    </select>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <p>Duración:</p>
-                    <select className="select select-bordered select-sm max-w-xs text-xs">
-                        <option>45</option>
-                        <option>60</option>
-                        <option>160</option>
-                    </select>
-                    <p>minutos</p>
-                </div>
-            </div>
-            </div>
-            
-            <div className='text-xs flex flex-col gap-2 text-justify lg:gap-4'>
-                <p className='font-bold'>Descripción</p>
-                <textarea className="textarea textarea-bordered h-24 text-xs" defaultValue={tour.description}></textarea>
-                <div className='flex items-center gap-3'>
-                    <p className='font-bold' id='lugares'>Lugares importantes</p>
-                    <input type="text" className="input input-sm input-bordered w-full" />
-                    <button className='btn rounded-full btn-neutral  btn-ghost btn-sm text-lg font-montserrat'>+</button>
-                </div>
-            </div>
-            <div className='lg:flex lg:justify-end lg:gap-2'>
-                <button className="btn btn-sm btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Cancelar</button>
-                <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleForm}>Guardar</button>
-            </div>
-            
-        </div>
-        <div id="dropdownSearch" className=" bg-white rounded-lg shadow w-60 ">
-    <div className="p-3">
-      <label htmlFor="input-group-search" className="sr-only">Search</label>
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg className="w-5 h-5 text-gray-500 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
-        </div>
-        <input type="text" id="input-group-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Buscar obra"/>
-      </div>
-    </div>
-    <ul className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700" aria-labelledby="dropdownSearchButton">
-
-      {
-        arts.map((art) => {
-            return (
-                <li>
-                    <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                    <input id="checkbox-item-11" type="checkbox" value={art.nombre} onChange={handleChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
-                    <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>
+                <div className='flex flex-col gap-2 lg:gap-4'>
+                    <h1 className='font-bold'>Información del tour</h1>
+                    <div className='bg-black w-full h-0.5 '></div>
+                    
+                    <div className='text-xs flex flex-col gap-3 font-bold '>
+                    <div className='flex gap-2 items-center'>
+                        <p>Nombre:</p>
+                        <input type="text" defaultValue={tour.name} onChange={(event)=> setNameValue(event.target.value)} placeholder="Nombre" className="input input-bordered input-sm font-normal text-xs" />
                     </div>
-                </li>
-            )
-        })
-      }
-   
-      
-    </ul>
+                    
+                    <div className='flex gap-2 items-center'> 
+                        <p>Disponibilidad:</p>
+                        <select value={selectValue} onChange={(event)=> setSelectValue(event.target.value)} className="select select-bordered select-sm max-w-xs text-xs">
+                            <option>Disponible</option>
+                            <option>No disponible</option>
+                        </select>
+                    </div>
+                    <div className='flex items-center gap-2'>
+                        <p>Duración:</p>
+                        <select value={durationValue} onChange={(event)=> setDurationValue(event.target.value)} className="select select-bordered select-sm max-w-xs text-xs">
+                            <option>45</option>
+                            <option>60</option>
+                            <option>160</option>
+                        </select>
+                        <p>minutos</p>
+                    </div>
+                </div>
+                </div>
+                
+                <div className='text-xs flex flex-col gap-2 text-justify lg:gap-4'>
+                    <p className='font-bold'>Descripción</p>
+                    <textarea defaultValue={tour.description} onChange={(event)=> setDescriptionValue(event.target.value)} className="textarea textarea-bordered h-24 text-xs"></textarea>
+                </div>
+                <div className='lg:flex lg:justify-end lg:gap-2'>
+                    <button className="btn btn-sm btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Cancelar</button>
+                    <Link to={TOURS_URL}>
+                    <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleForm}>Guardar</button>
+                    </Link>
+                </div>
+                
+            </div>
+            <div className='flex flex-col gap-3'>
+                <h1 className='font-montserrat font-bold text-xs'>Seleccione las obras que desea incluir</h1>
+                <div id="dropdownSearch" className="bg-[#FF8C42]/10 rounded-lg shadow w-60 lg:h-80 font-montserrat ">
+                <div className="p-3">
+                <label htmlFor="input-group-search" className="sr-only">Search</label>
+                <div className="relative">
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-500 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                    </div>
+                    <input onChange={handleChange} type="text" id="input-group-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Buscar obra"/>
+                </div>
+                </div>
+                <ul className="h-44 lg:h-60 px-3 pb-3 overflow-y-auto text-sm text-gray-700" aria-labelledby="dropdownSearchButton">
 
-    </div>
+                {
+                    arts.map((art) => {
+                        let si = false;
+                        tour.obras.map((obra)=>{
+                            if(obra.nombre == art.nombre){   
+                                si = true;
+                                
+                            }
+                        })
+                       
+                        return (
+                            <li>
+                                <div className="flex items-center p-2 rounded hover:bg-gray-100">
+                                <input id="checkbox-item-11" defaultChecked={si} type="checkbox" value={art.nombre} onChange={handleChangeInput} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
+                                <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>
+                                </div>
+                            </li>
+                        )
+                    })
+                }
+            
+                
+                </ul>
+
+                </div>
+            </div>
     </section>
         )}
 }

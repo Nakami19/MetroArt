@@ -34,6 +34,7 @@ export function SemiPrivateRoute({ children }) {
   if (!isLoading && user!=null){
     if(tipodeuser == "" && location.pathname !== COMPLETE_URL) {
     return <Navigate to={COMPLETE_URL} />;}
+    
   }else if (!isLoading && !user && location.pathname !== HOME_URL && location.pathname !== TOURS_URL){
     return <Navigate to={LOGIN_URL} />;
   }
