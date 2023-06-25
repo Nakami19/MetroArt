@@ -4,7 +4,7 @@ import { HomePage } from './Pages/HomePage/HomePage'
 import './index.css'
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Layout from './Components/Layout/Layout';
-import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL, COMPLETE_URL, ADDARTWORK_URL } from './constants/url';
+import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL, COMPLETE_URL, ADDARTWORK_URL, ARTPAGE_URL } from './constants/url';
 import { ToursPage } from './Pages/ToursPage/ToursPage';
 import { ArtDetailsPage } from './Pages/ArtDetailsPage/ArtDetailsPage';
 import { SignupPage } from './Pages/SignupPage/SignupPage'
@@ -18,6 +18,7 @@ import { PublicRoute } from './Components/PublicRoute/PublicRoute';
 import { AddArtworkPage } from './Pages/AddArtworkPage/AddArtWorkPage';
 import { EditArtworkPage } from './Pages/EditArtworkPage/EditArtWorkPage';
 import { EditTourPage } from './Pages/EditTourPage/EditTourPage';
+import { ArtPage } from './Pages/ArtPage/ArtPage';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={PROFILE_URL} element={<ProfilePage/>}/>
         <Route path={RESERVATION_URL} element={<ReservationPage/>}/>
         <Route path={ADDARTWORK_URL} element={<AddArtworkPage/>}/>
+        <Route path={ARTPAGE_URL} element={<ArtPage/>}/>
         <Route path={'/editartwork/:artId'} element={<EditArtworkPage/>}/>
         <Route path='*' element={<h1 className='my-80 text-3xl'>NOT FOUND!</h1>}></Route>
     </Route>
