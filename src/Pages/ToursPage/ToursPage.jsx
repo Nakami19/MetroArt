@@ -37,13 +37,33 @@ export function ToursPage() {
         getSearchTours(ey, filtro)
             
     }
+    let componet= <div className='p-6'>
+        <div className='font-montserrat flex items-center justify-center bg-[#FF8C42]/10 w-full text-center rounded-xl h-72'>
+            <div className='flex flex-col gap-2 p-4'>
+                <h1 className='text-[#864317] font-bold'>No hay resultados que coincidan con su búsqueda</h1>
+                <p className='text-[#864317] text-xs'>Verifique que ha introducido los datos correctamente</p>
+            </div> 
+            </div>
+        </div>
+
+    if(tours.length>0){
+        componet=<div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-6 xl:grid-cols-7'>
+        {
+            tours.map((tour)=>{
+                return (
+                    <TourCard tour={tour} user={user} key={tour.id}/>
+                )
+            })
+        }
+    </div>
+    }
 
 useEffect(()=> {
     },[buscar])
         return (
             <>
-                <div className="join flex justify-center p-6">
-                    <div className=' w-28 md:w-10/12'>
+                <div className="join flex justify-center p-6 xl:p-8">
+                    <div className=' w-44 md:w-11/12'>
                         <div>
                         <input className="input input-bordered bg-slate-100 join-item w-full" placeholder="Buscar..." onChange={handleChange}/>
                         </div>
@@ -53,9 +73,6 @@ useEffect(()=> {
                         <option>Id de tour</option>    
                         <option>Ubicación</option>
                     </select>
-                    <div className="indicator">
-                        <button className="btn join-item normal-case bg-[#FF8C42] text-white hover:bg-[#a14207]">Buscar</button>
-                    </div>
                 </div>
                 <div className='p-6 flex gap-3'>
                     <h1 className='font-raleway font-bold text-[#C14C00] text-2xl'>Tours</h1>
@@ -63,15 +80,7 @@ useEffect(()=> {
                         <button className='btn btn-sm text-xs normal-case font-montserrat bg-[#001A72] text-white'>Agregar tour</button>
                     )}   
                 </div>
-                <div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-6 xl:grid-cols-7'>
-                    {
-                        tours.map((tour)=>{
-                            return (
-                                <TourCard tour={tour} user={user} key={tour.id}/>
-                            )
-                        })
-                    }
-                </div>
+                {componet}
             </>
           )
  }
