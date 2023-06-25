@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
-import { COMPLETE_URL } from "../../constants/url";
+import { COMPLETE_URL , LOGIN_URL, HOME_URL, TOURS_URL} from "../../constants/url";
 import styles from "./SemiPrivateRoute.module.css";
 import { useState, useEffect } from "react";
 import {
@@ -34,6 +34,8 @@ export function SemiPrivateRoute({ children }) {
   if (!isLoading && user!=null){
     if(tipodeuser == "" && location.pathname !== COMPLETE_URL) {
     return <Navigate to={COMPLETE_URL} />;}
+  }else if (!isLoading && !user && location.pathname !== HOME_URL && location.pathname !== TOURS_URL){
+    return <Navigate to={LOGIN_URL} />;
   }
 
   return children;

@@ -6,18 +6,22 @@ import {
   signInWithFacebook
 } from "../../firebase/auth-service";
 import { useState , useEffect} from "react";
-
+import {
+  doc,
+  onSnapshot ,
+} from 'firebase/firestore';
 import { useUsers } from "../../hooks/useUsers";
+import { db } from '../../firebase/config';
+import { useUserContext } from '../../contexts/UserContext'
 
 export function SignupPage() {
-
   const {usuarios, getUsuarios} = useUsers()
+  const [tipodeuser, setTipodeuser] = useState(null);
+  const { user } = useUserContext(); 
 
   useEffect(()=>{
     getUsuarios();
   },[])
-
-
 
   const [errors, setErrors] = useState({
     usertype: "",
@@ -27,8 +31,19 @@ export function SignupPage() {
   const newErrors = {};
 
   const onSuccess = () => {
-    navigate(HOME_URL);
-  };
+    navigate(HOME_URL); };
+
+    useEffect(() => {
+      if (user && user.id) {
+        const userDocRef = doc(db, "users", user.id);
+  
+        const unsubscribe = onSnapshot(userDocRef, (doc) => {
+          setTipodeuser(doc.data().usertype);
+        });
+  
+        return () => unsubscribe();
+      }
+    }, [user]);
     
       const onFail = (_error) => {
         newErrors.email = "El correo electrónico ya ha sido tomado";
@@ -51,6 +66,14 @@ export function SignupPage() {
           if (usuario.name == formData.name){
             newErrors.name = "El nombre de usuario ya ha sido registrado";}
           })
+        if (!formData.fullname){
+          newErrors.fullname = "El nombre y apellido es obligatorio";
+        } else if (!/^[a-zA-Z\s]+$/.test(formData.fullname)) {
+          newErrors.fullname = "El nombre y apellido solo pueden contener letras y espacios en blanco";
+        }
+       else if (formData.fullname.trim().length !== formData.fullname.length) {
+        newErrors.fullname = "El nombre y apellido no pueden comenzar ni terminar con espacios en blanco";
+      }
 
         if (!formData.password) {
           newErrors.password = "La contraseña es obligatoria";
@@ -78,17 +101,29 @@ export function SignupPage() {
     
       const handleGoogleClick = async () => {
         await signInWithGoogle({
-          onSuccess: () => navigate(COMPLETE_URL),
+          onSuccess: () => {
+            if (user.usertype === "") {
+              navigate(COMPLETE_URL);
+            } else {
+              navigate(HOME_URL);
+            }
+          },
         });
-      };    
+      };
 
-      const handleFacebookClick = async () => {
-        await signInWithFacebook({
-          onSuccess: () => navigate(COMPLETE_URL),
-        });
+
+
+  const handleFacebookClick = async () => {
+  await signInWithFacebook({
+    onSuccess: () => {
+      if (user.usertype === "") {
+        navigate(COMPLETE_URL);
+      } else {
+        navigate(HOME_URL);
       }
-
-    
+    },
+  });
+};
       const onChange = (event) => {
         setData((oldData) => ({
           ...oldData,
@@ -120,10 +155,18 @@ export function SignupPage() {
                             </div>
 
                             <div className='mt-4'>
+                                <label id="fullname" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
+                                    Nombre y apellido 
+                                </label>
+                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simón Bolívar" name="fullname" onChange={onChange}/>
+                                {errors.fullname && (<p className="text-red-500 text-xs mt-1">{errors.fullname}</p>)}
+                            </div>
+
+                            <div className='mt-4'>
                                 <label id="username" className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Nombre de usuario
                                 </label>
-                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="Ej. Simoncito" name="name" onChange={onChange}/>
+                                <input aria-labelledby="email" type="text" className="bg-gray-200 border rounded  text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" pattern="[A-Za-z]+" required  placeholder="@simoncito" name="name" onChange={onChange}/>
                                 {errors.name && (<p className="text-red-500 text-xs mt-1">{errors.name}</p>)}
                             </div>
 

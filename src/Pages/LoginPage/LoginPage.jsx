@@ -1,16 +1,37 @@
 import React from 'react'
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import {useNavigate } from "react-router-dom";
-import { HOME_URL } from "../../constants/url";
+import { HOME_URL,COMPLETE_URL } from "../../constants/url";
 
 import {
   loginWithEmailAndPassword,
   signInWithGoogle,
+  signInWithFacebook
 } from "../../firebase/auth-service";
+import {
+  doc,
+  onSnapshot ,
+} from 'firebase/firestore';
+import { db } from '../../firebase/config';
+import { useUserContext } from '../../contexts/UserContext'
 
-export function LoginPage() {
+export function LoginPage() 
+{
+  const [tipodeuser, setTipodeuser] = useState(null);
+  const { user } = useUserContext(); 
+
   const newErrors = {};
+  useEffect(() => {
+    if (user && user.id) {
+      const userDocRef = doc(db, "users", user.id);
 
+      const unsubscribe = onSnapshot(userDocRef, (doc) => {
+        setTipodeuser(doc.data().usertype);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [user]);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -53,9 +74,29 @@ export function LoginPage() {
 
   const handleGoogleClick = async () => {
     await signInWithGoogle({
-      onSuccess: () => navigate(HOME_URL),
+      onSuccess: () => {
+        if (user.usertype === "") {
+          navigate(COMPLETE_URL);
+        } else {
+          navigate(HOME_URL);
+        }
+      },
     });
   };
+
+
+
+const handleFacebookClick = async () => {
+await signInWithFacebook({
+onSuccess: () => {
+  if (user.usertype === "") {
+    navigate(COMPLETE_URL);
+  } else {
+    navigate(HOME_URL);
+  }
+},
+});
+};
 
 return (
     // <!-- component -->
@@ -119,7 +160,7 @@ return (
                         
 
 
-                        <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4">
+                        <button aria-label="Continue with github" role="button" className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4" onClick={handleFacebookClick}>
                             <img className="h-5 w-5" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/768px-Facebook_f_logo_%282021%29.svg.png?20210818083032" alt="Facebook Logo" />
                                 
                             <p className="text-base font-medium ml-3 text-gray-700 font-montserrat">Continuar con Facebook</p>

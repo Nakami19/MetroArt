@@ -22,7 +22,6 @@ export const getArtDocuments=async () => {
     return obrass;
 }
 
-
 export const getUserDocuments=async ()=>{
     let usuarios=[];
     const personas= collection(db, "users");
