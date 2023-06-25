@@ -47,10 +47,10 @@ export function TourDetailsPage() {
 
     {/*Detalles del tour*/}
     <section className='p-7 flex flex-col gap-5 md:flex-row lg:justify-center'>
-        <div className='flex flex-col gap-5 w-full lg:items-center lg:w-72'>
+        <div className='flex flex-col gap-5 lg:items-center lg:w-96'>
             <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>{tour.name}</h1>
             <div className="avatar">
-                <div className="w-full h-full rounded">
+                <div className="w-full rounded">
                     <img src={tour.url} />
                 </div>
             </div>

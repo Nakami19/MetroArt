@@ -70,15 +70,15 @@ export function EditTourPage() {
                 <textarea className="textarea textarea-bordered h-24 text-xs" defaultValue={tour.description}></textarea>
                 <div className='flex items-center gap-3'>
                     <p className='font-bold' id='lugares'>Lugares importantes</p>
-                    <select className="select select-bordered select-sm max-w-xs text-xs">
-                            <option>Disponible</option>
-                            <option>No disponible</option>
-                    </select>
+                    <input type="text" className="input input-sm input-bordered w-full" />
                     <button className='btn rounded-full btn-neutral  btn-ghost btn-sm text-lg font-montserrat'>+</button>
                 </div>
             </div>
+            <div className='lg:flex lg:justify-end lg:gap-2'>
+                <button className="btn btn-sm btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Cancelar</button>
+                <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Guardar</button>
+            </div>
             
-            <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Guardar</button>
         </div>
     </section>
         )}

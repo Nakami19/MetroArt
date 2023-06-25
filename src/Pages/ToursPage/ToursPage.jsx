@@ -22,7 +22,7 @@ export function ToursPage() {
      
     return (
         <>
-            <div className="join flex justify-center p-6">
+            <div className="join flex justify-center p-6 xl:p-8">
                 <div className=' w-28 md:w-10/12'>
                     <div>
                     <input className="input input-bordered bg-slate-100 join-item w-full" placeholder="Buscar..."/>
