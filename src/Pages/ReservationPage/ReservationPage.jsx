@@ -4,9 +4,12 @@ import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router';
 import { useTours } from '../../hooks/useTours';
 import { HOME_URL } from '../../constants/url';
+import { PaypalWrapper } from '../../Components/PaypalWrapper/PaypalWrapper';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 export function ReservationPage() {
 
+    const [pay, setPay] = useState(10);
     const [formData, setData] = useState({
         horario: "" 
       });
@@ -113,7 +116,21 @@ export function ReservationPage() {
         </div>
         <div className='flex flex-col items-center gap-3'>
             <h1 className='text-center font-raleway font-bold text-xl text-[#4E598C]'>¡Ayúdanos y dona con PayPal!</h1>
-            <button className='btn w-fit bg-[#C9D1F7]'><img className='h-5' onClick={openPopup} src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"/></button>
+            
+            <div>
+            <PayPalScriptProvider
+                options={{
+                    "clientId": "Ab0lO39irIToxCMDFIsBPZpIOnDREVATxwk4WSxoEWCjzRNf4VMZD-GgYL6-cNAd_1FwzbFmDcOboYC8",
+                    components: "buttons",
+                    currency: "USD"
+                }}
+            >
+              <PaypalWrapper
+                  currency={"USD"}
+                  pay={pay}
+              />
+            </PayPalScriptProvider>
+            </div>
         </div>
     </div>
     
