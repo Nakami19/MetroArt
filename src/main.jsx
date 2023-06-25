@@ -20,14 +20,15 @@ import { PrivateRouteVisitante } from './Components/PrivateRouteVisitante copy/P
 import { AddArtworkPage } from './Pages/AddArtworkPage/AddArtWorkPage';
 import { EditArtworkPage } from './Pages/EditArtworkPage/EditArtWorkPage';
 import { EditTourPage } from './Pages/EditTourPage/EditTourPage';
+import { SemiPublicRoute } from './Components/SemiPublicRoute/SemiPublicRoute';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
     <BrowserRouter> 
     <Routes>
     <Route element={<Layout/>}>
-        <Route path={HOME_URL} element={<SemiPrivateRoute><HomePage/></SemiPrivateRoute>}/> 
-        <Route path={TOURS_URL} element={<SemiPrivateRoute><ToursPage/></SemiPrivateRoute>}/>
+        <Route path={HOME_URL} element={<SemiPublicRoute><HomePage/></SemiPublicRoute>}/> 
+        <Route path={TOURS_URL} element={<SemiPublicRoute><ToursPage/></SemiPublicRoute>}/>
         <Route path={'/obras/:artId'} element={<ArtDetailsPage/>}/>
         <Route path={'/tours/:tourId'} element={<TourDetailsPage/>}/>
         <Route path={'/toursedit/:tourId'} element={<EditTourPage/>}/>
