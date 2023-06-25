@@ -1,16 +1,49 @@
 import React from 'react'
 import { useTours } from '../../hooks/useTours';
 import { useParams } from 'react-router';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useArts } from '../../hooks/useArts';
 
 export function EditTourPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
+    const {arts, getArts} =useArts();
+    const [checkedValues, setValue] = useState([])
+    
+    
     let component=null;
+
+    function handleChange(event){
+
+        const {value, checked} = event.target
+
+        if(checked){
+            setValue(pre => [...pre, value])
+        }else(
+            setValue(pre => [...pre.filter(skill => skill!==value)]
+            )
+        )
+
+    }
+
+    function handleForm(){
+        let array = [];
+        checkedValues.map((nameobra) => {
+            arts.map((obra) => {
+                if(nameobra == obra.nombre){
+                    array.push(obra)
+                }
+            })
+        })
+        console.log(array)
+    }
+
+    console.log(checkedValues)
 
     useEffect(()=>{
         getOneTour(tourId);
+        getArts()
     },[])
 
     if(tour.disponible) {
@@ -76,10 +109,39 @@ export function EditTourPage() {
             </div>
             <div className='lg:flex lg:justify-end lg:gap-2'>
                 <button className="btn btn-sm btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Cancelar</button>
-                <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Guardar</button>
+                <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleForm}>Guardar</button>
             </div>
             
         </div>
+        <div id="dropdownSearch" className=" bg-white rounded-lg shadow w-60 ">
+    <div className="p-3">
+      <label htmlFor="input-group-search" className="sr-only">Search</label>
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg className="w-5 h-5 text-gray-500 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+        </div>
+        <input type="text" id="input-group-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Buscar obra"/>
+      </div>
+    </div>
+    <ul className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700" aria-labelledby="dropdownSearchButton">
+
+      {
+        arts.map((art) => {
+            return (
+                <li>
+                    <div className="flex items-center p-2 rounded hover:bg-gray-100">
+                    <input id="checkbox-item-11" type="checkbox" value={art.nombre} onChange={handleChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
+                    <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>
+                    </div>
+                </li>
+            )
+        })
+      }
+   
+      
+    </ul>
+
+    </div>
     </section>
         )}
 }

@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { db } from "./config";
 import { collection } from 'firebase/firestore';
 import { doc, setDoc, addDoc, updateDoc, getDoc, getDocs } from "firebase/firestore";
@@ -11,6 +12,11 @@ export const getToursDocuments= async ()=>{
     });
     return tourss;
   }
+
+export const AddTour=async (data) =>{
+    const newTourRef = doc(collection(db, "tours"));
+    await setDoc(newTourRef, data);
+}
 
 export const getArtDocuments=async () => {
     let obrass=[];

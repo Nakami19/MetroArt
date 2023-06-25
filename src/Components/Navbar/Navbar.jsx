@@ -15,6 +15,7 @@ export default function Navbar() {
     const { user, isLoadingUser } = useUserContext(); 
     const [imagenFirebase, setImagenFirebase] = useState(null);
     const [nombreusuario, setNombreusuario] = useState(null);
+    let isAdmin = false;
 
     useEffect(() => {
         if (user && user.id) {
@@ -33,6 +34,14 @@ export default function Navbar() {
         await logout(() => navigate(HOME_URL));
       };
 
+    try{
+        if(user.usertype == "Administrador"){
+            isAdmin = true
+        } 
+    }catch(error){
+
+    }
+
     return (
     <div className="navbar bg-[#4E598C] z-10">
         <div className="navbar-start">
@@ -50,6 +59,12 @@ export default function Navbar() {
                 {user && (
                     <li><Link to={PROFILE_URL}>
                     <h1>Perfil</h1>
+                    </Link></li>
+                )}
+
+                {isAdmin && (
+                    <li><Link to={PROFILE_URL}>
+                    <h1>Obras</h1>
                     </Link></li>
                 )}
                 
@@ -78,6 +93,14 @@ export default function Navbar() {
                         </Link>
                     </li>
                 )}
+                {isAdmin && (
+                    <li>
+                        <Link to={PROFILE_URL}>
+                        <h1>Obras</h1>
+                        </Link>
+                    </li>
+                )}
+                
                 
             </ul>
         </div>
