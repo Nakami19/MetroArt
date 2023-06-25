@@ -31,7 +31,7 @@ export function PrivateRouteAdmin({ children }) {
   if (!isLoading && !user || tipodeuser == "") {
     return <Navigate to={COMPLETE_URL} />;}
 
-    else if (!isLoading && !user || tipodeuser != "Administrador") {
+    else if (!isLoading && !user || user.usertype != "Administrador") {
       return <Navigate to={LOGIN_URL} />;}
   
   return children;
