@@ -10,7 +10,11 @@ export function Calendar({ onDateSelect }) {
   const today = dayjs().startOf('day');
   const maxDate = today.add(1, 'month'); 
   const minDate = today; 
-
+  
+  const shouldDisableDate = (date) => {
+    const day = dayjs(date).day();
+    return day === 0 ;
+  };
   const handleDateChange = (date) => {
     if (dayjs(date).isBetween(minDate, maxDate, null, '[]')) { 
       setSelectedDate(date);
@@ -22,7 +26,7 @@ export function Calendar({ onDateSelect }) {
     <div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']}>
-          <DatePicker label="Día de la reserva" value={selectedDate} onChange={handleDateChange} minDate={minDate} maxDate={maxDate} />
+          <DatePicker label="Día de la reserva" value={selectedDate}  onKeyDown={(e) => e.preventDefault()}  onChange={handleDateChange} minDate={minDate} maxDate={maxDate} shouldDisableDate={shouldDisableDate} customInput={<input readOnly />}  />
         </DemoContainer>
       </LocalizationProvider>
     </div>

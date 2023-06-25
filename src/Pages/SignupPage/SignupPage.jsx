@@ -26,7 +26,7 @@ export function SignupPage() {
   const [errors, setErrors] = useState({
     usertype: "",
   });  const navigate = useNavigate();
-  const [formData, setData] = useState({});
+  const [formData, setData] = useState({usertype: "" });
 
   const newErrors = {};
 
@@ -46,7 +46,7 @@ export function SignupPage() {
     }, [user]);
     
       const onFail = (_error) => {
-        newErrors.email = "El correo electrónico ya ha sido tomado";
+        newErrors.email = "El correo electrónico es inválido o ya ha sido tomado";
       };
     
       const handleSubmit = async (event) => {
@@ -175,8 +175,8 @@ export function SignupPage() {
                                 <label className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Tipo de usuario
                                 </label>
-                                <select className="select w-full bg-gray-200 mt-2" onChange={onChange} id="usertype" name="usertype" >
-                                    <option></option>
+                                <select value={formData.usertype} className="select w-full bg-gray-200 mt-2" onChange={onChange} id="usertype" name="usertype" >
+                                <option value="" disabled defaultValue>Pulsa aquí para seleccionar su tipo de usuario</option>
                                     <option>Visitante</option>
                                     <option>Administrador</option>
                                 </select>
