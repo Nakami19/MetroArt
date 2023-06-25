@@ -8,6 +8,13 @@ export function useArts() {
     const [art, setArt]=useState([]);
     const [isLoading, setLoading]=useState(false); 
 
+    const getArts= async ()=> {
+        setLoading(true)
+        const obra= await getArtDocuments();
+        setArts(obra);
+        setLoading(false)
+    }
+
     const getOneArt= async (artId)=> {
         setLoading(true);
         const obras=await getArtDocuments();
@@ -20,6 +27,6 @@ export function useArts() {
     }
 
     return{
-        art,getOneArt, isLoading
+        arts, getArts, art, getOneArt, isLoading
     }
 }

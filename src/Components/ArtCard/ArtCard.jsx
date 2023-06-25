@@ -4,10 +4,11 @@ import { ARTDETAIL_URL } from '../../constants/url'
 
 export function ArtCard({obra}) {
   let autores="";
+  try {
   obra.autor.map((autor)=>{
     autores+=autor+"\n";
   })
-
+  } catch (error) {}
   autores=autores.replace("\n",", ")
 
 
