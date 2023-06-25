@@ -29,11 +29,9 @@ export function useTours() {
 
     const getSearchTours=async (busqueda, option)=>{
         let coincide=[];
-        setLoading(true)
         const tour= await getToursDocuments();
         busqueda=busqueda.toLowerCase();
         if (option=="Nombre de tour" && busqueda!="" ){
-            console.log("aaaaaa  "+busqueda)
             tour.map((one)=>{
                 if(one.name.toLowerCase().includes(busqueda)) {
                     coincide.push(one)
@@ -63,7 +61,7 @@ export function useTours() {
            setTours(tour); 
         }
         
-        setLoading(false)
+       
     }
 
     return {

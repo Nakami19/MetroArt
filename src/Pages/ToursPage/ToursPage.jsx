@@ -14,7 +14,7 @@ export function ToursPage() {
         getTours();
     },[])
 
-    
+    useEffect(()=>{},[buscar])
 
 
  if(!isLoadingUser){
