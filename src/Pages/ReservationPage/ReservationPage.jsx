@@ -4,8 +4,27 @@ import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router';
 import { useTours } from '../../hooks/useTours';
 import { HOME_URL } from '../../constants/url';
+import {
+  doc,
+  onSnapshot,
+  updateDoc,
+  setDoc,
+  deleteDoc,
+  collection,
+  serverTimestamp,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+} from 'firebase/firestore';
+import { db } from '../../firebase/config';
+import { useUserContext } from '../../contexts/UserContext'
 
 export function ReservationPage() {
+  
+    const profilecollection = collection(db, 'users');
+    const { user } = useUserContext(); 
 
     const [formData, setData] = useState({
         horario: "" 
@@ -31,10 +50,12 @@ export function ReservationPage() {
         getOneTour(tourId);
     },[])
 
+    const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
 
     
-    const handleConfirmar= (event)=>{
+    const handleConfirmar= async (event)=>{
         event.preventDefault();
+        const userRef = doc(profilecollection, user.id);
         const newErrors = {};
 
         if (!selectedDate) {
@@ -57,9 +78,60 @@ export function ReservationPage() {
             return;
           }
           setErrors({ fecha: '', horario: '' })
-        alert(formattedFecha)
+        
+
+        const reserva = {
+          id_tour: tour.generated_id,
+          fecha: formattedFecha,
+          horario: formData.horario,
+        }
+        
+        let lista = user.reservas
+        lista.push(reserva)
+
+        try {
+          await updateDoc(userRef, {"reservas": lista});
+          setData({horario: "" })
+          navigate(HOME_URL)
+          } catch (error) {
+          console.error(error);
+        }
     }
 
+    function generarIdTicket() {
+      const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const numeros = '0123456789';
+      let id = '';
+    
+      // Agregar una letra aleatoria en una posición aleatoria
+      const posicionLetra = Math.floor(Math.random() * 5);
+      const letraAleatoria = letras.charAt(Math.floor(Math.random() * letras.length));
+      id += id.length === posicionLetra ? letraAleatoria : numeros.charAt(Math.floor(Math.random() * numeros.length));
+    
+      // Agregar un número aleatorio en una posición aleatoria diferente a la anterior
+      let posicionNumero = Math.floor(Math.random() * 5);
+      while (posicionNumero === posicionLetra) {
+        posicionNumero = Math.floor(Math.random() * 5);
+      }
+      const numeroAleatorio = numeros.charAt(Math.floor(Math.random() * numeros.length));
+      id += id.length === posicionNumero ? numeroAleatorio : letras.charAt(Math.floor(Math.random() * letras.length));
+    
+      // Agregar caracteres alfanuméricos aleatorios en las posiciones restantes
+      for (let i = 0; i < 5; i++) {
+        if (i !== posicionLetra && i !== posicionNumero) {
+          const caracterAleatorio = Math.random() < 0.5 ? letras.charAt(Math.floor(Math.random() * letras.length)) : numeros.charAt(Math.floor(Math.random() * numeros.length));
+          id += caracterAleatorio;
+        }
+      }
+    
+      return id;
+    }
+    const xd= async (event)=>{
+      event.preventDefault();
+      const idTicket = generarIdTicket();
+      alert(idTicket);    }
+
+    
     const openPopup = () => {
         const width = 600;
         const height = 400;
@@ -72,7 +144,6 @@ export function ReservationPage() {
         window.open(popupUrl, popupName, popupFeatures);
       }
     
-    const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
 
     const cancelReservation = () => {
         navigate(HOME_URL)
@@ -113,7 +184,7 @@ export function ReservationPage() {
         </div>
         <div className='flex flex-col items-center gap-3'>
             <h1 className='text-center font-raleway font-bold text-xl text-[#4E598C]'>¡Ayúdanos y dona con PayPal!</h1>
-            <button className='btn w-fit bg-[#C9D1F7]'><img className='h-5' onClick={openPopup} src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"/></button>
+            <button className='btn w-fit bg-[#C9D1F7]'><img className='h-5' onClick={xd} src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"/></button>
         </div>
     </div>
     
