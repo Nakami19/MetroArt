@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { TOURDETAILS_URL } from '../../constants/url'
+import { DeleteTour } from '../../firebase/info'
 
 
 export function TourCard({tour, user}) {
@@ -59,7 +61,7 @@ export function TourCard({tour, user}) {
                                     </Link>
                                 </div>
                                 <div className=''>
-                                    <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</button>
+                                    <a href="#my_modal_8" className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</a>
                                 </div>
                             </div>
                             <div className="avatar contrast-75 saturate-150	brightness-50">
@@ -68,6 +70,18 @@ export function TourCard({tour, user}) {
                                 </div>
                             </div>
                         </div>
+                        <div className="modal" id="my_modal_8">
+                                        <div className="modal-box font-montserrat">
+                                            <h3 className="font-bold text-lg">¿Estás seguro?</h3>
+                                            <p className="py-4">Los cambios no son reversibles</p>
+                                            <div className="modal-action">
+                                               
+                                                <a href="#" className="btn normal-case" onClick={()=>{DeleteTour(tour.generated_id)}}>Sí, estoy seguro</a>
+                                                
+                                                <a href="#" className="btn normal-case">Cancelar</a>
+                                            </div>
+                                        </div>
+                                    </div>
                         <div className='h-1/4 flex items-center justify-center'>
                             <p className='text-white font-montserrat text-center text-xs'>{tour.name}</p>
                         </div>
