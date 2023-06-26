@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { TourCard } from '../../Components/TourCard/TourCard'
 import { useTours } from '../../hooks/useTours'
 import { useUserContext } from '../../contexts/UserContext'
+import { Link } from 'react-router-dom'
+import { ADDTOUR_URL } from '../../constants/url'
 
 export function ToursPage() {
     const {tours, getTours, getSearchTours} =useTours()
@@ -12,7 +14,7 @@ export function ToursPage() {
 
     useEffect(()=>{
         getTours();
-    },[])
+    },[tours])
 
     useEffect(()=>{},[buscar])
 
@@ -77,7 +79,9 @@ useEffect(()=> {
                 <div className='p-6 flex gap-3'>
                     <h1 className='font-raleway font-bold text-[#C14C00] text-2xl'>Tours</h1>
                     {isAdmin && (
-                        <button className='btn btn-sm text-xs normal-case font-montserrat bg-[#001A72] text-white'>Agregar tour</button>
+                        <Link to={ADDTOUR_URL}>
+                            <button className='btn btn-sm text-xs normal-case font-montserrat bg-[#001A72] hover:bg-[#051341] text-white'>Agregar tour</button>
+                        </Link>
                     )}   
                 </div>
                 {componet}
