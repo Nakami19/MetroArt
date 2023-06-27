@@ -4,12 +4,12 @@ import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router';
 import { useTours } from '../../hooks/useTours';
 import { HOME_URL } from '../../constants/url';
-import { PaypalWrapper } from '../../Components/PaypalWrapper/PaypalWrapper';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { PaypalWrapper } from '../../Components/PaypalWrapper/PaypalWrapper';
 
 export function ReservationPage() {
 
-    const [pay, setPay] = useState(10);
+    const [pay, setPay] = useState(5);
     const [formData, setData] = useState({
         horario: "" 
       });
@@ -33,8 +33,6 @@ export function ReservationPage() {
     useEffect(()=>{
         getOneTour(tourId);
     },[])
-
-
     
     const handleConfirmar= (event)=>{
         event.preventDefault();
@@ -63,18 +61,7 @@ export function ReservationPage() {
         alert(formattedFecha)
     }
 
-    const openPopup = () => {
-        const width = 600;
-        const height = 400;
-        const left = (window.innerWidth - width) / 2;
-        const top = (window.innerHeight - height) / 2;
-        const popupUrl = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FJ48PVKAP2RMJ';
-        const popupName = '_blank';
-        const popupFeatures = `width=${width},height=${height},left=${left},top=${top}`;
-      
-        window.open(popupUrl, popupName, popupFeatures);
-      }
-    
+  
     const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
 
     const cancelReservation = () => {
@@ -116,7 +103,11 @@ export function ReservationPage() {
         </div>
         <div className='flex flex-col items-center gap-3'>
             <h1 className='text-center font-raleway font-bold text-xl text-[#4E598C]'>¡Ayúdanos y dona con PayPal!</h1>
-            
+            <form>
+              <input className='p-3 border' type='number' onChange={(e) => {
+                setPay(e.target.value)
+              }} placeholder='Monto a donar'/>
+            </form>
             <div>
             <PayPalScriptProvider
                 options={{
@@ -128,6 +119,7 @@ export function ReservationPage() {
               <PaypalWrapper
                   currency={"USD"}
                   pay={pay}
+                  
               />
             </PayPalScriptProvider>
             </div>
@@ -136,3 +128,4 @@ export function ReservationPage() {
     
   )
 }
+

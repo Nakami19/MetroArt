@@ -20,8 +20,9 @@ export function PaypalWrapper ({ currency, pay}) {
 
      return (<PayPalButtons
         fundingSource="paypal"
-        style={{"layout":"vertical","label":"donate"}}
+        style={{"layout":"vertical","label":"donate", 'color':'silver'}}
         disabled={false}
+        forceReRender={[pay]}
         createOrder={(data, actions) => {
             return actions.order
                 .create({
