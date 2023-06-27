@@ -59,7 +59,13 @@ export function ProfilePage() {
 
       const handleUpload = async (e) => {
         const file = e.target.files[0];
-        const code = uuidv4();
+        const fileName = file.name
+        const extension = fileName.substr(fileName.lastIndexOf("."))
+        const allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png)$/i
+        const isAllowed = allowedExtensionsRegx.test(extension)
+        console.log(isAllowed)
+        if(isAllowed){
+            const code = uuidv4();
         const storageRef = ref(storage, `perfil-imagenes/${file.name+" "+code}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on("state_changed", null, null, () => {
@@ -69,7 +75,12 @@ export function ProfilePage() {
                   setImagenFirebase(downloadUrl);
               });
           });
-        });};
+        });
+        }
+        else {
+            alert("Tipo de archivo invalido!")
+        }
+        };
 
 
     const editUser = (event) => {

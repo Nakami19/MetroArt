@@ -9,8 +9,8 @@ export function Calendar({ onDateSelect }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const today = dayjs().startOf('day');
   const maxDate = today.add(1, 'month'); 
-  const minDate = today; 
-  
+  const minDate = dayjs().add(1, 'day').startOf('day');
+
   const shouldDisableDate = (date) => {
     const day = dayjs(date).day();
     return day === 0 ;
