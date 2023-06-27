@@ -4,7 +4,7 @@ import { HomePage } from './Pages/HomePage/HomePage'
 import './index.css'
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Layout from './Components/Layout/Layout';
-import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL, COMPLETE_URL, ADDARTWORK_URL, ARTPAGE_URL } from './constants/url';
+import { ARTDETAIL_URL, HOME_URL, TOURDETAILS_URL, RESERVATION_URL, LOGIN_URL, PROFILE_URL, REGISTER_URL, TOURS_URL, COMPLETE_URL, ADDARTWORK_URL, ARTPAGE_URL, ADDTOUR_URL } from './constants/url';
 import { ToursPage } from './Pages/ToursPage/ToursPage';
 import { ArtDetailsPage } from './Pages/ArtDetailsPage/ArtDetailsPage';
 import { SignupPage } from './Pages/SignupPage/SignupPage'
@@ -21,6 +21,7 @@ import { AddArtworkPage } from './Pages/AddArtworkPage/AddArtWorkPage';
 import { EditArtworkPage } from './Pages/EditArtworkPage/EditArtWorkPage';
 import { EditTourPage } from './Pages/EditTourPage/EditTourPage';
 import { ArtPage } from './Pages/ArtPage/ArtPage';
+import { AddTourPage } from './Pages/AddTourPage/AddTourPage';
 import { SemiPublicRoute } from './Components/SemiPublicRoute/SemiPublicRoute';
 
 
@@ -41,6 +42,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={'/reserve/:tourId'} element={<PrivateRouteVisitante><ReservationPage/></PrivateRouteVisitante>}/>
         <Route path={ADDARTWORK_URL} element={<SemiPrivateRoute><AddArtworkPage/></SemiPrivateRoute>}/>
         <Route path={ARTPAGE_URL} element={<ArtPage/>}/>
+        <Route path={ADDTOUR_URL} element={<AddTourPage/>}/>
         <Route path={'/editartwork/:artId'} element={<SemiPrivateRoute><EditArtworkPage/></SemiPrivateRoute>}/>
         <Route path='*' element={<h1 className='my-80 text-3xl'>NOT FOUND!</h1>}></Route>
     </Route>

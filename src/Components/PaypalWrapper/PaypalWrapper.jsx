@@ -52,7 +52,7 @@ export function PaypalWrapper ({ currency, pay}) {
                     ],
                 })
                 .then((orderId) => {
-                    console.log("PAGADO POR PAYPAL")
+                    alert("PAGADO POR PAYPAL")
                     return orderId;
                 });
         }}
