@@ -4,11 +4,12 @@
 import React from 'react'
 
 export function ReserveCard() {
+  
   return (
 <div className='block'>
-        <a href='#a' className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow mt-6 md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-            <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="src/assets/Images/fondo2.png" alt=""/>
-            <div className="flex flex-col justify-between p-4 leading-normal">
+        <a href='#a' className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow mt-6 lg:max-w-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+            <img className="object-cover lg:w-2/5 md: w-full rounded-t-lg lg:h-64 md: h-36 md:w-full md:rounded-none md:rounded-l-lg" src="https://www.unimet.edu.ve/wp-content/uploads/2020/10/Campus-galer%C3%ADa.jpg" alt=""/>
+            <div className="w-3/4 flex flex-col justify-between p-4 leading-normal">
                 <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-raleway">Paseo de Esculturas</h5>
                 <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: </p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Hora: </p>
@@ -37,11 +38,12 @@ export function ReserveCard() {
         <div className="modal-box">
             <h3 className="font-bold text-lg font-raleway mb-5">Rating</h3>
                     <div className="rating">
-                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
-                        <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating" className="mask mask-star-2 bg-orange-400" />
+                        <input type="radio" name="rating" className="mask mask-star-2 bg-orange-400" />
+                        
                     </div>
                     <div className="form-control w-full ">
                     <label className="label mt-5">
