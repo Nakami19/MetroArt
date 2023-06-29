@@ -43,7 +43,7 @@ export function ArtPage() {
         {
             arts.map((obra)=>{
                     return (
-                        <ArtCard obra={obra} key={obra.id}/>
+                        <ArtCard obra={obra} user={user} key={obra.id}/>
                     )
                 })
             }
