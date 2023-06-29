@@ -26,17 +26,13 @@ export const UpdateTour= async (data, id) =>{
     if (docSnap.exists()) {
         data.generated_id = docRef.id
         await setDoc(docRef, data);
-        console.log('reemplazado')
     } else {
     // docSnap.data() will be undefined in this case
-    console.log("No such document!");
     }
     
 }
 
 export const DeleteTour=async (id) => {
-    console.log('eliminando...')
-    console.log(id)
     await deleteDoc(doc(db, "tours", id));
 }
 

@@ -33,10 +33,6 @@ export function EditTourPage() {
         setBuscar(ey);
         getSearchArt(ey,filtro);     
     }
-    const handlerBuscar= (e)=> {
-        const option=e.target.value
-        setFiltro(option)
-    }
 
     function handleChangeInput(event){
 
