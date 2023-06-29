@@ -39,7 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={REGISTER_URL} element={<PublicRoute><SignupPage/></PublicRoute>}/>
         <Route path={COMPLETE_URL} element={<SemiPrivateRoute><CompletePage/></SemiPrivateRoute>}/>
         <Route path={PROFILE_URL} element={<SemiPrivateRoute><ProfilePage/></SemiPrivateRoute>}/>
-        <Route path={RESERVATION_URL} element={<PrivateRouteVisitante><ReservationPage/></PrivateRouteVisitante>}/>
+        <Route path={'/reserve/:tourId'} element={<PrivateRouteVisitante><ReservationPage/></PrivateRouteVisitante>}/>
         <Route path={ADDARTWORK_URL} element={<SemiPrivateRoute><AddArtworkPage/></SemiPrivateRoute>}/>
         <Route path={ARTPAGE_URL} element={<ArtPage/>}/>
         <Route path={ADDTOUR_URL} element={<AddTourPage/>}/>
