@@ -218,69 +218,9 @@ export function AddArtworkPage() {
 
 
 // export function SnapshotFirebaseAdvanced() {
-//   const [filename, setFilename] = useState("");
-//   const artcollection = collection(db, 'obras');
-
-//   const [arts, setArts] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [autor, setAutor] = useState('');
-//   const [descripcion, setDescripcion] = useState('');
-//   const [fecha, setFecha] = useState('');
-//   const [nombre, setNombre] = useState('');
-//   const [tipo, setTipo] = useState('');
-//   const [ubicacion, setUbicacion] = useState('');
-//   const [imageUrl, setImageUrl] = useState("");
-  
-//     const handleUpload = async (e) => {
-//       const file = e.target.files[0];
-//       const code = uuidv4();
-//       const storageRef = ref(storage, `obras-imagenes/${file.name+" "+code}`);
-//       setFilename(file.name+" "+code)
-//       const uploadTask = uploadBytesResumable(storageRef, file);
-//       uploadTask.on("state_changed", null, null, () => {
-//         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-//           setImageUrl(downloadUrl);
-//         });
-//       });
-//     };
-
-  
 
 
-//   //ONE TIME GET FUNCTION
-//   // useEffect(() => {
-//   //   const getSchools = async () => {
-//   //     setLoading(true);
 
-//   //     const querySnapshot = await getDocs(dbRef);
-//   //     const items = [];
-
-//   //     querySnapshot.forEach((doc) => {
-//   //       items.push(doc.data());
-//   //     });
-//   //     setSchools(items);
-//   //     setLoading(false);
-//   //   };
-
-//   //   try {
-//   //     getSchools();
-//   //   } catch (error) {
-//   //     console.error(error);
-//   //   }
-
-//   //   // eslint-disable-next-line
-//   // }, []);
-
-//   //REALTIME GET FUNCTION
-//   useEffect(() => {
-//     const q = query(
-//       artcollection,
-//       //  where('owner', '==', currentUserId),
-//       // where('title', '==', 'School1') // does not need index
-//       //  where('score', '<=', 100) // needs index  https://firebase.google.com/docs/firestore/query-data/indexing?authuser=1&hl=en
-//       // orderBy('score', 'asc'), // be aware of limitations: https://firebase.google.com/docs/firestore/query-data/order-limit-data#limitations
-//       // limit(1)
-//     );
 
 //     setLoading(true);
 //     // const unsub = onSnapshot(q, (querySnapshot) => {
@@ -299,34 +239,6 @@ export function AddArtworkPage() {
 //     // eslint-disable-next-line
 //   }, []);
 
-//   // ADD FUNCTION
-//   async function addArt() {
-//     const newArt = {
-//       autor,
-//       descripcion,
-//       fecha,
-//       nombre,
-//       tipo,
-//       ubicacion,
-//       id: uuidv4(),
-//       imageUrl: imageUrl,
-//       filename: filename,
-//     }
-//     try {
-//       const artRef = doc(artcollection, newArt.id);
-//       await setDoc(artRef, newArt);
-//       setAutor('');
-//       setDescripcion('');
-//       setFecha('');
-//       setNombre('');
-//       setTipo('');
-//       setUbicacion('');
-//       setImageUrl('');
-
-//       } catch (error) {
-//       console.error(error);
-//     }
-//   }
 
 //   //DELETE FUNCTION
 //   async function deleteArt(art) {
@@ -341,20 +253,6 @@ export function AddArtworkPage() {
 //   }
 
 
-//   // EDIT FUNCTION
-//   async function editArt(art) {
-//     const updateArt = {
-      
-//       lastUpdate: serverTimestamp(),
-//     };
-
-//     try {
-//       const artRef = doc(artcollection, art.id);
-//       updateDoc(artRef, updateArt);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
 
 
 
