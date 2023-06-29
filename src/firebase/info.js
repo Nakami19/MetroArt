@@ -19,8 +19,19 @@ export const AddTour=async (data) =>{
     await setDoc(newTourRef, data);
 }
 
-export const UpdateTour=async (data, id) =>{
-    await setDoc(doc(db, 'tours', id), data);
+export const UpdateTour= async (data, id) =>{
+    const docRef = doc(db, "tours", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        data.generated_id = docRef.id
+        await setDoc(docRef, data);
+        console.log('reemplazado')
+    } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+    }
+    
 }
 
 export const DeleteTour=async (id) => {
