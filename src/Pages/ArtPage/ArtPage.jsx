@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { useArts } from '../../hooks/useArts'
@@ -39,7 +39,7 @@ export function ArtPage() {
         </div>
 
     if(arts.length>0) {
-        componet=<div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-6 xl:grid-cols-7'>
+        componet=<div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-5 xl:grid-cols-6'>
         {
             arts.map((obra)=>{
                     return (
