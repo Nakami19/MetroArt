@@ -162,6 +162,8 @@ export function ProfilePage() {
 
       };
 
+
+
     if(!isLoadingUser){
         try{
             if(user.usertype == "Administrador"){
@@ -192,7 +194,25 @@ export function ProfilePage() {
             <input hidden={true} type="file" name="button2" id="button2" onChange={handleUpload} accept="image/png, image/jpeg, image/jpg"/>
         </div>
 
+        {errors.name && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.name}</span>
+            </div>
+            </div>
+        )
+        }
         
+        {errors.fullname && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.fullname}</span>
+            </div>
+            </div>
+        )
+        }
         
         <div className='min-h-screen lg:flex lg:mt-14 md: mt-8'>
 
@@ -215,27 +235,27 @@ export function ProfilePage() {
                                     Username
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                    <input  id= "name" type="text" placeholder={"@"+nombreusuario} value={formData.name} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableUser} name="name" onChange={onChange}/>
-                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editUser}/></button></div>
+                                    <input  id= "name" type="text" placeholder={"@"+nombreusuario} value={formData.name} className="input input-sm w-5/6 disabled:bg-white disabled:placeholder:text-black" disabled={disableUser} name="name" onChange={onChange}/>
+                                    <button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editUser}/></button>
                                 </dd>
                             </div>
-                            {errors.name && (<p className="ml-3 text-red-500 text-xs mt-1">{errors.name}</p>)}
+                            
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     Nombre
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                <input  id= "fullname" type="text" placeholder={nombrecompleto} value={formData.fullname} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableName} name="fullname" onChange={onChange}/>
-                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editName}/></button></div>
+                                <input  id= "fullname" type="text" placeholder={nombrecompleto} value={formData.fullname} className="input input-sm w-5/6 disabled:bg-white disabled:placeholder:text-black" disabled={disableName} name="fullname" onChange={onChange}/>
+                                    <button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editName}/></button>
                                 </dd>
                             </div>
-                            {errors.fullname && (<p className=" ml-3 text-red-500 text-xs mt-1">{errors.fullname}</p>)}
+                            
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     E-mail
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                <input type="text" placeholder={correousuario} className="placeholder:truncate input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableEmail}/>
+                                <input type="text" placeholder={correousuario} className="placeholder:truncate input input-sm w-5/6 disabled:bg-white disabled:placeholder:text-black" disabled={disableEmail}/>
                                 </dd>
                             </div>
                             
