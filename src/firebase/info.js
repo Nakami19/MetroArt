@@ -1,5 +1,6 @@
+import { async } from "@firebase/util";
 import { db } from "./config";
-import { collection } from 'firebase/firestore';
+import { collection, deleteDoc } from 'firebase/firestore';
 import { doc, setDoc, addDoc, updateDoc, getDoc, getDocs } from "firebase/firestore";
 
 export const getToursDocuments= async ()=>{
@@ -11,6 +12,33 @@ export const getToursDocuments= async ()=>{
     });
     return tourss;
   }
+
+export const AddTour=async (data) =>{
+    const newTourRef = doc(collection(db, "tours"));
+    data.generated_id = newTourRef.id;
+    await setDoc(newTourRef, data);
+}
+
+export const UpdateTour= async (data, id) =>{
+    const docRef = doc(db, "tours", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        data.generated_id = docRef.id
+        await setDoc(docRef, data);
+        console.log('reemplazado')
+    } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+    }
+    
+}
+
+export const DeleteTour=async (id) => {
+    console.log('eliminando...')
+    console.log(id)
+    await deleteDoc(doc(db, "tours", id));
+}
 
 export const getArtDocuments=async () => {
     let obrass=[];

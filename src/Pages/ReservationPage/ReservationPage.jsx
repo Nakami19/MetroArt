@@ -1,7 +1,21 @@
 import React from 'react'
 import { Calendar } from '../../Components/Calendar/Calendar'
+import { useState } from "react";
 
 export function ReservationPage() {
+    const [popupOpen, setPopupOpen] = useState(false);
+
+    const openPopup = () => {
+        const width = 600;
+        const height = 400;
+        const left = (window.innerWidth - width) / 2;
+        const top = (window.innerHeight - height) / 2;
+        const popupUrl = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FJ48PVKAP2RMJ';
+        const popupName = '_blank';
+        const popupFeatures = `width=${width},height=${height},left=${left},top=${top}`;
+      
+        window.open(popupUrl, popupName, popupFeatures);
+      }
   return (
     <div className='p-6 flex flex-col gap-4 lg:gap-6'>
         <h1 className='font-bold font-raleway text-[#C14C00] text-xl text-center'>¡Completa tu reserva!</h1>
@@ -32,7 +46,7 @@ export function ReservationPage() {
         </div>
         <div className='flex flex-col items-center gap-3'>
             <h1 className='text-center font-raleway font-bold text-xl text-[#4E598C]'>¡Ayúdanos y dona con PayPal!</h1>
-            <button className='btn w-fit bg-[#C9D1F7]'><img className='h-5' src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"/></button>
+            <button className='btn w-fit bg-[#C9D1F7]'><img className='h-5' onClick={openPopup} src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"/></button>
         </div>
     </div>
     
