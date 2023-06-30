@@ -43,10 +43,33 @@ export function HomePage() {
     </div>
 
     {/*Content*/}
-    <section className='text-center' id='info-section'>
+    <section className='text-center h-screen lg:flex lg:p-12' id='info-section'>
+      <div className="carousel h-96 rounded-lg">
+      <div id="slide1" className="carousel-item relative w-full">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Titulo_Latente%2C_Universidad_Metropolitana_._a%C3%B1o_2004.jpg/1200px-Titulo_Latente%2C_Universidad_Metropolitana_._a%C3%B1o_2004.jpg" className="w-full" />
+        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+          <a href="#slide4" className="btn btn-circle"></a> 
+          <a href="#slide2" className="btn btn-circle"></a>
+        </div>
+      </div> 
+      <div id="slide2" className="carousel-item relative w-full">
+        <img src="https://www.unimet.edu.ve/wp-content/uploads/2020/10/Campus-galer%C3%ADa-29.jpg" className="w-full" />
+        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+          <a href="#slide1" className="btn btn-circle"></a> 
+          <a href="#slide3" className="btn btn-circle"></a>
+        </div>
+      </div> 
+      <div id="slide3" className="carousel-item relative w-full">
+        <img src="https://www.unimet.edu.ve/wp-content/uploads/2020/10/Campus-galer%C3%ADa.jpg" className="w-full" />
+        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+          <a href="#slide2" className="btn btn-circle"></a> 
+          <a href="#slide4" className="btn btn-circle"></a>
+        </div>
+      </div> 
+    </div>
       <div className='p-10'>
-        <h1 className='mb-5 text-4xl font-bold font-raleway text-[#C14C00]'>Conoce, aprende, comenta</h1>
-        <p className='mb-5  text-lg font-baskervville text-justify'>Las obras de arte nos ayudan a expresar nuestras emociones creando piezas que pueden resultar simbólicas y atractivas para otras personas, dándoles un significado único. Es por ello que el Departamento de Cultura te invita a visitar las obras alojadas en la Universidad. ¡Anímate a aprender sobre las obras y sus historias reservando un tour!</p>
+        <h1 className='mb-5 text-3xl font-bold font-raleway text-[#C14C00]'>Conoce, aprende, comenta</h1>
+        <p className='mb-5  text-sm font-baskervville text-justify'>Las obras de arte nos ayudan a expresar nuestras emociones creando piezas que pueden resultar simbólicas y atractivas para otras personas, dándoles un significado único. Es por ello que el Departamento de Cultura te invita a visitar las obras alojadas en la Universidad. ¡Anímate a aprender sobre las obras y sus historias reservando un tour!</p>
       </div>
     </section>
 
