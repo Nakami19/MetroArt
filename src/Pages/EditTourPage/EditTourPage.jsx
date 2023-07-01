@@ -85,7 +85,6 @@ export function EditTourPage() {
                 reviews: tour.reviews,
                 url: tour.url,
             }
-            console.log(data)
             const aaaa = UpdateTour(data, tour.generated_id)
     
         }
