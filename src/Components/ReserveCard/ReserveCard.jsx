@@ -17,9 +17,9 @@ export function ReserveCard({reserva}) {
 
   
   return (
-<div className='block'>
-        <a href='#a' className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow mt-6 lg:max-w-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-            <img className="object-cover lg:w-2/5 md: w-full rounded-t-lg lg:h-64 md: h-36 md:w-full md:rounded-none md:rounded-l-lg" src={tour.url} alt=""/>
+<div className='block mr-3'>
+        <a href='#a' className="flex lg: flex-col items-center bg-white border border-gray-200 rounded-lg shadow mt-6 lg:max-w-md md:flex-row md: max-w-xl h-5/6 hover:bg-gray-100 ">
+            <img className="object-cover lg:w-2/5 md: w-full rounded-t-lg lg:h-full md: h-36 md:rounded-none md:rounded-l-lg" src={tour.url} alt=""/>
             <div className="w-3/4 flex flex-col justify-between p-4 leading-normal">
                 <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-raleway">{tour.name}</h5>
                 <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: {reserva.fecha} </p>

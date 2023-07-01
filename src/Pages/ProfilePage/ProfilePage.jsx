@@ -39,9 +39,25 @@ export function ProfilePage() {
     const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     const {usuarios, getUsuarios} = useUsers()
 
+
+    const slideLeft = () => {
+        var slider = document.getElementById('slider');
+        slider.scrollLeft = slider.scrollLeft - 500;
+      };
+    
+      const slideRight = () => {
+        var slider = document.getElementById('slider');
+        slider.scrollLeft = slider.scrollLeft + 500;
+      };
+
+
     useEffect(()=>{
       getUsuarios(firebaseUsersData.data_user);
     },[firebaseUsersData])
+    useEffect(()=>{
+        if (isAdmin){
+        setDivPerfil(' lg:w-full md: w-full lg:min-h-screen p-3')}
+      },[isLoadingUser])
 
     useEffect(() => {
         const userDocRef = doc(db, "users", user.id);
@@ -275,8 +291,8 @@ export function ProfilePage() {
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             
-                <div className="carousel carousel-center w-full p-4 space-x-4 rounded-box overflow-y-visible">
-                    <div className="carousel-item">
+                <div id='slider' className="carousel carousel-center w-full p-4 space-x-4 rounded-box overflow-y-visible snap-none">
+                    <div className="carousel-item p-3">
                         {user.reservas.map((reserva)=>{
                             return(
                               <ReserveCard reserva={reserva} key={reserva.id_tour} />  
@@ -286,7 +302,10 @@ export function ProfilePage() {
                     
                     </div>
                 </div>
-
+                <div className='flex justify-between'>
+                    <div className='opacity-50 cursor-pointer hover:opacity-100' onMouseEnter={slideLeft} size={40}> ❮</div>
+                    <div className='opacity-50 cursor-pointer hover:opacity-100' onMouseEnter={slideRight} size={40}> ❯ </div>
+               </div>
                </div>
             )}
 
