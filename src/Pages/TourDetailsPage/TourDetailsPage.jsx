@@ -8,8 +8,8 @@ export function TourDetailsPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
-    const navigate = useNavigate();
-    let component=null;
+    let component=<><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
+    <p>Disponible</p></>;
     let rating=0;
 
     if (tour.feedbacks) {
@@ -25,17 +25,8 @@ export function TourDetailsPage() {
         getOneTour(tourId);
     },[])
 
-    const handleReserva= ()=>{
-        navigate(`/reserve/${tour.id}`)
-    }
-
-    if(tour.disponible) {
-        component= <><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
-        <p>Disponible</p></>
-    } else {
-        component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>
-        <p>No Disponible</p></>
-    }
+    
+    
 
     if(isLoading) {
         return (
@@ -44,7 +35,15 @@ export function TourDetailsPage() {
             </>
         )
     } else if (!isLoading && tour.obras) {
-
+        // tour.obras.autor.map((autor)=>{
+        //     autores+=autor+"\n"
+        // })
+        console.log(tour.disponible)
+        if(!tour.disponible) {
+            console.log('a')
+            component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>
+            <p>No Disponible</p></>
+        }
         return (
     <>
 
