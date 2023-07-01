@@ -31,8 +31,8 @@ export function ArtCard({obra, user}) {
     return(
 
     <div className='font-montserrat text-xs lg:w-full flex flex-col gap-1'>
-            <div className="avatar w-44">
-              <div className="w-44">
+            <div className="avatar w-full">
+              <div className="w-full">
                 <div className='absolute z-10 p-4 flex justify-between items-end w-full h-full'>
                   <div>
                       <Link to={`/editartwork/${obra.id}`}>
