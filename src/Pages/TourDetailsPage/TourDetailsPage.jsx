@@ -13,6 +13,7 @@ export function TourDetailsPage() {
     const navigate = useNavigate();
     let component=<><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
     <p>Disponible</p></>;
+    
     let rating=0;
 
     if (tour.feedbacks) {
@@ -33,7 +34,7 @@ export function TourDetailsPage() {
         navigate(`/reserve/${tour.id}`)
     }
 
-    
+    let boton=<><button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleReserva}>Reservar</button></>
     
 
     if(isLoading) {
@@ -48,9 +49,9 @@ export function TourDetailsPage() {
         //     autores+=autor+"\n"
         // })
         if(!tour.disponible) {
-            console.log('a')
             component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>
             <p>No Disponible</p></>
+            boton=<><button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Proximamente</button></>
         }
         return (
     <>
@@ -89,7 +90,7 @@ export function TourDetailsPage() {
                 <p className='font-bold'>Lugares importantes</p>
                 <p>{tour.important_places}</p>
             </div>
-            <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleReserva}>Reservar</button>
+           {boton}
         </div>
     </section>
 
