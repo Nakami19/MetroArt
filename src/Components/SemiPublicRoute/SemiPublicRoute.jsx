@@ -32,7 +32,7 @@ export function SemiPublicRoute({ children }) {
 
 
   if (!isLoading && user!=null){
-    if(user.usertype == "" && location.pathname !== COMPLETE_URL) {
+    if(tipodeuser == "" && location.pathname !== COMPLETE_URL) {
     return <Navigate to={COMPLETE_URL} />;}}
 
   return children;

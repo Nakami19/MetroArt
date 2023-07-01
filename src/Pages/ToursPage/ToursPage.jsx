@@ -4,22 +4,25 @@ import { useTours } from '../../hooks/useTours'
 import { useUserContext } from '../../contexts/UserContext'
 import { Link } from 'react-router-dom'
 import { ADDTOUR_URL } from '../../constants/url'
-import { firebaseToursData, loadToursFromFirebase } from '../../firebase/data'
+// import { firebaseToursData, loadToursFromFirebase } from '../../firebase/data'
+import { useGlobalContext } from '../../contexts/GlobalContext'
 
 export function ToursPage() {
     const {tours, getTours, getSearchTours} =useTours()
     const { user, isLoadingUser } = useUserContext(); 
     const [filtro, setFiltro]=useState("Nombre de tour");
     const [buscar, setBuscar]=useState("");
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     let isAdmin = false;
 
-    useEffect(()=>{
-        loadToursFromFirebase()
-    },[])
+    // useEffect(()=>{
+    //     loadToursFromFirebase()
+    // },[])
 
     useEffect(()=>{
-        getTours();
-    },[])
+
+        getTours(firebaseToursData.data_tour);
+    },[firebaseToursData])
 
     useEffect(()=>{},[buscar])
 
@@ -41,7 +44,7 @@ export function ToursPage() {
     const handleChange= (e)=>{
         const ey=e.target.value
         setBuscar(ey)
-        getSearchTours(ey, filtro)
+        getSearchTours(ey, filtro,firebaseToursData.data_tour)
             
     }
     let componet= <div className='p-6'>

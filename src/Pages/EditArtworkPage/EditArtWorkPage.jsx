@@ -12,6 +12,7 @@ import {
   import { storage } from '../../firebase/config';
   import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
 import { ARTPAGE_URL } from '../../constants/url';
+import { useGlobalContext } from '../../contexts/GlobalContext';
   
   
 
@@ -30,6 +31,8 @@ export function EditArtworkPage() {
     const [imageUrl, setImageUrl] = useState("");
     const [autor, setautor]= useState([""]);
     const navigate = useNavigate();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+
 
     const handleinputchange=(e, index)=>{
         
@@ -110,8 +113,8 @@ async function updateArt() {
 
 
     useEffect(()=>{
-        getOneArt(artId);
-    },[])
+        getOneArt(artId, firebaseArtsData.data_art);
+    },[firebaseArtsData])
 
 
   

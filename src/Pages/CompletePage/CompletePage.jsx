@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore';
 import { useUserContext } from '../../contexts/UserContext';
 import { db } from '../../firebase/config';
+import { useGlobalContext } from "../../contexts/GlobalContext";
 
 
 export function CompletePage() {
@@ -18,10 +19,12 @@ export function CompletePage() {
   
   const { user, isLoadingUser } = useUserContext(); 
   const {usuarios, getUsuarios} = useUsers()
+  const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
+
 
   useEffect(()=>{
-    getUsuarios();
-  },[])
+    getUsuarios(firebaseUsersData.data_user);
+  },[firebaseUsersData])
 
 
 

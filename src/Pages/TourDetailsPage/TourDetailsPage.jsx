@@ -3,11 +3,13 @@ import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { ComentContainer } from '../../Components/ComentContainer/ComentContainer'
 import { useTours } from '../../hooks/useTours';
 import { Navigate, useNavigate, useParams } from 'react-router';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function TourDetailsPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     const navigate = useNavigate();
     let component=<><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
     <p>Disponible</p></>;
@@ -23,8 +25,9 @@ export function TourDetailsPage() {
     }
 
     useEffect(()=>{
-        getOneTour(tourId);
-    },[])
+
+        getOneTour(tourId,firebaseToursData.data_tour); 
+    },[firebaseToursData])
 
     const handleReserva= ()=>{
         navigate(`/reserve/${tour.id}`)

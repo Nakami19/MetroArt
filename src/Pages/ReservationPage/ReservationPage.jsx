@@ -22,6 +22,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { useUserContext } from '../../contexts/UserContext'
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ReservationPage() {
   
@@ -46,12 +47,14 @@ export function ReservationPage() {
 
       };
     const {tourId}=useParams();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     const {tour, getOneTour, isLoading}=useTours();
     const navigate = useNavigate();
 
     useEffect(()=>{
-        getOneTour(tourId);
-    },[])
+
+      getOneTour(tourId,firebaseToursData.data_tour); 
+  },[firebaseToursData])
 
     const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
 

@@ -13,6 +13,7 @@ import {
   } from 'firebase/firestore';
 import { useState, useEffect } from "react";
 import { useUsers } from "../../hooks/useUsers";
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ProfilePage() {
 
@@ -35,12 +36,12 @@ export function ProfilePage() {
     const [disableName, setDisableName] = useState(true);
     const [disableEmail, setDisableEmail] = useState(true);
     const [style, setStyle] = useState("hidden");
-
+    const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     const {usuarios, getUsuarios} = useUsers()
 
     useEffect(()=>{
-      getUsuarios();
-    },[])
+      getUsuarios(firebaseUsersData.data_user);
+    },[firebaseUsersData])
 
     useEffect(() => {
         const userDocRef = doc(db, "users", user.id);

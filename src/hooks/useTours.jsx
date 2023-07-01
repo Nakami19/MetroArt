@@ -9,17 +9,17 @@ export function useTours() {
     const [isLoading, setLoading]=useState(false); 
     
 
-    const getTours= async ()=> {
+    const getTours= async (tourDocuments)=> {
         setLoading(true)
-        const tour= await getToursDocuments();
-        setTours(tour);
+        //const tour= await getToursDocuments();
+        setTours(tourDocuments);
         setLoading(false)
     }
 
-    const getOneTour= async (TourId) => {
+    const getOneTour= async (TourId, tourDocuments) => {
         setLoading(true)
-        const toure= await getToursDocuments();
-        toure.map((one)=>{
+        // const toure= await getToursDocuments();
+        tourDocuments.map((one)=>{
             if (one.id==TourId) {
                setTour(one)
             }  
@@ -27,9 +27,9 @@ export function useTours() {
         setLoading(false)
     }
 
-    const getSearchTours=async (busqueda, option)=>{
+    const getSearchTours=async (busqueda, option,tour)=>{
         let coincide=[];
-        const tour= await getToursDocuments();
+        // const tour= await getToursDocuments();
         busqueda=busqueda.toLowerCase();
         if (option=="Nombre de tour" && busqueda!="" ){
             tour.map((one)=>{
