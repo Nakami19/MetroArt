@@ -9,7 +9,7 @@ export function TourDetailsPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
-    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+    const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     const navigate = useNavigate();
     let component=<><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
     <p>Disponible</p></>;
@@ -18,7 +18,7 @@ export function TourDetailsPage() {
     if (tour.feedbacks) {
         if(tour.feedbacks.length!=0) {
            tour.feedbacks.map((comentario)=>{
-                rating+=comentario.rating
+                rating=rating+parseInt(comentario.rating)
             }) 
         rating=rating/tour.feedbacks.length    
         }
@@ -121,7 +121,7 @@ export function TourDetailsPage() {
                 {
                     tour.feedbacks.map((comment)=>{
                         return (
-                           <ComentContainer comment={comment} key={comment.id}/>  
+                           <ComentContainer comment={comment} key={comment.comment}/>  
                         )
                         
                     })
