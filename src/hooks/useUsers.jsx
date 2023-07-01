@@ -8,10 +8,10 @@ export function useUsers() {
     const [isLoading, setLoading]=useState(false); 
     
 
-    const getUsuarios= async ()=> {
+    const getUsuarios= async (usuarios)=> {
         setLoading(true)
-        const username= await getUserDocuments();
-        setUsuarios(username);
+        // const username= await getUserDocuments();
+        setUsuarios(usuarios);
         setLoading(false)
     }
 

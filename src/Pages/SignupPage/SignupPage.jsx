@@ -13,15 +13,17 @@ import {
 import { useUsers } from "../../hooks/useUsers";
 import { db } from '../../firebase/config';
 import { useUserContext } from '../../contexts/UserContext'
+import { useGlobalContext } from "../../contexts/GlobalContext";
 
 export function SignupPage() {
   const {usuarios, getUsuarios} = useUsers()
   const [tipodeuser, setTipodeuser] = useState(null);
   const { user } = useUserContext(); 
+  const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
 
   useEffect(()=>{
-    getUsuarios();
-  },[])
+    getUsuarios(firebaseUsersData.data_user);
+  },[firebaseUsersData])
 
   const [errors, setErrors] = useState({
     usertype: "",

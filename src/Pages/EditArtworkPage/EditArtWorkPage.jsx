@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useArts } from '../../hooks/useArts';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom'
 import {
     doc,
@@ -11,6 +11,8 @@ import {
   import {v4 as uuidv4} from 'uuid';
   import { storage } from '../../firebase/config';
   import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
+import { ARTPAGE_URL } from '../../constants/url';
+import { useGlobalContext } from '../../contexts/GlobalContext';
   
   
 
@@ -28,6 +30,9 @@ export function EditArtworkPage() {
     const [titulo, setTitulo] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [autor, setautor]= useState([""]);
+    const navigate = useNavigate();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+
 
     const handleinputchange=(e, index)=>{
         
@@ -50,6 +55,10 @@ export function EditArtworkPage() {
     const handleaddclick=()=>{ 
         setautor(art.autor.push(""));
        
+    }
+
+    const handleOk= () => {
+      navigate(ARTPAGE_URL)
     }
 
     useEffect(() => {
@@ -105,8 +114,8 @@ async function updateArt() {
 
 
     useEffect(()=>{
-        getOneArt(artId);
-    },[])
+        getOneArt(artId, firebaseArtsData.data_art);
+    },[firebaseArtsData])
 
 
   
@@ -229,7 +238,7 @@ async function updateArt() {
                 <p className="py-4">Se ha editado la obra con éxito</p>
                 <div className="modal-action">
                 {/* if there is a button in form, it will close the modal */}
-                <button className="btn bg-green-500">OK</button>
+                <button className="btn bg-green-500" onClick={handleOk}>OK</button>
                 </div>
             </form>
             </dialog>  

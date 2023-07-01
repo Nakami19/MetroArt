@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useArts } from '../../hooks/useArts';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ArtDetailsPage() {
 
     const {artId}=useParams();
     const {art,getOneArt, isLoading}=useArts();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+
     let autores="";
 
    if(art.autor) {
@@ -20,8 +23,8 @@ export function ArtDetailsPage() {
 
 
     useEffect(()=>{
-        getOneArt(artId);
-    },[])
+        getOneArt(artId, firebaseArtsData.data_art);
+    },[firebaseArtsData])
 
     if(isLoading) {
         return (

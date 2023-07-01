@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { useNavigate, useParams } from 'react-router';
 import { useTours } from '../../hooks/useTours';
 import { HOME_URL } from '../../constants/url';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { PaypalWrapper } from '../../Components/PaypalWrapper/PaypalWrapper';
 import {
   doc,
   onSnapshot,
@@ -20,12 +22,14 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { useUserContext } from '../../contexts/UserContext'
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ReservationPage() {
   
     const profilecollection = collection(db, 'users');
     const { user } = useUserContext(); 
 
+    const [pay, setPay] = useState(5);
     const [formData, setData] = useState({
         horario: "" 
       });
@@ -43,12 +47,14 @@ export function ReservationPage() {
 
       };
     const {tourId}=useParams();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     const {tour, getOneTour, isLoading}=useTours();
     const navigate = useNavigate();
 
     useEffect(()=>{
-        getOneTour(tourId);
-    },[])
+
+      getOneTour(tourId,firebaseToursData.data_tour); 
+  },[firebaseToursData])
 
     const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
 
@@ -184,9 +190,29 @@ export function ReservationPage() {
         </div>
         <div className='flex flex-col items-center gap-3'>
             <h1 className='text-center font-raleway font-bold text-xl text-[#4E598C]'>¡Ayúdanos y dona con PayPal!</h1>
-            <button className='btn w-fit bg-[#C9D1F7]'><img className='h-5' onClick={xd} src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png"/></button>
+            <form>
+              <input className='p-3 border' type='number' onChange={(e) => {
+                setPay(e.target.value)
+              }} placeholder='Monto a donar'/>
+            </form>
+            <div>
+            <PayPalScriptProvider
+                options={{
+                    "clientId": "Ab0lO39irIToxCMDFIsBPZpIOnDREVATxwk4WSxoEWCjzRNf4VMZD-GgYL6-cNAd_1FwzbFmDcOboYC8",
+                    components: "buttons",
+                    currency: "USD"
+                }}
+            >
+              <PaypalWrapper
+                  currency={"USD"}
+                  pay={pay}
+                  
+              />
+            </PayPalScriptProvider>
+            </div>
         </div>
     </div>
     
   )
 }
+

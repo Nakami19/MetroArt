@@ -3,11 +3,14 @@ import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { ComentContainer } from '../../Components/ComentContainer/ComentContainer'
 import { useTours } from '../../hooks/useTours';
 import { Navigate, useNavigate, useParams } from 'react-router';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function TourDetailsPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+    const navigate = useNavigate();
     let component=<><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
     <p>Disponible</p></>;
     let rating=0;
@@ -22,8 +25,13 @@ export function TourDetailsPage() {
     }
 
     useEffect(()=>{
-        getOneTour(tourId);
-    },[])
+
+        getOneTour(tourId,firebaseToursData.data_tour); 
+    },[firebaseToursData])
+
+    const handleReserva= ()=>{
+        navigate(`/reserve/${tour.id}`)
+    }
 
     
     
@@ -35,10 +43,10 @@ export function TourDetailsPage() {
             </>
         )
     } else if (!isLoading && tour.obras) {
+
         // tour.obras.autor.map((autor)=>{
         //     autores+=autor+"\n"
         // })
-        console.log(tour.disponible)
         if(!tour.disponible) {
             console.log('a')
             component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>

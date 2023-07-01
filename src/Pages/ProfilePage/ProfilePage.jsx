@@ -13,6 +13,7 @@ import {
   } from 'firebase/firestore';
 import { useState, useEffect } from "react";
 import { useUsers } from "../../hooks/useUsers";
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ProfilePage() {
 
@@ -35,12 +36,12 @@ export function ProfilePage() {
     const [disableName, setDisableName] = useState(true);
     const [disableEmail, setDisableEmail] = useState(true);
     const [style, setStyle] = useState("hidden");
-
+    const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     const {usuarios, getUsuarios} = useUsers()
 
     useEffect(()=>{
-      getUsuarios();
-    },[])
+      getUsuarios(firebaseUsersData.data_user);
+    },[firebaseUsersData])
 
     useEffect(() => {
         const userDocRef = doc(db, "users", user.id);
@@ -59,7 +60,13 @@ export function ProfilePage() {
 
       const handleUpload = async (e) => {
         const file = e.target.files[0];
-        const code = uuidv4();
+        const fileName = file.name
+        const extension = fileName.substr(fileName.lastIndexOf("."))
+        const allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png)$/i
+        const isAllowed = allowedExtensionsRegx.test(extension)
+        console.log(isAllowed)
+        if(isAllowed){
+            const code = uuidv4();
         const storageRef = ref(storage, `perfil-imagenes/${file.name+" "+code}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on("state_changed", null, null, () => {
@@ -69,7 +76,12 @@ export function ProfilePage() {
                   setImagenFirebase(downloadUrl);
               });
           });
-        });};
+        });
+        }
+        else {
+            alert("Tipo de archivo invalido!")
+        }
+        };
 
 
     const editUser = (event) => {
@@ -265,13 +277,13 @@ export function ProfilePage() {
             
                 <div className="carousel carousel-center w-full p-4 space-x-4 rounded-box overflow-y-visible">
                     <div className="carousel-item">
-                     <ReserveCard/>
-                    </div>
-                    <div className="carousel-item">
-                     <ReserveCard/>
-                    </div>
-                    <div className="carousel-item">
-                     <ReserveCard/>
+                        {user.reservas.map((reserva)=>{
+                            return(
+                              <ReserveCard reserva={reserva} key={reserva.id_tour} />  
+                            )
+
+                        })}
+                    
                     </div>
                 </div>
 

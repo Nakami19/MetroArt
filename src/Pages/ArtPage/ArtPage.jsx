@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { useArts } from '../../hooks/useArts'
 import { useUserContext } from '../../contexts/UserContext'
+import { useGlobalContext } from '../../contexts/GlobalContext'
+// import { firebaseArtsData, loadArtsFromFirebase } from '../../firebase/data'
+
 
 
 
@@ -11,18 +14,24 @@ export function ArtPage() {
     const { user, isLoadingUser } = useUserContext(); 
     const [buscar, setBuscar]=useState("");
     const [filtro, setFiltro]=useState("Nombre de obra");
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     let isAdmin = false;
 
+    // useEffect(()=>{
+    //     loadArtsFromFirebase()
+    // },[])
+
     useEffect(()=>{
-        getArts();
-    },[])
+
+        getArts(firebaseArtsData.data_art);
+    },[firebaseArtsData])
 
     useEffect(()=>{},[buscar])
 
     const handleChange= (e)=>{
         const ey=e.target.value
         setBuscar(ey);
-        getSearchArt(ey,filtro);     
+        getSearchArt(ey,filtro, firebaseArtsData.data_art);     
     }
     const handlerBuscar= (e)=> {
         const option=e.target.value

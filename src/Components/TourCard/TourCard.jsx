@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TOURDETAILS_URL } from '../../constants/url'
 import { DeleteTour } from '../../firebase/info'
 
 
