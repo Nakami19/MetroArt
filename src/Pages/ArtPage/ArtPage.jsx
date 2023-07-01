@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { useArts } from '../../hooks/useArts'
 import { useUserContext } from '../../contexts/UserContext'
+import { firebaseArtsData, loadArtsFromFirebase } from '../../firebase/data'
+
 
 
 
@@ -12,6 +14,10 @@ export function ArtPage() {
     const [buscar, setBuscar]=useState("");
     const [filtro, setFiltro]=useState("Nombre de obra");
     let isAdmin = false;
+
+    useEffect(()=>{
+        loadArtsFromFirebase()
+    },[])
 
     useEffect(()=>{
         getArts();

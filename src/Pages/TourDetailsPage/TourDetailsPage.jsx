@@ -44,7 +44,6 @@ export function TourDetailsPage() {
         // tour.obras.autor.map((autor)=>{
         //     autores+=autor+"\n"
         // })
-        console.log(tour.disponible)
         if(!tour.disponible) {
             console.log('a')
             component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>

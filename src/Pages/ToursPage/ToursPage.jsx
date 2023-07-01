@@ -4,6 +4,7 @@ import { useTours } from '../../hooks/useTours'
 import { useUserContext } from '../../contexts/UserContext'
 import { Link } from 'react-router-dom'
 import { ADDTOUR_URL } from '../../constants/url'
+import { firebaseToursData, loadToursFromFirebase } from '../../firebase/data'
 
 export function ToursPage() {
     const {tours, getTours, getSearchTours} =useTours()
@@ -13,8 +14,12 @@ export function ToursPage() {
     let isAdmin = false;
 
     useEffect(()=>{
+        loadToursFromFirebase()
+    },[])
+
+    useEffect(()=>{
         getTours();
-    },[tours])
+    },[])
 
     useEffect(()=>{},[buscar])
 
