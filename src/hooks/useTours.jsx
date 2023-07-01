@@ -20,7 +20,7 @@ export function useTours() {
         setLoading(true)
         // const toure= await getToursDocuments();
         tourDocuments.map((one)=>{
-            if (one.id==TourId) {
+            if (one.id==TourId || one.generated_id==TourId) {
                setTour(one)
             }  
         })

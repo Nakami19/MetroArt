@@ -277,13 +277,13 @@ export function ProfilePage() {
             
                 <div className="carousel carousel-center w-full p-4 space-x-4 rounded-box overflow-y-visible">
                     <div className="carousel-item">
-                     <ReserveCard/>
-                    </div>
-                    <div className="carousel-item">
-                     <ReserveCard/>
-                    </div>
-                    <div className="carousel-item">
-                     <ReserveCard/>
+                        {user.reservas.map((reserva)=>{
+                            return(
+                              <ReserveCard reserva={reserva} key={reserva.id_tour} />  
+                            )
+
+                        })}
+                    
                     </div>
                 </div>
 

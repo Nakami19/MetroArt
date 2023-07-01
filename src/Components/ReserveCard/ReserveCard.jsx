@@ -1,18 +1,29 @@
 
 
 
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useTours } from '../../hooks/useTours'
+import { useGlobalContext } from '../../contexts/GlobalContext'
 
-export function ReserveCard() {
+export function ReserveCard({reserva}) {
+  const {tour, getOneTour, isLoading}=useTours();
+  const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+
+  useEffect(()=>{
+    getOneTour(reserva.id_tour,firebaseToursData.data_tour)
+
+  },[firebaseToursData])
+
+
   
   return (
 <div className='block'>
         <a href='#a' className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow mt-6 lg:max-w-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-            <img className="object-cover lg:w-2/5 md: w-full rounded-t-lg lg:h-64 md: h-36 md:w-full md:rounded-none md:rounded-l-lg" src="https://www.unimet.edu.ve/wp-content/uploads/2020/10/Campus-galer%C3%ADa.jpg" alt=""/>
+            <img className="object-cover lg:w-2/5 md: w-full rounded-t-lg lg:h-64 md: h-36 md:w-full md:rounded-none md:rounded-l-lg" src={tour.url} alt=""/>
             <div className="w-3/4 flex flex-col justify-between p-4 leading-normal">
-                <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-raleway">Paseo de Esculturas</h5>
-                <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: </p>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Hora: </p>
+                <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-raleway">{tour.name}</h5>
+                <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: {reserva.fecha} </p>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Hora: {reserva.horario} </p>
                 
                 
             </div>
