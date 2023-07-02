@@ -16,9 +16,11 @@ export function useArts() {
     }
 
     const getOneArt= async (artId, artDocuments)=> {
+        
         setLoading(true);
         // const obras=await getArtDocuments();
         artDocuments.map((one)=>{
+            console.log(artId + " < Id > "+ one.id)
             if(one.id==artId) {
               setArt(one);  
             }

@@ -21,6 +21,8 @@ export function ArtCard({obra, user}) {
     // DeleteTour(tour.generated_id, firebaseUsersData.data_user)
 }
 
+// console.log(obra.id)
+
 
   if (!user  || user.usertype == "Visitante"){
 

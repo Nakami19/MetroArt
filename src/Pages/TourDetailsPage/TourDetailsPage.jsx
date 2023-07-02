@@ -103,6 +103,7 @@ export function TourDetailsPage() {
         <div className='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 lg:h-80 lg:gap-10 overflow-y-scroll h-fit'>
             {
             tour.obras.map((obra)=>{
+                console.log(obra.id)
                 return (
                     <ArtCard obra={obra} key={obra.id}/>
                 )
