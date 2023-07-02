@@ -27,11 +27,12 @@ export function AddArtworkPage() {
     const [titulo, setTitulo] = useState("...");
     const [imageUrl, setImageUrl] = useState("");
     const [autor, setautor]= useState([""]);
-    const navigate=useNavigate()    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({});
     const newErrors = {};
 
 
 
+    const navigate=useNavigate()
     const handleinputchange=(e, index)=>{
         
         const list= [...autor];
@@ -73,7 +74,8 @@ export function AddArtworkPage() {
                 });
             });
         }else {
-            window.alert("Tipo de archivo invalido!")
+            newErrors.archivo = "Tipo de archivo inválido";
+            setErrors(newErrors);
         }
     };
     
@@ -122,23 +124,20 @@ export function AddArtworkPage() {
         e.preventDefault();
 
 
-        if(nombre == '' || ubicacion=='' || tipo =='' || fecha =='' || descripcion ==''){
+        if(nombre == '' || ubicacion=='' || tipo =='' || fecha =='' || descripcion =='' || autor[0]=="" || imageUrl==""){
             
-            newErrors.vacio = "Evite dejar campos vacíos";
-
-            autor.map((a) => {
-                if(a=="" ) {
+            if (imageUrl == "") {
+                newErrors.vacio = "Por favor cargue una imagen para la obra"
+            }else {
                 newErrors.vacio = "Evite dejar campos vacíos";
             }
-            })
-
-            console.log(autor)
+        
             if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
-        } else {
-            setErrors({});
-        }
+            } else {
+                setErrors({});
+            }
         
         } else {
 
@@ -166,6 +165,15 @@ export function AddArtworkPage() {
             <div className="alert alert-error mt-5 font-montserrat">
             <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span>{errors.vacio}</span>
+            </div>
+            </div>
+        )
+        }
+        {errors.archivo && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.archivo}</span>
             </div>
             </div>
         )
