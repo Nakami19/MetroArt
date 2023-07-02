@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
 import { COMPLETE_URL , LOGIN_URL, HOME_URL, TOURS_URL} from "../../constants/url";
-import styles from "./SemiPrivateRoute.module.css";
 import { useState, useEffect } from "react";
 import {
   doc,

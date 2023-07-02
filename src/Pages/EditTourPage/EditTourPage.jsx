@@ -26,6 +26,7 @@ export function EditTourPage() {
     const [descriptionValue, setDescriptionValue] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+    const newErrors = {};
     const [filename, setFilename] = useState("");
 
         useEffect(()=>{

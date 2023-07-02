@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
 import { LOGIN_URL , COMPLETE_URL} from "../../constants/url";
-import styles from "./PrivateRouteAdmin.module.css";
 import { useState, useEffect } from "react";
 import {
   doc,
