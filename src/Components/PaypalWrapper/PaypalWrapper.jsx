@@ -23,7 +23,7 @@ export function PaypalWrapper ({ currency, pay}) {
         style={{"layout":"vertical","label":"donate", 'color':'silver'}}
         disabled={false}
         forceReRender={[pay]}
-        onApprove={alert("Transaccion completada")}
+        onApprove={() =>{alert("Transaccion completada")}}
         createOrder={(data, actions) => {
             return actions.order
                 .create({
