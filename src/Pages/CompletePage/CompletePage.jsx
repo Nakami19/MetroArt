@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore';
 import { useUserContext } from '../../contexts/UserContext';
 import { db } from '../../firebase/config';
+import { useGlobalContext } from "../../contexts/GlobalContext";
 
 
 export function CompletePage() {
@@ -18,17 +19,19 @@ export function CompletePage() {
   
   const { user, isLoadingUser } = useUserContext(); 
   const {usuarios, getUsuarios} = useUsers()
+  const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
+
 
   useEffect(()=>{
-    getUsuarios();
-  },[])
+    getUsuarios(firebaseUsersData.data_user);
+  },[firebaseUsersData])
 
 
 
   const [errors, setErrors] = useState({
     usertype: "",
   });  const navigate = useNavigate();
-  const [formData, setData] = useState({});
+  const [formData, setData] = useState({usertype: "" });
 
   const newErrors = {};
   const profilecollection = collection(db, 'users');
@@ -106,8 +109,8 @@ export function CompletePage() {
                                 <label className="text-sm font-medium leading-none text-gray-800 font-montserrat">
                                     Tipo de usuario
                                 </label>
-                                <select className="select w-full bg-gray-200 mt-2" onChange={onChange} id="usertype" name="usertype" >
-                                    <option></option>
+                                <select value={formData.usertype} className="select w-full bg-gray-200 mt-2" onChange={onChange} id="usertype" name="usertype" >
+                                <option value="" disabled defaultValue>Pulsa aquí para seleccionar su tipo de usuario</option>
                                     <option>Visitante</option>
                                     <option>Administrador</option>
                                 </select>

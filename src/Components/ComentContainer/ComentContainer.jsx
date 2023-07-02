@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useGlobalContext } from '../../contexts/GlobalContext'
+import { useUsers } from '../../hooks/useUsers'
 
 export function ComentContainer({comment}) {
+
+    const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
+    const {comentUser, getCommentUser}=useUsers()
+
+    useEffect(()=>{
+        getCommentUser(comment.user, firebaseUsersData.data_user)
+    },[firebaseUsersData])
+
   return (
     <div className='bg-white border border-[#29487D] rounded-xl flex flex-col gap-2 w-full p-4 text-xs font-montserrat'>
                     <div className='flex items-center justify-between'>
                         <div className='flex items-center gap-1'>
                             <div className="avatar">
                                 <div className="w-6 rounded-full">
-                                    <img src="https://images.pexels.com/photos/3775168/pexels-photo-3775168.jpeg?auto=compress&cs=tinysrgb&w=600" />
+                                    <img src={comentUser.url} />
                                 </div>
                             </div>
-                            <p className='font-bold text-[#29487D]'>{comment.user}</p>
+                            <p className='font-bold text-[#29487D]'>{comentUser.name}</p>
                         </div>
                         <div>{comment.rating} Estrellas</div>
                     </div>

@@ -4,17 +4,20 @@ import { useTours } from '../../hooks/useTours'
 import { useUserContext } from '../../contexts/UserContext'
 import { Link } from 'react-router-dom'
 import { ADDTOUR_URL } from '../../constants/url'
+import { useGlobalContext } from '../../contexts/GlobalContext'
 
 export function ToursPage() {
-    const {tours, getTours, getSearchTours} =useTours()
+    const {tours, getTours, getSearchTours, isLoading} =useTours()
     const { user, isLoadingUser } = useUserContext(); 
     const [filtro, setFiltro]=useState("Nombre de tour");
     const [buscar, setBuscar]=useState("");
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     let isAdmin = false;
 
     useEffect(()=>{
-        getTours();
-    },[tours])
+
+        getTours(firebaseToursData.data_tour);
+    },[firebaseToursData])
 
     useEffect(()=>{},[buscar])
 
@@ -36,7 +39,7 @@ export function ToursPage() {
     const handleChange= (e)=>{
         const ey=e.target.value
         setBuscar(ey)
-        getSearchTours(ey, filtro)
+        getSearchTours(ey, filtro,firebaseToursData.data_tour)
             
     }
     let componet= <div className='p-6'>
@@ -62,6 +65,15 @@ export function ToursPage() {
 
 useEffect(()=> {
     },[buscar])
+
+
+    if(isLoading) {
+        return (
+            <div className="flex text-center justify-center content-center min-h-screen">
+            <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        )
+    }
         return (
             <>
                 <div className="join flex justify-center p-6 xl:p-8">

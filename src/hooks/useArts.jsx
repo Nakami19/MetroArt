@@ -8,17 +8,17 @@ export function useArts() {
     const [art, setArt]=useState([]);
     const [isLoading, setLoading]=useState(false); 
 
-    const getArts= async ()=> {
+    const getArts= async (artDocuments)=> {
         setLoading(true)
-        const obra= await getArtDocuments();
-        setArts(obra);
+        // const obra= await getArtDocuments();
+        setArts(artDocuments);
         setLoading(false)
     }
 
-    const getOneArt= async (artId)=> {
+    const getOneArt= async (artId, artDocuments)=> {
         setLoading(true);
-        const obras=await getArtDocuments();
-        obras.map((one)=>{
+        // const obras=await getArtDocuments();
+        artDocuments.map((one)=>{
             if(one.id==artId) {
               setArt(one);  
             }
@@ -26,9 +26,9 @@ export function useArts() {
         setLoading(false);
     }
 
-    const getSearchArt=async (busqueda, option)=>{
+    const getSearchArt=async (busqueda, option, obra)=>{
         let coincide=[];
-        const obra= await getArtDocuments();
+        // const obra= await getArtDocuments();
         busqueda=busqueda.toLowerCase();
         if (option=="Nombre de obra" && busqueda!="" ){
             obra.map((one)=>{

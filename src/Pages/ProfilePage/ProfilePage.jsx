@@ -13,6 +13,7 @@ import {
   } from 'firebase/firestore';
 import { useState, useEffect } from "react";
 import { useUsers } from "../../hooks/useUsers";
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ProfilePage() {
 
@@ -35,12 +36,28 @@ export function ProfilePage() {
     const [disableName, setDisableName] = useState(true);
     const [disableEmail, setDisableEmail] = useState(true);
     const [style, setStyle] = useState("hidden");
-
+    const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     const {usuarios, getUsuarios} = useUsers()
 
+
+    const slideLeft = () => {
+        var slider = document.getElementById('slider');
+        slider.scrollLeft = slider.scrollLeft - 500;
+      };
+    
+      const slideRight = () => {
+        var slider = document.getElementById('slider');
+        slider.scrollLeft = slider.scrollLeft + 500;
+      };
+
+
     useEffect(()=>{
-      getUsuarios();
-    },[])
+      getUsuarios(firebaseUsersData.data_user);
+    },[firebaseUsersData])
+    useEffect(()=>{
+        if (isAdmin){
+        setDivPerfil(' lg:w-full md: w-full lg:min-h-screen p-3')}
+      },[isLoadingUser])
 
     useEffect(() => {
         const userDocRef = doc(db, "users", user.id);
@@ -59,7 +76,13 @@ export function ProfilePage() {
 
       const handleUpload = async (e) => {
         const file = e.target.files[0];
-        const code = uuidv4();
+        const fileName = file.name
+        const extension = fileName.substr(fileName.lastIndexOf("."))
+        const allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png)$/i
+        const isAllowed = allowedExtensionsRegx.test(extension)
+        console.log(isAllowed)
+        if(isAllowed){
+            const code = uuidv4();
         const storageRef = ref(storage, `perfil-imagenes/${file.name+" "+code}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on("state_changed", null, null, () => {
@@ -69,7 +92,12 @@ export function ProfilePage() {
                   setImagenFirebase(downloadUrl);
               });
           });
-        });};
+        });
+        }
+        else {
+            alert("Tipo de archivo invalido!")
+        }
+        };
 
 
     const editUser = (event) => {
@@ -151,6 +179,8 @@ export function ProfilePage() {
 
       };
 
+
+
     if(!isLoadingUser){
         try{
             if(user.usertype == "Administrador"){
@@ -181,7 +211,25 @@ export function ProfilePage() {
             <input hidden={true} type="file" name="button2" id="button2" onChange={handleUpload} accept="image/png, image/jpeg, image/jpg"/>
         </div>
 
+        {errors.name && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.name}</span>
+            </div>
+            </div>
+        )
+        }
         
+        {errors.fullname && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.fullname}</span>
+            </div>
+            </div>
+        )
+        }
         
         <div className='min-h-screen lg:flex lg:mt-14 md: mt-8'>
 
@@ -204,27 +252,27 @@ export function ProfilePage() {
                                     Username
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                    <input  id= "name" type="text" placeholder={"@"+nombreusuario} value={formData.name} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableUser} name="name" onChange={onChange}/>
-                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editUser}/></button></div>
+                                    <input  id= "name" type="text" placeholder={"@"+nombreusuario} value={formData.name} className="input input-sm w-5/6 disabled:bg-white disabled:placeholder:text-black" disabled={disableUser} name="name" onChange={onChange}/>
+                                    <button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editUser}/></button>
                                 </dd>
                             </div>
-                            {errors.name && (<p className="ml-3 text-red-500 text-xs mt-1">{errors.name}</p>)}
+                            
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     Nombre
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                <input  id= "fullname" type="text" placeholder={nombrecompleto} value={formData.fullname} className="input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableName} name="fullname" onChange={onChange}/>
-                                    <div className='badge'><button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editName}/></button></div>
+                                <input  id= "fullname" type="text" placeholder={nombrecompleto} value={formData.fullname} className="input input-sm w-5/6 disabled:bg-white disabled:placeholder:text-black" disabled={disableName} name="fullname" onChange={onChange}/>
+                                    <button><img  className="w-6" src="https://svgsilh.com/svg/1294842.svg" onClick={editName}/></button>
                                 </dd>
                             </div>
-                            {errors.fullname && (<p className=" ml-3 text-red-500 text-xs mt-1">{errors.fullname}</p>)}
+                            
                             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 font-montserrat">
                                 <dt className="text-sm font-medium text-gray-500">
                                     E-mail
                                 </dt>
                                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-montserrat flex flex-wrap justify-between">
-                                <input type="text" placeholder={correousuario} className="placeholder:truncate input input-sm max-w-xs disabled:bg-white disabled:placeholder:text-black" disabled={disableEmail}/>
+                                <input type="text" placeholder={correousuario} className="placeholder:truncate input input-sm w-5/6 disabled:bg-white disabled:placeholder:text-black" disabled={disableEmail}/>
                                 </dd>
                             </div>
                             
@@ -243,19 +291,22 @@ export function ProfilePage() {
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             
-                <div className="carousel carousel-center w-full p-4 space-x-4 rounded-box overflow-y-visible">
-                    <div className="carousel-item">
-                     <ReserveCard/>
-                    </div>
-                    <div className="carousel-item">
-                     <ReserveCard/>
-                    </div>
-                    <div className="carousel-item">
-                     <ReserveCard/>
+            <div className='flex'>
+                <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideLeft} size={40}> ❮</div>
+                <div id='slider' className="carousel carousel-center h-[50vh] w-full p-4 space-x-4 rounded-box overflow-y-visible snap-none">
+                    <div className="carousel-item p-3">
+                        {user.reservas.map((reserva)=>{
+                            return(
+                              <ReserveCard reserva={reserva} key={reserva.id_tour} />  
+                            )
+
+                        })}
+                    
                     </div>
                 </div>
-
+                <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideRight} size={40}> ❯ </div>
                </div>
+            </div>
             )}
 
            

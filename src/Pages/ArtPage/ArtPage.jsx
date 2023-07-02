@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { useArts } from '../../hooks/useArts'
 import { useUserContext } from '../../contexts/UserContext'
+import { useGlobalContext } from '../../contexts/GlobalContext'
+// import { firebaseArtsData, loadArtsFromFirebase } from '../../firebase/data'
+
 
 
 
@@ -10,18 +14,21 @@ export function ArtPage() {
     const { user, isLoadingUser } = useUserContext(); 
     const [buscar, setBuscar]=useState("");
     const [filtro, setFiltro]=useState("Nombre de obra");
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     let isAdmin = false;
 
+
     useEffect(()=>{
-        getArts();
-    },[])
+
+        getArts(firebaseArtsData.data_art);
+    },[firebaseArtsData])
 
     useEffect(()=>{},[buscar])
 
     const handleChange= (e)=>{
         const ey=e.target.value
         setBuscar(ey);
-        getSearchArt(ey,filtro);     
+        getSearchArt(ey,filtro, firebaseArtsData.data_art);     
     }
     const handlerBuscar= (e)=> {
         const option=e.target.value
@@ -38,11 +45,11 @@ export function ArtPage() {
         </div>
 
     if(arts.length>0) {
-        componet=<div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-6 xl:grid-cols-7'>
+        componet=<div className='grid grid-cols-2 gap-4 p-6 md:grid-cols-4 justify-items-center lg:grid-cols-5 xl:grid-cols-6'>
         {
             arts.map((obra)=>{
                     return (
-                        <ArtCard obra={obra} key={obra.id}/>
+                        <ArtCard obra={obra} user={user} key={obra.id}/>
                     )
                 })
             }
@@ -51,14 +58,13 @@ export function ArtPage() {
 
     
 
-    if(isLoading) {
+    if(isLoadingUser) {
         return (
-            <>
-            <span className="loading loading-spinner loading-lg position"></span>
-            
-            </>
+            <div className="flex text-center justify-center content-center min-h-screen">
+            <span className="loading loading-spinner loading-lg"></span>
+            </div>
         )
-    } else if (!isLoading) {
+    } else if (!isLoadingUser) {
         
      
     return (
@@ -75,8 +81,11 @@ export function ArtPage() {
                     <option>Ubicación</option>
                 </select>
             </div>
-            <div className='p-6 flex gap-3'>
+            <div className='p-6 flex gap-3 mx-5'>
                 <h1 className='font-raleway font-bold text-[#C14C00] text-2xl'>Obras</h1>
+                <Link to={'/addartwork'}>
+                <button className='btn btn-sm text-xs normal-case font-montserrat bg-[#001A72] text-white'>Agregar obra</button>
+                </Link>
                  
             </div>
             {componet}

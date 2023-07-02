@@ -7,6 +7,7 @@ import { updateDoc } from '@firebase/firestore';
 import { UpdateTour } from '../../firebase/info';
 import { Link, useNavigate } from "react-router-dom";
 import { TOURS_URL } from '../../constants/url';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function EditTourPage() {
 
@@ -20,6 +21,7 @@ export function EditTourPage() {
     const [nameValue, setNameValue] = useState();
     const [durationValue, setDurationValue] = useState();
     const [descriptionValue, setDescriptionValue] = useState();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
 
         useEffect(()=>{
             try{
@@ -83,7 +85,6 @@ export function EditTourPage() {
                 reviews: tour.reviews,
                 url: tour.url,
             }
-            console.log(data)
             const aaaa = UpdateTour(data, tour.generated_id)
     
         }
@@ -97,16 +98,12 @@ export function EditTourPage() {
         setBuscar(ey);
         getSearchArt(ey,filtro);     
     }
-    const handlerBuscar= (e)=> {
-        const option=e.target.value
-        setFiltro(option)
-    }
 
 
     useEffect(()=>{
-        getOneTour(tourId);
-        getArts()
-    },[])
+        getOneTour(tourId,firebaseToursData.data_tour);
+        getArts(firebaseArtsData.data_art)
+    },[firebaseToursData, firebaseArtsData])
 
 
     
@@ -120,7 +117,6 @@ export function EditTourPage() {
         )
     } else if (!isLoading && tour.obras) {
 
-        console.log(checkedValues)
         
         
         return (
@@ -196,7 +192,7 @@ export function EditTourPage() {
                                 })
                             
                                 return (
-                                    <li>
+                                    <li key={art.id}>
                                         <div className="flex items-center p-2 rounded hover:bg-gray-100">
                                         <input id="checkbox-item-11" defaultChecked={si} type="checkbox" value={art.nombre} onChange={handleChangeInput} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
                                         <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>
