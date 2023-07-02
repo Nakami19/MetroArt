@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../contexts/UserContext';
 import { UpdateTour } from '../../firebase/info';
 import { PROFILE_URL } from '../../constants/url';
+import {updateDoc } from "firebase/firestore";
 
 export function ReserveCard({reserva}) {
   const {tour, getOneTour, isLoading}=useTours();
@@ -14,6 +15,8 @@ export function ReserveCard({reserva}) {
   const { user, isLoadingUser } = useUserContext(); 
   const navigate = useNavigate();
   const [fecha, setFecha]=useState();
+  const newErrors = {};
+  const [errors, setErrors] = useState({})
 
   useEffect(()=>{
     getOneTour(reserva.id_tour,firebaseToursData.data_tour)
@@ -60,8 +63,17 @@ export function ReserveCard({reserva}) {
     return id;
   }
 
-  const handleEnviar=()=>{
+  const handleEnviar=(e)=>{
+    e.preventDefault();
     let comment=tour.feedbacks;
+    if (comentario == "") {
+      newErrors.commented = "No puede dejar este campo vacio";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
     const id=generarIdTicket();
     comment.push({
       user: user.id,
@@ -84,7 +96,12 @@ export function ReserveCard({reserva}) {
       url: tour.url,
   }
     const aaa= UpdateTour(data, tour.generated_id)
-    navigate(PROFILE_URL)
+    aaa.then(() => {
+      navigate(PROFILE_URL);
+      window.location.reload();
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
 
@@ -128,9 +145,10 @@ let modal=<>
                     <label className="label mt-5">
                         <span className="label-text font-montserrat">Comentario</span>
                     </label>
-                    <textarea placeholder="Escribe aquí" className="textarea textarea-bordered w-full " onChange={handleChangeText}/>
+                    <textarea placeholder="Escribe aquí" className="textarea textarea-bordered w-full " name="commented" onChange={handleChangeText}/>
                     
                     </div>
+                    {errors.commented && (<p className="text-red-500 text-xs mt-1">{errors.commented}</p>)}
             <div className="modal-action">
             <a href="#" className="btn normal-case" onClick={handleEnviar}>Enviar</a>
             </div>
