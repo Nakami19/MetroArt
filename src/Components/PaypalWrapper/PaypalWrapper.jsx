@@ -52,7 +52,6 @@ export function PaypalWrapper ({ currency, pay}) {
                     ],
                 })
                 .then((orderId) => {
-                    alert("PAGADO POR PAYPAL")
                     return orderId;
                 });
         }}
