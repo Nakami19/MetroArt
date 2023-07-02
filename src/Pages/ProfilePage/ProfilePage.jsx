@@ -291,7 +291,9 @@ export function ProfilePage() {
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             
-                <div id='slider' className="carousel carousel-center w-full p-4 space-x-4 rounded-box overflow-y-visible snap-none">
+            <div className='flex'>
+                <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideLeft} size={40}> ❮</div>
+                <div id='slider' className="carousel carousel-center h-[50vh] w-full p-4 space-x-4 rounded-box overflow-y-visible snap-none">
                     <div className="carousel-item p-3">
                         {user.reservas.map((reserva)=>{
                             return(
@@ -302,11 +304,9 @@ export function ProfilePage() {
                     
                     </div>
                 </div>
-                <div className='flex justify-between'>
-                    <div className='opacity-50 cursor-pointer hover:opacity-100' onMouseEnter={slideLeft} size={40}> ❮</div>
-                    <div className='opacity-50 cursor-pointer hover:opacity-100' onMouseEnter={slideRight} size={40}> ❯ </div>
+                <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideRight} size={40}> ❯ </div>
                </div>
-               </div>
+            </div>
             )}
 
            

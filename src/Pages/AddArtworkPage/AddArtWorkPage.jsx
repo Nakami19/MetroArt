@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Link } from 'react-router-dom'
 import {
   doc,
@@ -32,20 +32,22 @@ export function AddArtworkPage() {
         const list= [...autor];
         list[index]= e.target.value;
         setautor(list);
-        console.log(autor)
+     
 
     }
+
     
     const handleremove= index=>{
         const list=[...autor];
+        if (index>0){
         list.splice(index);
         setautor(list);
-        console.log(autor);
+        }
     }
 
     const handleaddclick=()=>{ 
         setautor([...autor, ""]);
-        console.log(autor);
+
     }
   
     const handleUpload = async (e) => {
@@ -86,6 +88,7 @@ export function AddArtworkPage() {
         setTipo('');
         setUbicacion('');
         setImageUrl('');
+        setTitulo('');
 
         } catch (error) {
         console.error(error);

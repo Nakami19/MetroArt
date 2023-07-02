@@ -60,6 +60,10 @@ export const DeleteTour=async (id,users) => {
     //await deleteDoc(doc(db, "tours", id));
 }
 
+export const deleteArt=async (id) => {
+    await deleteDoc(doc(db, "obras", id));
+}
+
 export const getArtDocuments=async () => {
     let obrass=[];
     // const arts= collection(db, "obras");
