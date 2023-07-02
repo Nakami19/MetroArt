@@ -43,6 +43,7 @@ export function ReservationPage() {
 
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateSelect = (date) => {
+      console.log("aaa "+ date)
         setSelectedDate(date); 
 
       };
@@ -56,7 +57,36 @@ export function ReservationPage() {
       getOneTour(tourId,firebaseToursData.data_tour); 
   },[firebaseToursData])
 
-    const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
+  function generarIdTicket() {
+    const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numeros = '0123456789';
+    let id = '';
+  
+    // Agregar una letra aleatoria en una posición aleatoria
+    const posicionLetra = Math.floor(Math.random() * 7);
+    const letraAleatoria = letras.charAt(Math.floor(Math.random() * letras.length));
+    id += id.length === posicionLetra ? letraAleatoria : numeros.charAt(Math.floor(Math.random() * numeros.length));
+  
+    // Agregar un número aleatorio en una posición aleatoria diferente a la anterior
+    let posicionNumero = Math.floor(Math.random() * 5);
+    while (posicionNumero === posicionLetra) {
+      posicionNumero = Math.floor(Math.random() * 5);
+    }
+    const numeroAleatorio = numeros.charAt(Math.floor(Math.random() * numeros.length));
+    id += id.length === posicionNumero ? numeroAleatorio : letras.charAt(Math.floor(Math.random() * letras.length));
+  
+    // Agregar caracteres alfanuméricos aleatorios en las posiciones restantes
+    for (let i = 0; i < 5; i++) {
+      if (i !== posicionLetra && i !== posicionNumero) {
+        const caracterAleatorio = Math.random() < 0.5 ? letras.charAt(Math.floor(Math.random() * letras.length)) : numeros.charAt(Math.floor(Math.random() * numeros.length));
+        id += caracterAleatorio;
+      }
+    }
+  
+    return id;
+  }
+
+    const formattedFecha = dayjs(selectedDate).format('M/D/YYYY');
 
     
     const handleConfirmar= async (event)=>{
@@ -85,11 +115,12 @@ export function ReservationPage() {
           }
           setErrors({ fecha: '', horario: '' })
         
-
+        const id=generarIdTicket();
         const reserva = {
           id_tour: tour.generated_id,
           fecha: formattedFecha,
           horario: formData.horario,
+          id: id,
           comentado: false,
         }
         

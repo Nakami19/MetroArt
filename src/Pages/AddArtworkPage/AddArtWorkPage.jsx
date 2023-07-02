@@ -82,10 +82,6 @@ export function AddArtworkPage() {
       // ADD FUNCTION
     async function addArt() {
 
-
-
-
-        
         const newArt = {
         autor,
         descripcion,
@@ -119,11 +115,7 @@ export function AddArtworkPage() {
 
 
         /////////////////////////VALIDACIONES
-
-
         e.preventDefault();
-
-
         if(nombre == '' || ubicacion=='' || tipo =='' || fecha =='' || descripcion =='' || autor[0]=="" || imageUrl==""){
             
             if (imageUrl == "") {

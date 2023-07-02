@@ -299,8 +299,9 @@ export function ProfilePage() {
                 <div id='slider' className="carousel carousel-center h-[50vh] w-full p-4 space-x-4 rounded-box overflow-y-visible snap-none">
                     <div className="carousel-item p-3">
                         {misreservas.map((reserva)=>{
+                            
                             return(
-                              <ReserveCard reserva={reserva} key={reserva.id_tour} />  
+                              <ReserveCard reserva={reserva} key={reserva.id} />  
                             )
 
                         })}

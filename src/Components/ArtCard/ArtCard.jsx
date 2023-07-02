@@ -22,6 +22,7 @@ export function ArtCard({obra, user}) {
 }
 
 
+
   if (!user  || user.usertype == "Visitante"){
 
   return (

@@ -127,7 +127,7 @@ export function TourDetailsPage() {
                 {
                     tour.feedbacks.map((comment)=>{
                         return (
-                           <ComentContainer comment={comment} key={comment.comment}/>  
+                           <ComentContainer comment={comment} key={comment.id}/>  
                         )
                         
                     })
