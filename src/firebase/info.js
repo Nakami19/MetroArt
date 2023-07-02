@@ -41,6 +41,10 @@ export const DeleteTour=async (id) => {
     await deleteDoc(doc(db, "tours", id));
 }
 
+export const deleteArt=async (id) => {
+    await deleteDoc(doc(db, "obras", id));
+}
+
 export const getArtDocuments=async () => {
     loadArtsFromFirebase()
     let obrass=[];

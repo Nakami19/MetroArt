@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ARTDETAIL_URL } from '../../constants/url'
+import { deleteArt } from '../../firebase/info';
 
 export function ArtCard({obra, user}) {
   let autores="";
@@ -40,7 +41,7 @@ export function ArtCard({obra, user}) {
                       </Link>
                   </div>
                   <div>
-                      <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</button>
+                      <a href="#my_modal_8" className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</a>
                   </div>
             </div>   
                 <img src={obra.url}/>
@@ -49,6 +50,26 @@ export function ArtCard({obra, user}) {
             <p className='font-bold text-justify'>{obra.nombre}</p>
             <p className='font-baskervville'>{autores}</p>
             <p className='font-baskervville'>{obra.tipo}, {obra.fecha}</p> 
+
+
+            <div className="modal" id="my_modal_8">
+            <div className="modal-box font-montserrat">
+                <h3 className="font-bold text-lg">¿Estás seguro?</h3>
+                <p className="py-4">Los cambios no son reversibles</p>
+                <div className="modal-action">
+
+                    <a href="#" className="btn normal-case" onClick={()=>{deleteArt(obra.id)}}>Sí, estoy seguro</a>
+
+                    <a href="#" className="btn normal-case">Cancelar</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
     </div>
 
   )}

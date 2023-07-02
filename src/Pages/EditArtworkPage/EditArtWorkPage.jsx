@@ -46,10 +46,11 @@ export function EditArtworkPage() {
 
     const handleremove= index=>{
         const list=[...art.autor];
+        if (index>0){
         list.splice(index);
         art.autor = list;
         setautor(art.autor);
-        
+        }
     }
 
     const handleaddclick=()=>{ 
@@ -71,11 +72,20 @@ export function EditArtworkPage() {
        setUbicacion(art.ubicacion)
        setImageUrl(art.url)
 
-    },[isLoading]);
+    },[art]);
+
 
 
 // EDIT FUNCTION
 async function updateArt() {
+    setautor(art.autor);
+       setDescripcion(art.descripcion)
+       setNombre(art.nombre)
+       setTitulo(art.nombre)
+       setFecha(art.fecha)
+       setTipo(art.tipo)
+       setUbicacion(art.ubicacion)
+       setImageUrl(art.url)
         
         const newArt = {
             autor,
@@ -88,6 +98,7 @@ async function updateArt() {
             url: imageUrl,
            
             }
+            console.log(newArt)
             try {
             const artRef = doc(artcollection, artId);
             await setDoc(artRef, newArt);} catch (error) {
