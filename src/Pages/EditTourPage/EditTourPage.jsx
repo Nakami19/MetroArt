@@ -21,9 +21,9 @@ export function EditTourPage() {
     const [buscar, setBuscar]=useState("");
     const [checkedValues, setValue] = useState([]);
     const [selectValue, setSelectValue] = useState();
-    const [nameValue, setNameValue] = useState();
-    const [durationValue, setDurationValue] = useState();
-    const [descriptionValue, setDescriptionValue] = useState();
+    const [nameValue, setNameValue] = useState("");
+    const [durationValue, setDurationValue] = useState("45");
+    const [descriptionValue, setDescriptionValue] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     const [filename, setFilename] = useState("");

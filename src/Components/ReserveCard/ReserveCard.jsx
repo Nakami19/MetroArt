@@ -30,6 +30,7 @@ export function ReserveCard({reserva}) {
   const handleChangeText=(e) => (
     setComentario(e.target.value)
   )
+ 
 
   const handleEnviar=()=>{
     let comment=tour.feedbacks;
