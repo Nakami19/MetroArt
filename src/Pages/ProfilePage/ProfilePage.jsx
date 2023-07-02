@@ -14,6 +14,8 @@ import {
 import { useState, useEffect } from "react";
 import { useUsers } from "../../hooks/useUsers";
 import { useGlobalContext } from '../../contexts/GlobalContext';
+import { Link } from 'react-router-dom';
+import { TOURS_URL } from '../../constants/url';
 
 export function ProfilePage() {
 
@@ -288,7 +290,7 @@ export function ProfilePage() {
 
 
 
-            {!isAdmin && ( <div className={'lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'}>
+            {!isAdmin && misreservas[0]!=null && ( <div className={'lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'}>
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             
@@ -308,6 +310,23 @@ export function ProfilePage() {
                 <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideRight} size={40}> ❯ </div>
                </div>
             </div>
+            )}
+
+            {!isAdmin && misreservas[0]==null && ( <div className={'lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'}>
+            <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
+
+            <Link to={TOURS_URL}>
+            <div className='font-montserrat flex items-center justify-center mt-6 bg-[#FF8C42]/10 w-full text-center rounded-xl h-72 hover:scale-105 transition ease-in-out delay-150'>
+            <div className='flex flex-col gap-2 p-4'>
+                <h1 className='text-[#864317] font-bold'>Aún no ha hecho ninguna reserva</h1>
+                
+                <p className='text-[#864317] text-xs'>¡Diríjase a la página de Tours para hacer la primera!</p>
+                
+            </div>
+            </div>
+            </Link> 
+        </div>
+
             )}
 
            
