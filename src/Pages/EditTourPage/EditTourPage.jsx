@@ -92,7 +92,6 @@ export function EditTourPage() {
     
     
         function handleForm(){
-            console.log(descriptionValue)
             if(nameValue == '' || descriptionValue=='' || titulo =='' || checkedValues.length==0 || imageUrl=="" ||descriptionValue==' '){
                 newErrors.vacio = "Evite dejar campos vacíos";
                 
