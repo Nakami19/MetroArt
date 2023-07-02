@@ -17,6 +17,7 @@ export function Calendar({ onDateSelect }) {
   };
   const handleDateChange = (date) => {
     if (dayjs(date).isBetween(minDate, maxDate, null, '[]')) { 
+      console.log(date)
       setSelectedDate(date);
       onDateSelect(date);
     }

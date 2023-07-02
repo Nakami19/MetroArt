@@ -43,6 +43,7 @@ export function ReservationPage() {
 
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateSelect = (date) => {
+      console.log("aaa "+ date)
         setSelectedDate(date); 
 
       };
@@ -85,7 +86,7 @@ export function ReservationPage() {
     return id;
   }
 
-    const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
+    const formattedFecha = dayjs(selectedDate).format('M/D/YYYY');
 
     
     const handleConfirmar= async (event)=>{
