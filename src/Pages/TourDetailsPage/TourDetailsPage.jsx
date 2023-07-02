@@ -16,8 +16,12 @@ export function TourDetailsPage() {
     
     let rating=0;
 
+    let comments = false;
+
     if (tour.feedbacks) {
+        
         if(tour.feedbacks.length!=0) {
+            comments = true;
            tour.feedbacks.map((comentario)=>{
                 rating=rating+parseInt(comentario.rating)
             }) 
@@ -66,7 +70,7 @@ export function TourDetailsPage() {
                 </div>
             </div>
         </div>
-        <div className='font-montserrat flex flex-col gap-2 lg:w-7/12 md:justify-evenly'>
+        <div className='font-montserrat flex flex-col gap-2 md:w-full lg:w-7/12 md:justify-evenly'>
             <div className='flex flex-col gap-2 lg:gap-4'>
                 <h1 className='font-bold'>Información del tour</h1>
                 <div className='bg-black w-full h-0.5 '></div>
@@ -119,7 +123,8 @@ export function TourDetailsPage() {
     <section className='bg-[#fcaf58]/50 p-6 md:flex md:gap-4'>
         <div className='bg-[#4E598C]/25 rounded-lg p-4 flex flex-col gap-3 md:w-2/4'>
             <h1 className='font-bold font-raleway'>Comentarios</h1>
-            <div className='h-72 flex flex-col gap-2 overflow-y-scroll'>
+            {comments && (
+                <div className='h-72 flex flex-col gap-2 overflow-y-scroll'>
                 {
                     tour.feedbacks.map((comment)=>{
                         return (
@@ -132,6 +137,14 @@ export function TourDetailsPage() {
                 <ComentContainer/> 
                 <ComentContainer/>  */}
             </div>
+            )}
+
+            {!comments && (
+                <div className='h-72 flex items-center justify-center'>
+                    <p className='font-montserrat font-bold text-sm'>No hay comentarios disponibles</p>
+                </div>
+            )}
+            
         </div>
         <div className="md:w-2/4 md:rounded-2xl md:bg-[url('https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]"></div>
     </section>
