@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   doc,
   setDoc,
@@ -9,6 +9,7 @@ import { db } from '../../firebase/config';
 import {v4 as uuidv4} from 'uuid';
 import { storage } from '../../firebase/config';
 import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
+import { ADDARTWORK_URL, ARTPAGE_URL } from '../../constants/url';
 
 
 export function AddArtworkPage() {
@@ -26,7 +27,7 @@ export function AddArtworkPage() {
     const [titulo, setTitulo] = useState("...");
     const [imageUrl, setImageUrl] = useState("");
     const [autor, setautor]= useState([""]);
-
+    const navigate=useNavigate()
     const handleinputchange=(e, index)=>{
         
         const list= [...autor];
@@ -99,13 +100,18 @@ export function AddArtworkPage() {
 
         addArt();
         window.my_modal_5.showModal()
-//      
+           
     };
 
     const handleOnChange = (event) => {
         setTitulo(event.target.value);
         setNombre(event.target.value);
     };
+
+
+    const handleFinish=()=>{
+        navigate(ARTPAGE_URL);
+    }
 
   return (
     <div className='py-10 lg:px-52 flex flex-col items-center gap-y-7 md:flex-row'>
@@ -207,7 +213,7 @@ export function AddArtworkPage() {
                 <p className="py-4">Se ha agregado la obra con éxito</p>
                 <div className="modal-action">
                 {/* if there is a button in form, it will close the modal */}
-                <button className="btn bg-green-500">OK</button>
+                <button className="btn bg-green-500" onClick={()=>handleFinish()} >OK</button>
                 </div>
             </form>
             </dialog>    

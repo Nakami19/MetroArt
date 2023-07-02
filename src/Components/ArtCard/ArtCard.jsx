@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ARTDETAIL_URL } from '../../constants/url'
 import { deleteArt } from '../../firebase/info';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ArtCard({obra, user}) {
+  const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
   let autores="";
   try {
   obra.autor.map((autor)=>{
@@ -11,6 +13,14 @@ export function ArtCard({obra, user}) {
   })
   } catch (error) {}
   autores=autores.replace("\n",", ")
+
+  const modalId = `my_modal_${obra.id}`;
+
+  const handleEliminar= ()=>{
+    deleteArt(obra.id, firebaseToursData.data_tour)
+    // DeleteTour(tour.generated_id, firebaseUsersData.data_user)
+}
+
 
   if (!user  || user.usertype == "Visitante"){
 
@@ -41,7 +51,7 @@ export function ArtCard({obra, user}) {
                       </Link>
                   </div>
                   <div>
-                      <a href="#my_modal_8" className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</a>
+                      <a href={`#${modalId}`} className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</a>
                   </div>
             </div>   
                 <img src={obra.url}/>
@@ -52,13 +62,13 @@ export function ArtCard({obra, user}) {
             <p className='font-baskervville'>{obra.tipo}, {obra.fecha}</p> 
 
 
-            <div className="modal" id="my_modal_8">
+            <div className="modal" id={modalId}>
             <div className="modal-box font-montserrat">
                 <h3 className="font-bold text-lg">¿Estás seguro?</h3>
                 <p className="py-4">Los cambios no son reversibles</p>
                 <div className="modal-action">
 
-                    <a href="#" className="btn normal-case" onClick={()=>{deleteArt(obra.id)}}>Sí, estoy seguro</a>
+                    <a href="#" className="btn normal-case" onClick={()=>{handleEliminar()}}>Sí, estoy seguro</a>
 
                     <a href="#" className="btn normal-case">Cancelar</a>
                 </div>

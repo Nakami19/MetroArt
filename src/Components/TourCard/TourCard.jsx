@@ -18,9 +18,8 @@ export function TourCard({tour, user}) {
         }
     }
 
-    const handleEliminar= (id)=>{
-        console.log(id.name + " eliminar")
-         //DeleteTour(tour.generated_id, firebaseUsersData.data_user)
+    const handleEliminar= ()=>{
+         DeleteTour(tour.generated_id, firebaseUsersData.data_user)
     }
 
     if (!user  || user.usertype == "Visitante"){
@@ -82,7 +81,7 @@ export function TourCard({tour, user}) {
                                             <p className="py-4">Los cambios no son reversibles</p>
                                             <div className="modal-action">
                                                
-                                                <a href="#" className="btn normal-case" onClick={()=>handleEliminar(tour)}>Sí, estoy seguro</a>
+                                                <a href="#" className="btn normal-case" onClick={()=>handleEliminar()}>Sí, estoy seguro</a>
                                                 
                                                 <a href="#" className="btn normal-case">Cancelar</a>
                                             </div>
