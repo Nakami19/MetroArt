@@ -1,20 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TOURDETAILS_URL } from '../../constants/url'
 import { DeleteTour } from '../../firebase/info'
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 
 export function TourCard({tour, user}) {
 
+    // console.log(tour.generated_id)
     let rating=0;
-
+    const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     if (tour.feedbacks) {
         if(tour.feedbacks.length!=0) {
            tour.feedbacks.map((comentario)=>{
-                rating+=comentario.rating
+                rating=rating+parseInt(comentario.rating)
             }) 
         rating=rating/tour.feedbacks.length    
         }
+    }
+
+    const handleEliminar= (id)=>{
+        console.log(id.name + " eliminar")
+         //DeleteTour(tour.generated_id, firebaseUsersData.data_user)
     }
 
     if (!user  || user.usertype == "Visitante"){
@@ -44,8 +50,8 @@ export function TourCard({tour, user}) {
                                 <img src={tour.url} />
                             </div>
                         </div>
-                        <div className='h-1/4 flex items-center justify-center'>
-                            <p className='text-white font-montserrat text-center text-xs'>{tour.name}</p>
+                        <div className='h-1/4 flex items-center break-normal justify-center'>
+                            <p className='text-white w-3/4 font-montserrat text-center text-xs'>{tour.name}</p>
                         </div>
             </div>
             </Link>
@@ -61,7 +67,7 @@ export function TourCard({tour, user}) {
                                     </Link>
                                 </div>
                                 <div className=''>
-                                    <a href="#my_modal_8" className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</a>
+                                    <a href={`#my_modal_8${tour.id}`} className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Eliminar</a>
                                 </div>
                             </div>
                             <div className="avatar contrast-75 saturate-150	brightness-50">
@@ -70,20 +76,20 @@ export function TourCard({tour, user}) {
                                 </div>
                             </div>
                         </div>
-                        <div className="modal" id="my_modal_8">
+                        <div className="modal" id={`my_modal_8${tour.id}`}>
                                         <div className="modal-box font-montserrat">
                                             <h3 className="font-bold text-lg">¿Estás seguro?</h3>
                                             <p className="py-4">Los cambios no son reversibles</p>
                                             <div className="modal-action">
                                                
-                                                <a href="#" className="btn normal-case" onClick={()=>{DeleteTour(tour.generated_id)}}>Sí, estoy seguro</a>
+                                                <a href="#" className="btn normal-case" onClick={()=>handleEliminar(tour)}>Sí, estoy seguro</a>
                                                 
                                                 <a href="#" className="btn normal-case">Cancelar</a>
                                             </div>
                                         </div>
                                     </div>
-                        <div className='h-1/4 flex items-center justify-center'>
-                            <p className='text-white font-montserrat text-center text-xs'>{tour.name}</p>
+                        <div className='h-1/4 flex items-center break-normal justify-center'>
+                            <p className='text-white w-3/4 font-montserrat text-center text-xs'>{tour.name}</p>
                         </div>
             </div> )
     }

@@ -3,48 +3,60 @@ import { ArtCard } from '../../Components/ArtCard/ArtCard'
 import { ComentContainer } from '../../Components/ComentContainer/ComentContainer'
 import { useTours } from '../../hooks/useTours';
 import { Navigate, useNavigate, useParams } from 'react-router';
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function TourDetailsPage() {
 
     const {tourId}=useParams();
     const {tour, getOneTour, isLoading}=useTours();
+    const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     const navigate = useNavigate();
-    let component=null;
+    let component=<><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
+    <p>Disponible</p></>;
+    
     let rating=0;
 
+    let comments = false;
+
     if (tour.feedbacks) {
+        
         if(tour.feedbacks.length!=0) {
+            comments = true;
            tour.feedbacks.map((comentario)=>{
-                rating+=comentario.rating
+                rating=rating+parseInt(comentario.rating)
             }) 
         rating=rating/tour.feedbacks.length    
         }
     }
 
     useEffect(()=>{
-        getOneTour(tourId);
-    },[])
+
+        getOneTour(tourId,firebaseToursData.data_tour); 
+    },[firebaseToursData])
 
     const handleReserva= ()=>{
         navigate(`/reserve/${tour.id}`)
     }
 
-    if(tour.disponible) {
-        component= <><div className=' bg-green-800 w-3 h-3 rounded-full'></div>
-        <p>Disponible</p></>
-    } else {
-        component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>
-        <p>No Disponible</p></>
-    }
+    let boton=<><button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleReserva}>Reservar</button></>
+    
 
     if(isLoading) {
         return (
-            <>
+            <div className="flex text-center justify-center content-center min-h-screen">
             <span className="loading loading-spinner loading-lg"></span>
-            </>
+            </div>
         )
-    } else if (!isLoading && tour.obras) {
+      } else if (!isLoading && tour.obras) {
 
+        // tour.obras.autor.map((autor)=>{
+        //     autores+=autor+"\n"
+        // })
+        if(!tour.disponible) {
+            component=<><div className=' bg-red-800 w-3 h-3 rounded-full'></div>
+            <p>No Disponible</p></>
+            boton=<><button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Proximamente</button></>
+        }
         return (
     <>
 
@@ -58,7 +70,7 @@ export function TourDetailsPage() {
                 </div>
             </div>
         </div>
-        <div className='font-montserrat flex flex-col gap-2 lg:w-7/12 md:justify-evenly'>
+        <div className='font-montserrat flex flex-col gap-2 md:w-full lg:w-7/12 md:justify-evenly'>
             <div className='flex flex-col gap-2 lg:gap-4'>
                 <h1 className='font-bold'>Información del tour</h1>
                 <div className='bg-black w-full h-0.5 '></div>
@@ -82,7 +94,7 @@ export function TourDetailsPage() {
                 <p className='font-bold'>Lugares importantes</p>
                 <p>{tour.important_places}</p>
             </div>
-            <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleReserva}>Reservar</button>
+           {boton}
         </div>
     </section>
 
@@ -110,11 +122,12 @@ export function TourDetailsPage() {
     <section className='bg-[#fcaf58]/50 p-6 md:flex md:gap-4'>
         <div className='bg-[#4E598C]/25 rounded-lg p-4 flex flex-col gap-3 md:w-2/4'>
             <h1 className='font-bold font-raleway'>Comentarios</h1>
-            <div className='h-72 flex flex-col gap-2 overflow-y-scroll'>
+            {comments && (
+                <div className='h-72 flex flex-col gap-2 overflow-y-scroll'>
                 {
                     tour.feedbacks.map((comment)=>{
                         return (
-                           <ComentContainer comment={comment} key={comment.id}/>  
+                           <ComentContainer comment={comment} key={comment.comment}/>  
                         )
                         
                     })
@@ -123,6 +136,14 @@ export function TourDetailsPage() {
                 <ComentContainer/> 
                 <ComentContainer/>  */}
             </div>
+            )}
+
+            {!comments && (
+                <div className='h-72 flex items-center justify-center'>
+                    <p className='font-montserrat font-bold text-sm'>No hay comentarios disponibles</p>
+                </div>
+            )}
+            
         </div>
         <div className="md:w-2/4 md:rounded-2xl md:bg-[url('https://images.pexels.com/photos/1266808/pexels-photo-1266808.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]"></div>
     </section>

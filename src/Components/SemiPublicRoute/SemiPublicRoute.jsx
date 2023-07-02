@@ -26,13 +26,17 @@ export function SemiPublicRoute({ children }) {
   }, [user]);
 
 
-  if (isLoading) {
-    return <h1 className={styles.loadingScreen}>CARGANDO...</h1>;
+  if(isLoading) {
+    return (
+        <div className="flex text-center justify-center content-center min-h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+        </div>
+    )
   }
 
 
   if (!isLoading && user!=null){
-    if(user.usertype == "" && location.pathname !== COMPLETE_URL) {
+    if(tipodeuser == "" && location.pathname !== COMPLETE_URL) {
     return <Navigate to={COMPLETE_URL} />;}}
 
   return children;

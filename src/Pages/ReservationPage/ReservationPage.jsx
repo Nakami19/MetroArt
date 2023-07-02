@@ -22,6 +22,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { useUserContext } from '../../contexts/UserContext'
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function ReservationPage() {
   
@@ -46,12 +47,14 @@ export function ReservationPage() {
 
       };
     const {tourId}=useParams();
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     const {tour, getOneTour, isLoading}=useTours();
     const navigate = useNavigate();
 
     useEffect(()=>{
-        getOneTour(tourId);
-    },[])
+
+      getOneTour(tourId,firebaseToursData.data_tour); 
+  },[firebaseToursData])
 
     const formattedFecha = dayjs(selectedDate).format('MM/DD/YYYY');
 
@@ -100,40 +103,6 @@ export function ReservationPage() {
           console.error(error);
         }
     }
-
-    function generarIdTicket() {
-      const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const numeros = '0123456789';
-      let id = '';
-    
-      // Agregar una letra aleatoria en una posición aleatoria
-      const posicionLetra = Math.floor(Math.random() * 5);
-      const letraAleatoria = letras.charAt(Math.floor(Math.random() * letras.length));
-      id += id.length === posicionLetra ? letraAleatoria : numeros.charAt(Math.floor(Math.random() * numeros.length));
-    
-      // Agregar un número aleatorio en una posición aleatoria diferente a la anterior
-      let posicionNumero = Math.floor(Math.random() * 5);
-      while (posicionNumero === posicionLetra) {
-        posicionNumero = Math.floor(Math.random() * 5);
-      }
-      const numeroAleatorio = numeros.charAt(Math.floor(Math.random() * numeros.length));
-      id += id.length === posicionNumero ? numeroAleatorio : letras.charAt(Math.floor(Math.random() * letras.length));
-    
-      // Agregar caracteres alfanuméricos aleatorios en las posiciones restantes
-      for (let i = 0; i < 5; i++) {
-        if (i !== posicionLetra && i !== posicionNumero) {
-          const caracterAleatorio = Math.random() < 0.5 ? letras.charAt(Math.floor(Math.random() * letras.length)) : numeros.charAt(Math.floor(Math.random() * numeros.length));
-          id += caracterAleatorio;
-        }
-      }
-    
-      return id;
-    }
-    const xd= async (event)=>{
-      event.preventDefault();
-      const idTicket = generarIdTicket();
-      alert(idTicket);    }
-
     
     const openPopup = () => {
         const width = 600;
@@ -151,6 +120,14 @@ export function ReservationPage() {
     const cancelReservation = () => {
         navigate(HOME_URL)
       };
+
+      if(isLoading) {
+        return (
+          <div className="flex text-center justify-center content-center min-h-screen">
+          <span className="loading loading-spinner loading-lg"></span>
+          </div>
+      )
+      }
       
 
 
@@ -173,9 +150,12 @@ export function ReservationPage() {
                     <p className='font-bold'>Selecciona un horario</p>
                     <select value={formData.horario} className='p-4 border'id="horario" name="horario" onChange={onChange}>
                         <option value="" disabled defaultValue>Pulsa aquí para ver las horas</option>
-                            <option>2</option>
-                            <option>4</option>
-                            <option>3</option>
+                            <option>8:45 am</option>
+                            <option>10:30 am</option>
+                            <option>12:15 pm</option>
+                            <option>1:45 pm</option>
+                            <option>3:15 pm</option>
+                            <option>4:45 pm</option>
                     </select>
                     {errors.horario && (<p className="text-red-500 text-xs mt-1">{errors.horario}</p>)}
                 </div>
