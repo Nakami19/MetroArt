@@ -6,6 +6,7 @@ export function ComentContainer({comment}) {
 
     const {firebaseToursData, firebaseArtsData, firebaseUsersData}=useGlobalContext()
     const {comentUser, getCommentUser}=useUsers()
+    const CommentError = {};
 
     useEffect(()=>{
         getCommentUser(comment.user, firebaseUsersData.data_user)

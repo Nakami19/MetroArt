@@ -22,6 +22,7 @@ export function EditTourPage() {
     const [durationValue, setDurationValue] = useState();
     const [descriptionValue, setDescriptionValue] = useState();
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+    const newErrors = {};
 
         useEffect(()=>{
             try{

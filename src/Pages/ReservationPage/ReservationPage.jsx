@@ -37,7 +37,7 @@ export function ReservationPage() {
     const onChange = (event) => {
         setData((oldData) => ({
           ...oldData,
-          [event.target.name]: event.target.value,
+          [event.target.name]: event.target.value,  
         }));
       };
 
@@ -90,6 +90,7 @@ export function ReservationPage() {
           id_tour: tour.generated_id,
           fecha: formattedFecha,
           horario: formData.horario,
+          comentado: false,
         }
         
         let lista = user.reservas
@@ -104,17 +105,7 @@ export function ReservationPage() {
         }
     }
     
-    const openPopup = () => {
-        const width = 600;
-        const height = 400;
-        const left = (window.innerWidth - width) / 2;
-        const top = (window.innerHeight - height) / 2;
-        const popupUrl = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FJ48PVKAP2RMJ';
-        const popupName = '_blank';
-        const popupFeatures = `width=${width},height=${height},left=${left},top=${top}`;
-      
-        window.open(popupUrl, popupName, popupFeatures);
-      }
+
     
 
     const cancelReservation = () => {
