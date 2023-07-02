@@ -4,6 +4,9 @@ import { AddTour } from '../../firebase/info';
 import { TOURS_URL } from '../../constants/url';
 import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContext } from '../../contexts/GlobalContext';
+import {v4 as uuidv4} from 'uuid';
+import { storage } from '../../firebase/config';
+import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
 
 export function AddTourPage() {
     const {arts, getArts, isLoading, getSearchArt} =useArts();
@@ -14,6 +17,8 @@ export function AddTourPage() {
     const [descriptionValue, setDescriptionValue] = useState("");
     const [buscar, setBuscar]=useState("");
     const [filtro, setFiltro]=useState("Nombre de obra");
+    const [imageUrl, setImageUrl] = useState("");
+    const [filename, setFilename] = useState("");
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
 
     useEffect(()=>{},[buscar])
@@ -27,6 +32,19 @@ export function AddTourPage() {
         const option=e.target.value
         setFiltro(option)
     }
+
+    const handleUpload = async (e) => {
+        const file = e.target.files[0];
+        const code = uuidv4();
+        const storageRef = ref(storage, `tours-imagenes/${file.name+" "+code}`);
+        setFilename(file.name+" "+code)
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on("state_changed", null, null, () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+          setImageUrl(downloadUrl);
+        });
+      });
+    };
 
 
     function handleChangeInput(event){
@@ -99,7 +117,7 @@ export function AddTourPage() {
             name: nameValue,
             obras: arrayobras,
             reviews: 0,
-            url: 'https://images.pexels.com/photos/1252983/pexels-photo-1252983.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+            url: imageUrl,
         }
  
         const add = AddTour(data)
@@ -123,11 +141,17 @@ export function AddTourPage() {
             <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
             <div className='flex flex-col gap-5 w-full lg:items-center lg:w-96'>
                 <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>nombre</h1>
-                <div className="avatar w-96">
-                    <div className=" w-full rounded">
-                        <img src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBISERESERISGBISEhEYFRISERESFRISGBgZGhgUGBgcIS4lHB4rHxgYJjgmKy8xNTU1GiQ7QDs0Py40NTEBDAwMEA8QHhISHjErISUxNDQ0NDE0NDE0NDE0NDQ0NDQ0NDQ0NDQ0NDQ0MTQ0NDE0NDQ0NDQ0NDQ0MTQxNDQ0Pf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAAAQIEAwUGB//EAEEQAAICAQIEAwYDBQcACwAAAAECABEDBCEFEjFBBlFhEyJxgZGxMqHBFCNCUvAHcoKSstHhFSQzNENTYmNzovH/xAAZAQADAQEBAAAAAAAAAAAAAAAAAQMCBAX/xAAlEQACAgICAgICAwEAAAAAAAAAAQIRAyESMQRBIlETMhRCkWH/2gAMAwEAAhEDEQA/APRAJICSAkgIxURAjqSAjqAxVHUcIDFUccIrAUcIQAIQhAAhCEQwhCEACEIQAIRwgMUcIQAIQhAYqhUlFAYjCo4QGKKo6hUBkSIqkiIEQNGIiRZZlqRIjQGLlimSoTVgTAkhCOZs5whHCIAqEI4DFCo4QAUI4QAUI4QAIVCEACFQhAYQhCABCOEAFCOEACEI4DCEIQGKoVHCAxRSUIDIxVJVEYGiJERElERACFQk4QsAEYhCBAI4QgAQhHABRwhAAhCoQAIQhAAhCEAFCEYgAoQhCxjhCEACAhHAAhCEBhCOEBijhCZGEIVCAxQMcIAQik4iIGiNQjhNAKOEIEAjhHABRwhAAhCEACEIQAUhnYhSR1FfeZJj1P4D8vvExrsqrnfzH0El7Z/MfQThPFuEHVodv+wxj/7vMGnwAdhNKDauymvo9C9q/n+QiOZ/MfQThHRe9flNbrSvQdx9JqOFv2ZlKMez032z+Y+gi9u/mPpPENSbO39espPiHl+UsvEf2cj8uCdJHvnt8nmP8oh7fJ6f5RPARh9Iexg/Ff2bXkxfo99Ooyen+WS02odno1VHoJ4NpsXvp/fT7ie8aYe/8jIZMbg1svCcZJ0i8I4o5MAjhCA0EVRwgMIQhAYoRxQAIo4oARqElCBoiI5j56k1NzRAccIQAIQhAAhHCAChHCACmPUfgPy+8yTHqPwH5feJjXZwnif/AL0v/wAWP/W8rINpe8Qp/wBZU1/4Sf6nmFU2nTGuKMOTtlHPZmr1SmtvtNzmFX95qdUpO06caPP8nI0mah8e/wDR3mM45cZPTeR5Z0nmLI7KgxRjFLQSS9nMtF45Stixe+n99fuJ7Vpvx/Izx/Gvvp/fX7iev6Y+/wDIzg8vtHq+FLlFl+EJBnAnMdZOOVk1SMxUMCw7XLAMyMcIoQGOELiJgA4SPNDmgMcUickg+dR1IgOjLCVv2zH/ADL9RFAfFml1HFBy84Irr/tLfBeKLlDC6ZTRXuJzq4C38Puqe01vEC2HIMmIkMK5qB3HltMYXzVt7OfI3FnpfMIcwnNcH4g+XGCSfnNuENbky7jWrFGVq6L3MI+aUFT1lfU6vkNc35xUNujcXC5q8OsJ7y+j2ImqGnZmhMReMvUAonIaj8J+Ux+2vpIZHsEen6iJjXZy/HUvOp/9tf8AU0r8s2fFBj9oOd0U8g2ZgDVtvUx/ugBeRKNAHnWjfSpSOSKSQpY5Nto1OXDYO0pPpCb2/KdJyYzVZMdkkAB13YdQPPoYn0C77mVjmSOafjcuzlH0m3T9JgOk+Ey+NdW+lxoUDAux98LaKBWzE7Am9u+xj8HZsmowM2RAWDGnIG69KHqKP1lVnOZ+EmYl0B8vyMDo/hOkGhNbgfnItw/0H0Ef5xrw19HNJpxzLv8AxL9xPTsTEPYHYzj24duNu47es6xHCmz6zmzz5NHb42LgmSbiJLFQpsdyRMeoGRhsfylY5OVyx7m5J+JrIW/R0IqpoWDc3Mebz7zbaTVEbZDfr/vNS/Fl8xK/7a7H3FJ+Ajbk+xpI6l9Uo7yueIqDvc5p9Y4NHYyLZn6k/wD5FTGoo6TJxVB5/aUc/GR2M1iA5B12lbU4QOphropGKRs043R638rmV+NtWwE5rMVUWD9JLEHK2brtBpFFFG2yca/mv5GazU8WDE0TNdq0PTeU8eIxUkWikXjqD/MYSr7A+f5wisodhoNSgx2223TzM02m1AfUFGIpia+HrMHFXbHhJBFjrXlNR4XR8mcO18t7X2jxxTfx6PDnOmkz1PTYERQABB8huhDDiPL1j/Z5Sjd6MT2BtsfOajU6Uk2SSfMzeNgJ7yP7KCN5qNIy9nNuuX+A0e20zJq9Yg6oR6p/zN0ujAMk+muO19GeL+yhh12c7sBfpYEsLqcrjoB8LmX9lIk0QiJpGk2VmGQC7+VSWkyOzNzjblP3EtMpiRCL+H6iJ9Gk/kjl/EoH7Ql/+UopjSm2f1ABHr+k1VBGKixXu2xW6Hl6dPObTxMP3/u/ibAn4m5VCq7m6rf/AJE0rZyAWBbm5rOVncoqBQ+4JpyRVA/zGedJfJnqR/VBqtD7PkLFVVl3POrU2xVdhs1bAUem11vp9S+RchKuSXdR+7yPzsVrcXQPui7+fQS/gTG+PmC84POV2bI5yNy9B2vcdyPtUYIVyOi78t82PIGTko8w5wN7Y117jyErHRDI7K+o4jq+QI+QtjIcnG9OrKu9sT3FdL6g9hUMPijWIKV8bKCtDGmPlWwaSlGw3UX0+hmHT65Xok4zylbGRQqlypHIHJssT3HQBpS1D4Ucrj5m5GI58bc3MCtbbHYuz1W/5S8W+mckqNvh8aaxrNoaA/gWugsBevn3MuYPGGqYD3cJv+Io1fMBun9fHn3KlSAipkXGylAcjEGx7xFCj073uTvW2VlZVVPaMFyFSVAApUFsNui3zjofwm73g2NPZvsfizVFgGw46PJZ5HWlbo18587+U9G5bNehnimjzsGXHzE41ZGB963PMAh67d9j2M9y0i/vPk0e7N+mV9Ppwz+8LobD1uGu4djamC7+nebf2Y8ouQR3swcg3CQHB7X0m90uFVWgBNi2FT2ExHTgdJqUrBaNXm4cmTICw2XfbazI67hilfcBs7Vf5zaBGvYTKqHvM2as53T8OZAF7yHEeAMylle2A/D0v0E6VsQO/eN02qF7sfJnM6Hw/jCKXssRZJJ2+EX7ETzogvlnQppiBVmLTaQY+au5s2bmXsop0cPqeG5FyEOD02PYynrNKUFqN532u0vtK9O80HFdJyAE+c0qfZaOSzjf3vkYTpQ6/wAohHxib5v6NNm1AYAMKDMdz5TJl16aZOZKLE9qraZ/EnB8jOhRCU7hdh85quJcL5cJs0QelVIYlJbPJyPtJHX+FvES6kFSCGXt6djOqVrni/grU+z1LK7VYNb1c9Sw62ygXe51NezMJembipGCNYkgJgqKo6khIwChVHyxwBgMRWQdfdP9d5kJkX6GD6HHs4XxlkVMjEu6t+zpVAEOebIQo9RTH5jpOOw6kMHPfke152XlXZmqgbvfb0M73xP4XyazKuRMqIFxhPeRmPMC5vrVe/0rsZz2HwBmxnmGpxc29H2T2O/nXWjIqC2zqc9JI0T8VZGZzytYIR3GyZKAJog7WDXzmrxZTzlUXJsoBxlmBbfd3ANAdNu23xnS5P7OcxJI1WOvLkf73vJr4AzqtLqMFk22RsTs5PeielyiikRk5SOZ1OjIAdr5DuycwLIQBSlrHmdwPPaVn4dkV2UlaHvgIeYFAaXla/ePN7u/cTq2/s+1Zq9ZjoCq5Mn9Hbb4bSWb+z/VOwc6rFzBQu6OF5R0UKNgPT1PnGm17JcX7RzHteRAr8/MeRVx84CihZBChaBHX085bVwqYWZn9oHKuoLm0P4CTZCOAwpRd3Zm6b+z3UlQDqMF778j15j3a2IN79d5Yy+A8pCAZsSheYsF9py87UC6Keh5VHzFxOjUYtM0OBHxJha0JyOqkbjnUvvzUfe3B+Q37X7LpmrJ8jPOX8D6nmxn9oxFMbKVBGQkgG6N7Xuf9p6Fpj7/AMm/SCRt6To2a5Lgz1MYgTc1RKzKrxlxMIMiYcQssBhHcqyfPCh2Z+aHNK9xF4qNWWC0fNKyvvJvkhQWjKalXUaZcgphcfOZgfV0Zl90bWtlf/obH5H6wk/20wm+Eh/l/wChomV8anrYH2mi8Q8EOTdTt3AlDgfEHGQY+b1IvoPKdk+6fKPicdqSPFeK8NfBmU3sTsRYo+U7Hw9r2VFOTqD57kSPjPQj2JyfysPznOcC4mQyq3Tpv9xNJrpkmmno9g0WqV1BBlqcRwviLYnAIJxuTTUdp2GDMHUEd4SjWy0J3r2Z7hIzFnyMARjTmflYqpJRTXYvRC9R6zBTZnhEpFWT+fSU8vEN6Qf4pmU1HspDDKb0i9UVjpYmqyZ2NczfTaWcQXGvO5oAbA9fnJrLZZ+NxVt79Fw479JpOK69MbAIOb+b0HnKfFvEd2mI/wCKc9q+I8innZB7RhbE0aNWLPwuTllt1E6Mfj8Y8p/4dkjcwB85KabhXGcOQcqZFY+SsCfpNtz/AB+ksjkkqZMwExnIIBxGBO4rkOeJngBImZtGff8Akf0lYvM2ga3/AMJ/SNdif6s2UUIpQhY4RSVRNjRGoomaLmjQWMmImItIFo6FY7jWYy0QeDWgT2Znfac5r9WFcrcuarW8hIPlOP4nqC2QG5xKbU7fo6+Fxo6hNWKG8JyI1xG3lCd354/RzfhZhTVHDrELkBWIHWelnIHxgqeo7TzfxJow2TExFAn8V9533BUrEgJ6ASs0uziwt20afxHpHyaXIo61Y+INzz7gWInUrjcd9x6T2TVYgyEV2nm2n0RXiTFloHoRJqKZuTcWdzhx4wEFDbYCbjAoAEqY9KtKfKbPT4xQP0ik1WikIv2HLQs9PLvNbl4ygsICWHUdD8ZtMiggg/rNRl4SjvYUgjoyk2Prdzlm5f1O/wAdYv7lLPk5i2RbUdWXcX/Mf69fibekHOKQWfPsPiZc03DAv42LegHKIa3XY9Pj7ADoqipNQfcjoeaL+ONWL2OPCC7kF/M9v7o/Wclxnir5mKoTy+kp8U4s+ZzueW+kjjK41LsQABZJk5y9LorjVO27f39GDHj9nbuRQF2Zx/GNf7bNzMaQfgXfp515y3xXiOTUtyraYgep2LeteUp6fSgtt8yes3ihx+UuwyXJUi/wfAuR0CG35hQFhrvahPaNMGCIHNsEUMbu2AF795wXgbS1qCQAQuNrNA8t0Ab7H/md/c6Me7kcHlSpqP0SuK4iZG5U5SUYMhcLhQWZLhcx3C4UFk5JRMXNMiGJjRIrExjuYHajMrehv7GwkZFslwU3NoyyRmNoO1TGzzSRlsZkCZBnmNsk2omXIp8V0xZbHWcfr0YH4Tts2WwQZyHEQ/tDtsJy5ce7OvDl1RosiNZ3MUsZOp2/KEjTLcjpfEemAx838QogdhLPhrjCkDGWF7d5Djj48mIjm7djOM4JkVdSPeoBtrPWeo9qmeIm1K0ewq4Imv1PD1bIr1utzLpXtBXlM/NI9M6XUlsyoaAEv4Pwr8Jqrm3UUAPSYkUgIiFwM13EOJY8SlnPTt3Mk3RaMXJ0jLr9YuNCxPw+M894rrmyuWYmt+huh8Icb4+czGtlHQTUo5J6zLV7ZeL46RewOg61/X2mi4xxgZHONT7imj/6iJc4q4x4mc9a2PQgnYbzlcOnLbk0Pzk4wV2zpWR6S7LOTUFvdQWf09Zn02jLEWxJ77kD6d5LHg5QAo6/Un1nReH+DPncKvuoK58lbKPL1Y+U036iNtL5SZ1fgbHyYcgAHJzijQFtXvb9/wCGdNcwaXTpiRcaClUbD7knufWZrl4JqNM8zJJSk2h3FcVxTZKyVwuCrAiFjpgTETDlMRUwtBTFcmjzGyyJQw0xW0Z+eYzZMniEHNTDdFErRBgBMfPUM2QAWekrtnBBImYSTlQTVRsebJMJyzG7XMTNOuMTklIytlmJ8omFnlZ3lFEnKZZbMJrtdmXlPSLJklLO4PWOWLkjMM/F7Na+cWfd/KEzcqwkP4sjo/mxOa1WsdlNO1HtNbo8pOVdzYI3hCaJemez8Ic+yWz2E2HPCEUuykejJg951HmRNyYQkZ9l8fRW1WUKpY9AJ5Zx/iJy5G3NAmhCEhLs7YagzTc28t6c1vCEzIcTHx9wdOLH4sigfLf9Jp9IhA3jhBfqbj+x0vh7g7al62CKLdtiQu/QdyaM9I0ulTEq48ahVXoB+p7n1hCVxJHL5M3yUfRluFwhLHMImK44QAyY95kIqEJOXZWPREtK2bMR0hCYNDx5LmVWhCbfZiPRBclEzHkYkjyhCYkaiDEEEGa7MwQmu8ISePs1lK4yGQd4QnqRPMkYHeVnaEJREZFbI0wPiJFwhNvSJxSb2UnBsxwhGY4o/9k=' />
+                <div className="flex items-center justify-center w-full">
+                <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full lg:h-[70vh] md: h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <img className="relative opacity-50 object-cover lg:h-[70vh] md: h-64 rounded-md " src={imageUrl}></img>
+                        <svg aria-hidden="true" className="w-10 h-10 mb-32 text-gray-700 absolute z-10" fill={"none"} stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p className="mb-14 text-sm black dark:text-gray-400 absolute z-10 md: mt-5"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p className="text-xs black dark:text-gray-400 absolute z-10">SVG, PNG or JPG (MAX. 800x400px)</p>
                     </div>
-                </div>
+                    <input id="dropzone-file" type="file" className="hidden" onChange={handleUpload} accept="image/png, image/jpeg, image/jpg"/>
+                </label>
+            </div> 
             </div>
             <div className='font-montserrat flex flex-col gap-7 lg:w-7/12 md:justify-evenly'>
 

@@ -8,6 +8,9 @@ import { UpdateTour } from '../../firebase/info';
 import { Link, useNavigate } from "react-router-dom";
 import { TOURS_URL } from '../../constants/url';
 import { useGlobalContext } from '../../contexts/GlobalContext';
+import {v4 as uuidv4} from 'uuid';
+import { storage } from '../../firebase/config';
+import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
 
 export function EditTourPage() {
 
@@ -21,7 +24,9 @@ export function EditTourPage() {
     const [nameValue, setNameValue] = useState();
     const [durationValue, setDurationValue] = useState();
     const [descriptionValue, setDescriptionValue] = useState();
+    const [imageUrl, setImageUrl] = useState("");
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
+    const [filename, setFilename] = useState("");
 
         useEffect(()=>{
             try{
@@ -33,6 +38,7 @@ export function EditTourPage() {
                 setSelectValue(tour.disponible)
                 setDurationValue(tour.duration)
                 setDescriptionValue(tour.description)
+                setImageUrl(tour.url)
                 
             })
             }catch(error){
@@ -40,6 +46,19 @@ export function EditTourPage() {
             }
             
         },[tour])
+
+        const handleUpload = async (e) => {
+            const file = e.target.files[0];
+            const code = uuidv4();
+            const storageRef = ref(storage, `tours-imagenes/${file.name+" "+code}`);
+            setFilename(file.name+" "+code)
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on("state_changed", null, null, () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+              setImageUrl(downloadUrl);
+            });
+          });
+        };
 
         function handleChangeInput(event){
 
@@ -83,7 +102,7 @@ export function EditTourPage() {
                 name: nameValue,
                 obras: arrayobras,
                 reviews: tour.reviews,
-                url: tour.url,
+                url: imageUrl,
             }
             const aaaa = UpdateTour(data, tour.generated_id)
     
@@ -123,11 +142,17 @@ export function EditTourPage() {
         <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
         <div className='flex flex-col gap-5 w-full lg:items-center lg:w-96'>
             <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>{tour.name}</h1>
-            <div className="avatar">
-                <div className=" w-full rounded">
-                    <img src={tour.url} />
-                </div>
-            </div>
+            <div className="flex items-center justify-center w-full">
+                <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center lg:h-[70vh] md: h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                        <img className="relative opacity-50 object-cover lg:h-[70vh] md: h-64 rounded-md " src={imageUrl}></img>
+                        <svg aria-hidden="true" className="w-10 h-10 mb-32 text-gray-700 absolute z-10" fill={"none"} stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p className="mb-14 text-sm black dark:text-gray-400 absolute z-10 md: mt-5"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p className="text-xs black dark:text-gray-400 absolute z-10">SVG, PNG or JPG (MAX. 800x400px)</p>
+                    </div>
+                    <input id="dropzone-file" type="file"  className="hidden" onChange={handleUpload} />
+                </label>
+            </div> 
         </div>
         <div className='font-montserrat flex flex-col gap-7 lg:w-7/12 md:justify-evenly'>
 
