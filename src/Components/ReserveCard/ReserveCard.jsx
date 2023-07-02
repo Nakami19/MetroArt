@@ -69,9 +69,9 @@ export function ReserveCard({reserva}) {
         <h1 className="flex lg: flex-col items-center bg-white border border-gray-200 rounded-lg shadow mt-6 lg:max-w-md md:flex-row md: max-w-xl h-5/6 hover:bg-gray-100 ">
             <img className="object-cover h-36 w-full md:h-full lg:w-2/5 md:w-2/5 rounded-t-lg lg:h-full md:rounded-none md:rounded-l-lg" src={tour.url} alt=""/>
             <div className="w-3/4 flex flex-col justify-between p-4 leading-normal">
-                <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-raleway">{tour.name}</h5>
-                <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: {reserva.fecha} </p>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Hora: {reserva.horario} </p>
+                <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 font-raleway">{tour.name}</h5>
+                <p className="mb-1 font-normal text-gray-700 font-montserrat">Fecha: {reserva.fecha} </p>
+                <p className="mb-3 font-normal text-gray-700  font-montserrat">Hora: {reserva.horario} </p>
                 
                 
             </div>
