@@ -75,7 +75,7 @@ useEffect(()=> {
         )
     }
         return (
-            <>
+            <section className='lg:min-h-screen'>
                 <div className="join flex justify-center p-6 xl:p-8">
                     <div className=' w-44 md:w-11/12'>
                         <div>
@@ -97,7 +97,7 @@ useEffect(()=> {
                     )}   
                 </div>
                 {componet}
-            </>
+            </section>
           )
  }
   

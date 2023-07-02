@@ -50,8 +50,8 @@ export function TourCard({tour, user}) {
                                 <img src={tour.url} />
                             </div>
                         </div>
-                        <div className='h-1/4 flex items-center justify-center'>
-                            <p className='text-white font-montserrat text-center text-xs'>{tour.name}</p>
+                        <div className='h-1/4 flex items-center break-normal justify-center'>
+                            <p className='text-white w-3/4 font-montserrat text-center text-xs'>{tour.name}</p>
                         </div>
             </div>
             </Link>
@@ -88,8 +88,8 @@ export function TourCard({tour, user}) {
                                             </div>
                                         </div>
                                     </div>
-                        <div className='h-1/4 flex items-center justify-center'>
-                            <p className='text-white font-montserrat text-center text-xs'>{tour.name}</p>
+                        <div className='h-1/4 flex items-center break-normal justify-center'>
+                            <p className='text-white w-3/4 font-montserrat text-center text-xs'>{tour.name}</p>
                         </div>
             </div> )
     }

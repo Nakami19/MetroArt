@@ -27,6 +27,7 @@ export function EditTourPage() {
     const [imageUrl, setImageUrl] = useState("");
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     const [filename, setFilename] = useState("");
+    const [titulo, setTitulo] = useState("");
 
         useEffect(()=>{
             try{
@@ -35,6 +36,7 @@ export function EditTourPage() {
                 array.push(obra.nombre)
                 setValue(array)
                 setNameValue(tour.name)
+                setTitulo(tour.name)
                 setSelectValue(tour.disponible)
                 setDurationValue(tour.duration)
                 setDescriptionValue(tour.description)
@@ -124,6 +126,11 @@ export function EditTourPage() {
         getArts(firebaseArtsData.data_art)
     },[firebaseToursData, firebaseArtsData])
 
+    const handleOnChange = (event) => {
+        setTitulo(event.target.value);
+        setNameValue(event.target.value)
+    };
+
 
     
 
@@ -141,11 +148,11 @@ export function EditTourPage() {
         return (
         <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
         <div className='flex flex-col gap-5 w-full lg:items-center lg:w-96'>
-            <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>{tour.name}</h1>
+            <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>{titulo}</h1>
             <div className="flex items-center justify-center w-full">
-                <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center lg:h-[70vh] md: h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full lg:h-[76vh] xl:h-[67vh] md:h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <img className="relative opacity-50 object-cover lg:h-[70vh] md: h-64 rounded-md " src={imageUrl}></img>
+                        <img className="relative opacity-50 object-cover lg:h-[76vh] xl:h-[67vh] md: h-64 rounded-md " src={imageUrl}></img>
                         <svg aria-hidden="true" className="w-10 h-10 mb-32 text-gray-700 absolute z-10" fill={"none"} stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                         <p className="mb-14 text-sm black dark:text-gray-400 absolute z-10 md: mt-5"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                         <p className="text-xs black dark:text-gray-400 absolute z-10">SVG, PNG or JPG (MAX. 800x400px)</p>
@@ -158,16 +165,16 @@ export function EditTourPage() {
 
 
             
-                <div className='flex flex-col gap-2 lg:gap-4'>
+                <div className='flex flex-col gap-2 md:gap-4'>
                     <h1 className='font-bold'>Información del tour</h1>
                     <div className='bg-black w-full h-0.5 '></div>
                     
-                    <div className='lg:flex lg:justify-between lg:gap-4'>
+                    <div className='flex flex-col gap-4 md:flex-row md:justify-between md:gap-2'>
                         <div className='w-full'>
                             <div className='text-xs flex flex-col gap-3 font-bold '>
                             <div className='flex gap-2 items-center'>
                                 <p>Nombre:</p>
-                                <input type="text" defaultValue={nameValue} onChange={(event)=> setNameValue(event.target.value)} placeholder="Nombre" className="input input-bordered input-sm font-normal text-xs" />
+                                <input type="text" defaultValue={nameValue} onChange={handleOnChange} placeholder="Nombre" className="input input-bordered input-sm font-normal text-xs" />
                             </div>
                             
                             <div className='flex gap-2 items-center'> 
@@ -187,51 +194,51 @@ export function EditTourPage() {
                                 <p>minutos</p>
                             </div>
                         </div>
-                        <div className='text-xs flex flex-col gap-2 text-justify lg:gap-4'>
+                        <div className='text-xs mt-2 flex flex-col gap-2 text-justify lg:gap-2'>
                             <p className='font-bold'>Descripción</p>
-                            <textarea defaultValue={descriptionValue} onChange={(event)=> setDescriptionValue(event.target.value)} className="textarea textarea-bordered h-32 text-xs"></textarea>
+                            <textarea defaultValue={descriptionValue} onChange={(event)=> setDescriptionValue(event.target.value)} className="textarea textarea-bordered h-32 lg:h-52 text-xs"></textarea>
                         </div>
-                    </div>
-                    <div className='flex flex-col gap-3'>
-                        <h1 className='font-montserrat font-bold text-xs'>Seleccione las obras que desea incluir</h1>
-                        <div id="dropdownSearch" className="bg-[#FF8C42]/10 rounded-lg shadow w-60 lg:h-64 font-montserrat ">
-                        <div className="p-3">
-                        <label htmlFor="input-group-search" className="sr-only">Search</label>
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg className="w-5 h-5 text-gray-500 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                        </div>
+                        <div className='flex flex-col gap-3'>
+                            <h1 className='font-montserrat font-bold text-xs text-center'>Selecciona las obras que deseas incluir</h1>
+                            <div id="dropdownSearch" className="bg-[#FF8C42]/10 rounded-lg shadow w-full h-64 md:w-60 lg:h-80 font-montserrat ">
+                            <div className="p-3">
+                            <label htmlFor="input-group-search" className="sr-only">Search</label>
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg className="w-5 h-5 text-gray-500 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                                </div>
+                                <input onChange={handleChange} type="text" id="input-group-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Buscar obra"/>
                             </div>
-                            <input onChange={handleChange} type="text" id="input-group-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Buscar obra"/>
-                        </div>
-                        </div>
-                        <ul className="h-44 lg:h-34 px-3 pb-3 overflow-y-auto text-sm text-gray-700" aria-labelledby="dropdownSearchButton">
+                            </div>
+                            <ul className="h-44 lg:h-60 px-3 pb-3 overflow-y-auto text-sm text-gray-700" aria-labelledby="dropdownSearchButton">
 
-                        {
-                            arts.map((art) => {
-                                let si = false;
-                                tour.obras.map((obra)=>{
-                                    if(obra.nombre == art.nombre){   
-                                        si = true;
-                                        
-                                    }
+                            {
+                                arts.map((art) => {
+                                    let si = false;
+                                    tour.obras.map((obra)=>{
+                                        if(obra.nombre == art.nombre){   
+                                            si = true;
+                                            
+                                        }
+                                    })
+                                
+                                    return (
+                                        <li key={art.id}>
+                                            <div className="flex items-center p-2 rounded hover:bg-gray-100">
+                                            <input id="checkbox-item-11" defaultChecked={si} type="checkbox" value={art.nombre} onChange={handleChangeInput} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
+                                            <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>
+                                            </div>
+                                        </li>
+                                    )
                                 })
-                            
-                                return (
-                                    <li key={art.id}>
-                                        <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                                        <input id="checkbox-item-11" defaultChecked={si} type="checkbox" value={art.nombre} onChange={handleChangeInput} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
-                                        <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>
-                                        </div>
-                                    </li>
-                                )
-                            })
-                        }
-                    
+                            }
                         
-                        </ul>
+                            
+                            </ul>
 
+                            </div>
                         </div>
-                    </div>
                     </div>
                     
                     
@@ -239,12 +246,12 @@ export function EditTourPage() {
                 </div>
             
                 
-                <div className='lg:flex lg:justify-end lg:gap-2'>
+                <div className='md:flex lg:justify-end md:gap-2 md:justify-center'>
                     <Link to={TOURS_URL}>
-                    <button className="btn btn-sm btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Cancelar</button>
+                    <button className="btn btn-sm md:btn-wide btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Cancelar</button>
                     </Link>
                     <Link to={TOURS_URL}>
-                    <button className="btn btn-sm bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleForm} >Guardar</button>
+                    <button className="btn btn-sm md:btn-wide bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleForm} >Guardar</button>
                     </Link>
                 </div>
                 
