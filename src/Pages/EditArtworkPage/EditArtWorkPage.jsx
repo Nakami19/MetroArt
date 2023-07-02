@@ -98,7 +98,6 @@ async function updateArt() {
             url: imageUrl,
            
             }
-            console.log(newArt)
             try {
             const artRef = doc(artcollection, artId);
             await setDoc(artRef, newArt);} catch (error) {
@@ -201,8 +200,8 @@ async function updateArt() {
                     { art.autor &&
                     art.autor.map( (x,i)=>{
                     return(
-                    <div className="flex row mb-3">
-                        <div className="form-group col-md-4">
+                    <div className="flex row mb-3" key={art.id}>
+                        <div className="form-group col-md-4" key={art.id}>
                         <input type="text" defaultValue={x} name="autor" className="form-control input input-bordered input-sm"  placeholder="Ingresa un autor" onChange={ e=>handleinputchange(e,i)} />
                 
                     </div>
