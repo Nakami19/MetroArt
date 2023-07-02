@@ -35,8 +35,29 @@ export const UpdateTour= async (data, id) =>{
     
 }
 
-export const DeleteTour=async (id) => {
-    await deleteDoc(doc(db, "tours", id));
+export const UpdateUser= async (data, id)=>{
+    const docRef= doc(db,"users",id);
+    const docSnap= await getDoc(docRef)
+
+    if(docSnap.exists()) {
+        await setDoc(data);
+    }
+}
+
+export const DeleteTour=async (id,users) => {
+    console.log(id + " id")
+    // users.map((one)=>{
+    //     if(one.reservas.length>0) {
+    //       one.reservas.map((reserva)=>{
+    //         if(reserva.id_tour==id) {
+    //             let indice=one.reservas.indexOf(reserva)
+    //             console.log(indice + "usuario" + one.name)
+    //         }
+    //       })  
+    //     }
+        
+    // })
+    //await deleteDoc(doc(db, "tours", id));
 }
 
 export const getArtDocuments=async () => {

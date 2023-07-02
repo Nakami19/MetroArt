@@ -117,7 +117,6 @@ export function EditTourPage() {
         )
     } else if (!isLoading && tour.obras) {
 
-        console.log(checkedValues)
         
         
         return (

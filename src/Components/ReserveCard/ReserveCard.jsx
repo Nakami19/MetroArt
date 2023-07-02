@@ -1,6 +1,3 @@
-
-
-
 import React, { useEffect, useState } from 'react'
 import { useTours } from '../../hooks/useTours'
 import { useGlobalContext } from '../../contexts/GlobalContext'
@@ -60,7 +57,7 @@ export function ReserveCard({reserva}) {
   }
 
 
-
+  const modalId = `my_modal_${reserva.id_tour}`;
   
   return (
     <>
@@ -87,13 +84,13 @@ export function ReserveCard({reserva}) {
     <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg>
 </label>
   <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-    <li><a href="#my_modal_8">Opinar</a></li>
+    <li><a href={`#${modalId}`}>Opinar</a></li>
   </ul>
 </div>
             
 
 
-        <div className="modal" id="my_modal_8">
+        <div className="modal" id={modalId}>
         <div className="modal-box">
             <h3 className="font-bold text-lg font-raleway mb-5">Rating</h3>
                     <div className="rating">
