@@ -10,7 +10,7 @@ export function TourCard({tour, user}) {
     if (tour.feedbacks) {
         if(tour.feedbacks.length!=0) {
            tour.feedbacks.map((comentario)=>{
-                rating+=comentario.rating
+                rating=rating+parseInt(comentario.rating)
             }) 
         rating=rating/tour.feedbacks.length    
         }

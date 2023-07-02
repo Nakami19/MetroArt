@@ -4,8 +4,6 @@ import { doc, setDoc, addDoc, updateDoc, getDoc, getDocs } from "firebase/firest
 import { firebaseArtsData, firebaseToursData, loadArtsFromFirebase, loadToursFromFirebase } from "./data";
 
 export const getToursDocuments= async ()=>{
-    loadToursFromFirebase()
-    console.log(firebaseToursData.data_tour + "lalalla")
     let tourss=[];
     firebaseToursData.data_tour.forEach((doc) => {
         tourss.push(doc);
@@ -46,11 +44,9 @@ export const deleteArt=async (id) => {
 }
 
 export const getArtDocuments=async () => {
-    loadArtsFromFirebase()
     let obrass=[];
     // const arts= collection(db, "obras");
     // const art= await getDocs(arts);
-    console.log(firebaseArtsData.data_art+" jijijijij")
     firebaseArtsData.data_art.forEach((doc)=>{
         obrass.push(doc)
     })

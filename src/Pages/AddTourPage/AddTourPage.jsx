@@ -3,6 +3,7 @@ import { useArts } from '../../hooks/useArts';
 import { AddTour } from '../../firebase/info';
 import { TOURS_URL } from '../../constants/url';
 import { Link, useNavigate } from "react-router-dom";
+import { useGlobalContext } from '../../contexts/GlobalContext';
 
 export function AddTourPage() {
     const {arts, getArts, isLoading, getSearchArt} =useArts();
@@ -13,13 +14,14 @@ export function AddTourPage() {
     const [descriptionValue, setDescriptionValue] = useState("");
     const [buscar, setBuscar]=useState("");
     const [filtro, setFiltro]=useState("Nombre de obra");
+    const {firebaseToursData, firebaseArtsData}=useGlobalContext()
 
     useEffect(()=>{},[buscar])
 
     const handleChange= (e)=>{
         const ey=e.target.value
         setBuscar(ey);
-        getSearchArt(ey,filtro);     
+        getSearchArt(ey,filtro, firebaseArtsData);     
     }
     const handlerBuscar= (e)=> {
         const option=e.target.value
@@ -39,6 +41,34 @@ export function AddTourPage() {
         )
 
     }
+    function generarIdTicket() {
+        const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numeros = '0123456789';
+        let id = '';
+      
+        // Agregar una letra aleatoria en una posición aleatoria
+        const posicionLetra = Math.floor(Math.random() * 5);
+        const letraAleatoria = letras.charAt(Math.floor(Math.random() * letras.length));
+        id += id.length === posicionLetra ? letraAleatoria : numeros.charAt(Math.floor(Math.random() * numeros.length));
+      
+        // Agregar un número aleatorio en una posición aleatoria diferente a la anterior
+        let posicionNumero = Math.floor(Math.random() * 5);
+        while (posicionNumero === posicionLetra) {
+          posicionNumero = Math.floor(Math.random() * 5);
+        }
+        const numeroAleatorio = numeros.charAt(Math.floor(Math.random() * numeros.length));
+        id += id.length === posicionNumero ? numeroAleatorio : letras.charAt(Math.floor(Math.random() * letras.length));
+      
+        // Agregar caracteres alfanuméricos aleatorios en las posiciones restantes
+        for (let i = 0; i < 5; i++) {
+          if (i !== posicionLetra && i !== posicionNumero) {
+            const caracterAleatorio = Math.random() < 0.5 ? letras.charAt(Math.floor(Math.random() * letras.length)) : numeros.charAt(Math.floor(Math.random() * numeros.length));
+            id += caracterAleatorio;
+          }
+        }
+      
+        return id;
+      }
 
     function handleForm(){
         let arrayobras = [];
@@ -56,12 +86,14 @@ export function AddTourPage() {
             disp = true
         }
 
+        const idTicket = generarIdTicket();
+
         const data = {
             description: descriptionValue,
             disponible: disp,
             duration: durationValue,
             feedbacks:[],
-            id:'1234',
+            id: idTicket,
             generated_id:"",
             important_places: important,
             name: nameValue,
@@ -74,18 +106,16 @@ export function AddTourPage() {
 
     }
 
-    console.log(checkedValues)
-
     useEffect(()=>{
-        getArts()
-    },[])
+        getArts(firebaseArtsData.data_art)
+    },[firebaseArtsData])
 
 
     if(isLoading) {
         return (
-            <>
+            <div className="flex text-center justify-center content-center min-h-screen">
             <span className="loading loading-spinner loading-lg"></span>
-            </>
+            </div>
         )
     } else if (!isLoading) {
 
@@ -159,7 +189,7 @@ export function AddTourPage() {
                 {
                     arts.map((art) => {
                         return (
-                            <li>
+                            <li key={art.id}>
                                 <div className="flex items-center p-2 rounded hover:bg-gray-100">
                                 <input id="checkbox-item-11" type="checkbox" value={art.nombre} onChange={handleChangeInput} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
                                 <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>

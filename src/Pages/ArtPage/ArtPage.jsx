@@ -17,9 +17,6 @@ export function ArtPage() {
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     let isAdmin = false;
 
-    // useEffect(()=>{
-    //     loadArtsFromFirebase()
-    // },[])
 
     useEffect(()=>{
 
@@ -63,10 +60,9 @@ export function ArtPage() {
 
     if(isLoadingUser) {
         return (
-            <>
-            <span className="loading loading-spinner loading-lg position"></span>
-            
-            </>
+            <div className="flex text-center justify-center content-center min-h-screen">
+            <span className="loading loading-spinner loading-lg"></span>
+            </div>
         )
     } else if (!isLoadingUser) {
         
