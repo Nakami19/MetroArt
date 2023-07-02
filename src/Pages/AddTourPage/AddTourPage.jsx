@@ -119,7 +119,7 @@ export function AddTourPage() {
             reviews: 0,
             url: imageUrl,
         }
-        console.log(data)
+ 
         const add = AddTour(data)
 
     }

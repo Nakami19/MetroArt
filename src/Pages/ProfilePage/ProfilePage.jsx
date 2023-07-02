@@ -26,6 +26,7 @@ export function ProfilePage() {
     const [nombreusuario, setNombreusuario] = useState(null);
     const [correousuario, setCorreousuario] = useState(null);
     const [nombrecompleto, setNombrecompleto] = useState(null);
+    const [misreservas, setMisReservas] = useState([]);
     const [formData, setData] = useState({name:"",
     fullname:""});
     const [divPerfil, setDivPerfil] = useState(' lg:w-1/3 md: w-full lg:min-h-screen p-3');
@@ -68,7 +69,7 @@ export function ProfilePage() {
             setNombreusuario(doc.data().name);
             setCorreousuario(doc.data().email);
             setNombrecompleto(doc.data().fullname);
-
+            setMisReservas(doc.data().reservas);
         });
     
         return () => unsubscribe();
@@ -295,7 +296,7 @@ export function ProfilePage() {
                 <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideLeft} size={40}> ❮</div>
                 <div id='slider' className="carousel carousel-center h-[50vh] w-full p-4 space-x-4 rounded-box overflow-y-visible snap-none">
                     <div className="carousel-item p-3">
-                        {user.reservas.map((reserva)=>{
+                        {misreservas.map((reserva)=>{
                             return(
                               <ReserveCard reserva={reserva} key={reserva.id_tour} />  
                             )

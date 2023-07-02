@@ -35,32 +35,75 @@ export const UpdateTour= async (data, id) =>{
     
 }
 
-export const UpdateUser= async (data, id)=>{
+export const UpdateUserss= async (data, id)=>{
     const docRef= doc(db,"users",id);
     const docSnap= await getDoc(docRef)
 
     if(docSnap.exists()) {
-        await setDoc(data);
+        await setDoc(docRef, data);
     }
 }
 
 export const DeleteTour=async (id,users) => {
     console.log(id + " id")
-    // users.map((one)=>{
-    //     if(one.reservas.length>0) {
-    //       one.reservas.map((reserva)=>{
-    //         if(reserva.id_tour==id) {
-    //             let indice=one.reservas.indexOf(reserva)
-    //             console.log(indice + "usuario" + one.name)
-    //         }
-    //       })  
-    //     }
+    users.map((one)=>{
+        if(one.reservas.length>0) {
+          one.reservas.map((reserva)=>{
+            if(reserva.id_tour==id) {
+                let indice=one.reservas.indexOf(reserva)
+                one.reservas.splice(indice,1)
+                const data= {
+                    email: one.email,
+                    fullname: one.fullname,
+                    id: one.id,
+                    name: one.name,
+                    reservas: one.reservas,
+                    url: one.url,
+                    usertype: one.usertype
+                }
+                UpdateUserss(data,one.id)
+            }
+          })  
+        }
         
+    })
+
+    // users.map((usuario)=>{
+    //     if (usuario.reservas.length>0) {
+    //         console.log(usuario.name)
+    //         usuario.reservas.map((reserva)=>{
+    //             console.log(reserva)
+    //         })
+            
+    //     }
     // })
-    //await deleteDoc(doc(db, "tours", id));
+    await deleteDoc(doc(db, "tours", id));
 }
 
-export const deleteArt=async (id) => {
+export const deleteArt=async (id, tours) => {
+    tours.map((tour)=>{
+        tour.obras.map((obra)=>{
+            if(obra.id==id){
+                let indice=tour.obras.indexOf(obra);
+                tour.obras.splice(indice,1);
+                const data = {
+                    description: tour.description,
+                    disponible: tour.disponible,
+                    duration: tour.duration,
+                    feedbacks:tour.feedbacks,
+                    id:tour.id,
+                    generated_id : tour.generated_id,
+                    important_places: tour.important_places,
+                    name: tour.name,
+                    obras: tour.obras,
+                    reviews: tour.reviews,
+                    url: tour.url,
+                }
+
+                UpdateTour(data, tour.id)
+            }
+        })
+    })
     await deleteDoc(doc(db, "obras", id));
 }
 

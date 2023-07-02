@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
 import { HOME_URL } from "../../constants/url";
-import styles from "./PublicRoute.module.css";
 
 export function PublicRoute({ children }) {
   const { user, isLoading } = useUserContext();
