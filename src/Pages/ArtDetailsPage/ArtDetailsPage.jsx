@@ -28,9 +28,9 @@ export function ArtDetailsPage() {
 
     if(isLoading) {
         return (
-            <>
+            <div className="flex text-center justify-center content-center min-h-screen">
             <span className="loading loading-spinner loading-lg"></span>
-            </>
+            </div>
         )
     } else if (!isLoading) {
         
