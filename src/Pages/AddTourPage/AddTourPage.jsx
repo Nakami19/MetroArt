@@ -135,15 +135,21 @@ export function AddTourPage() {
 
 
         let arrayobras = [];
-        let important = "";
+        let important = [];
+        let imp="";
         checkedValues.map((nameobra) => {
             arts.map((obra) => {
                 if(nameobra == obra.nombre){
                     arrayobras.push(obra)
-                    important+=(obra.ubicacion+' ')
+                    if(!imp.includes(obra.ubicacion)){
+                        imp+=(obra.ubicacion+', ')
+                        important.push(obra.ubicacion)
+                    }
+                    
                 }
             })
         })
+        important = important.join(", ")
         let disp = false
         if(selectValue == 'Disponible'){
             disp = true
