@@ -35,8 +35,9 @@ export function ArtDetailsPage() {
     } else if (!isLoading) {
         
         return (
-            <div className='p-10 flex flex-col items-center gap-y-7 md:flex-row'>
-                <div className='flex flex-col gap-5 md:w-full'>
+         
+            <div className='p-10 lg:px-40 flex flex-col items-center gap-y-7 md:flex-row '>
+                <div className='flex flex-col gap-5 w-full lg:w-1/3'>
                     <h1 className=' font-raleway font-bold text-2xl text-center text-[#001A72]'>
                         {art.nombre}
                     </h1>
@@ -44,32 +45,34 @@ export function ArtDetailsPage() {
                         <div className="w-full h-96 rounded">
                             <img src={art.url} />
                         </div>
+                    </div>
                 </div>
-                </div>
-                <div className='font-montserrat grid gap-3 p-1 md:p-7'>
-                    <h2 className="font-bold text-center md:text-start">Información de la obra</h2>
-                    <div className='flex gap-x-1 h-fit text-justify'>
-                        <p className='font-bold'>Nombre:</p>
-                        <p>{art.nombre }</p>
+            <div className='font-montserrat grid gap-3 p-1 lg:w-2/3 md:p-7'>
+            <h2 className="font-bold text-base text-center md:text-start">Información de la obra</h2>
+            <div className='bg-black w-full h-0.5 '></div>
+                    <div className='flex gap-x-2 h-fit text-justify'>
+                        <p className='font-bold text-sm'>Nombre:</p>
+                        <p className='text-sm'>{art.nombre }</p>
                     </div>
-                    <div className='flex gap-x-1 h-fit text-justify'>
-                        <p className='font-bold'>Ubicación: </p>
-                        <p>{art.ubicacion}</p>
+                    <div className='flex gap-x-2 h-fit text-justify'>
+                        <p className='font-bold text-sm'>Ubicación: </p>
+                        <p className='text-sm'>{art.ubicacion}</p>
                     </div>
-                    <div className='flex gap-x-1 h-fit text-justify'>
-                        <p className='font-bold'>Tipo: </p>
-                        <p>{art.tipo}</p>
+                    <div className='flex gap-x-2 h-fit text-justify'>
+                        <p className='font-bold text-sm'>Tipo: </p>
+                        <p className='text-sm'>{art.tipo}</p>
                     </div>
-                    <div className='flex gap-x-1 h-fit text-justify'>
-                        <p className='font-bold'>Autor: </p>
-                        <p>{autores}</p>
+                    <div className='flex gap-x-2 h-fit text-justify'>
+                        <p className='font-bold text-sm'>Autor: </p>
+                        <p className='text-sm'>{autores}</p>
                     </div>
                     <div className='h-fit text-justify'>
-                        <p className='font-bold'>Descripción </p>
-                        <p>{art.descripcion}</p>
+                        <p className='font-bold text-sm'>Descripción: </p>
+                        <p className='text-sm'>{art.descripcion}</p>
                     </div>
                 </div>
             </div>
+            
   )
 
     }

@@ -1,0 +1,35 @@
+{
+  "background_color": "#ffffff",
+  "description": "Metro Art Collection te permite reservar fácilmente visitas guiadas a las obras de arte de la Universidad Metropolitana. Explora una amplia variedad de obras y aprende sobre su significado histórico y cultural con nuestros guías expertos. ¡Reserva tu tour hoy mismo y descubre el arte en la Universidad Metropolitana!",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "metro-art-collection.web",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "metro-art-collection.web",
+  "start_url": "/",
+  "theme_color": "#4E598C",
+  "categories": [
+    "education",
+    "entertainment"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "https://firebasestorage.googleapis.com/v0/b/metro-art-collection.appspot.com/o/proyecto-imagenes%2Fblanquito%20(1).png?alt=media&amp;token=e40fe06a-7de3-4520-8b06-a20b054a9ef8",
+      "type": "image/png",
+      "sizes": "313x283"
+    },
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "MAC",
+      "url": "https://metro-art-collection.web.app/",
+      "description": "Inicio"
+    }
+  ]
+}
