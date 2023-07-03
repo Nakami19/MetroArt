@@ -14,6 +14,8 @@ import {
 import { useState, useEffect } from "react";
 import { useUsers } from "../../hooks/useUsers";
 import { useGlobalContext } from '../../contexts/GlobalContext';
+import { Link } from 'react-router-dom';
+import { TOURS_URL } from '../../constants/url';
 
 export function ProfilePage() {
 
@@ -26,6 +28,7 @@ export function ProfilePage() {
     const [nombreusuario, setNombreusuario] = useState(null);
     const [correousuario, setCorreousuario] = useState(null);
     const [nombrecompleto, setNombrecompleto] = useState(null);
+    const [misreservas, setMisReservas] = useState([]);
     const [formData, setData] = useState({name:"",
     fullname:""});
     const [divPerfil, setDivPerfil] = useState(' lg:w-1/3 md: w-full lg:min-h-screen p-3');
@@ -68,7 +71,7 @@ export function ProfilePage() {
             setNombreusuario(doc.data().name);
             setCorreousuario(doc.data().email);
             setNombrecompleto(doc.data().fullname);
-
+            setMisReservas(doc.data().reservas);
         });
     
         return () => unsubscribe();
@@ -287,7 +290,7 @@ export function ProfilePage() {
 
 
 
-            {!isAdmin && ( <div className={'lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'}>
+            {!isAdmin && misreservas[0]!=null && ( <div className={'lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'}>
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             
@@ -295,9 +298,10 @@ export function ProfilePage() {
                 <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideLeft} size={40}> ❮</div>
                 <div id='slider' className="carousel carousel-center h-[50vh] w-full p-4 space-x-4 rounded-box overflow-y-visible snap-none">
                     <div className="carousel-item p-3">
-                        {user.reservas.map((reserva)=>{
+                        {misreservas.map((reserva)=>{
+                            
                             return(
-                              <ReserveCard reserva={reserva} key={reserva.id_tour} />  
+                              <ReserveCard reserva={reserva} key={reserva.id} />  
                             )
 
                         })}
@@ -307,6 +311,23 @@ export function ProfilePage() {
                 <div className='flex flex-wrap opacity-50 cursor-pointer hover:opacity-100 content-center p-2' onMouseEnter={slideRight} size={40}> ❯ </div>
                </div>
             </div>
+            )}
+
+            {!isAdmin && misreservas[0]==null && ( <div className={'lg:w-2/3 md: w-full lg:min-h-screen py-5 lg:px-20 md: px-5'}>
+            <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
+
+            <Link to={TOURS_URL}>
+            <div className='font-montserrat flex items-center justify-center mt-6 bg-[#FF8C42]/10 w-full text-center rounded-xl h-72 hover:scale-105 transition ease-in-out delay-150'>
+            <div className='flex flex-col gap-2 p-4'>
+                <h1 className='text-[#864317] font-bold'>Aún no ha hecho ninguna reserva</h1>
+                
+                <p className='text-[#864317] text-xs'>¡Diríjase a la página de Tours para hacer la primera!</p>
+                
+            </div>
+            </div>
+            </Link> 
+        </div>
+
             )}
 
            

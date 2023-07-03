@@ -21,6 +21,10 @@ export function AddTourPage() {
     const [filename, setFilename] = useState("");
     const {firebaseToursData, firebaseArtsData}=useGlobalContext()
     const [titulo, setTitulo] = useState("...");
+    const [errors, setErrors] = useState({});
+    const newErrors = {};
+    const navigate = useNavigate();
+
 
     useEffect(()=>{},[buscar])
 
@@ -39,6 +43,11 @@ export function AddTourPage() {
     const handleUpload = async (e) => {
         const file = e.target.files[0];
         const code = uuidv4();
+        const extension = file.name.substr(file.name.lastIndexOf("."))
+        const allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png)$/i
+        const isAllowed = allowedExtensionsRegx.test(extension)
+
+        if(isAllowed){
         const storageRef = ref(storage, `tours-imagenes/${file.name+" "+code}`);
         setFilename(file.name+" "+code)
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -46,7 +55,14 @@ export function AddTourPage() {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
           setImageUrl(downloadUrl);
         });
-      });
+        });
+        } else {
+            newErrors.archivo = "Tipo de archivo inválido";
+            setErrors(newErrors);
+        }
+
+
+        
     };
 
 
@@ -92,6 +108,31 @@ export function AddTourPage() {
       }
 
     function handleForm(){
+
+        if(nameValue == '' || descriptionValue=='' || titulo =='' || checkedValues.length==0 || imageUrl==""){
+            newErrors.vacio = "Evite dejar campos vacíos";
+            
+            if (imageUrl == "") {
+                newErrors.vacio = "Por favor cargue una imagen para el tour"
+            } else if (checkedValues.length==0) {
+                newErrors.vacio = "Por favor añada obras al tour"
+            }
+            else {
+                newErrors.vacio = "Evite dejar campos vacíos";
+            }
+        
+            if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+            } else {
+                setErrors({});
+            }
+        
+        } else {
+
+
+
+
         let arrayobras = [];
         let important = "";
         checkedValues.map((nameobra) => {
@@ -122,8 +163,10 @@ export function AddTourPage() {
             reviews: 0,
             url: imageUrl,
         }
-        console.log(data)
+ 
         const add = AddTour(data)
+        navigate(TOURS_URL)
+    }
 
     }
 
@@ -147,6 +190,25 @@ export function AddTourPage() {
 
         return (
             <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
+            {errors.vacio && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.vacio}</span>
+            </div>
+            </div>
+        )
+        }
+            {errors.archivo && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.archivo}</span>
+            </div>
+            </div>
+        )
+        }
+
             <div className='flex flex-col gap-5 w-full lg:items-center lg:w-96'>
                 <h1 className='text-center font-raleway text-2xl font-bold text-[#4E598C]'>{titulo}</h1>
                 <div className="flex items-center justify-center w-full">
@@ -239,9 +301,9 @@ export function AddTourPage() {
                     <Link to={TOURS_URL}>
                     <button className="btn btn-sm btn-outline md:btn-wide normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide">Cancelar</button>
                     </Link>
-                    <Link to={TOURS_URL}>
+                    {/* <Link to={TOURS_URL}> */}
                     <button className="btn btn-sm md:btn-wide bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat md:btn-md lg:btn-wide" onClick={handleForm}>Guardar</button>
-                    </Link>
+                {/* </Link> */}
                 </div>
                 
             </div>

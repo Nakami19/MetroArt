@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   doc,
   setDoc,
@@ -9,6 +9,7 @@ import { db } from '../../firebase/config';
 import {v4 as uuidv4} from 'uuid';
 import { storage } from '../../firebase/config';
 import { ref, uploadBytesResumable, getDownloadURL, } from "firebase/storage";
+import { ADDARTWORK_URL, ARTPAGE_URL } from '../../constants/url';
 
 
 export function AddArtworkPage() {
@@ -26,7 +27,12 @@ export function AddArtworkPage() {
     const [titulo, setTitulo] = useState("...");
     const [imageUrl, setImageUrl] = useState("");
     const [autor, setautor]= useState([""]);
+    const [errors, setErrors] = useState({});
+    const newErrors = {};
 
+
+
+    const navigate=useNavigate()
     const handleinputchange=(e, index)=>{
         
         const list= [...autor];
@@ -51,22 +57,31 @@ export function AddArtworkPage() {
     }
   
     const handleUpload = async (e) => {
+        
         const file = e.target.files[0];
         const code = uuidv4();
-        const storageRef = ref(storage, `obras-imagenes/${file.name+" "+code}`);
-        setFilename(file.name+" "+code)
-        const uploadTask = uploadBytesResumable(storageRef, file);
-        uploadTask.on("state_changed", null, null, () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-          setImageUrl(downloadUrl);
-        });
-      });
+        const extension = file.name.substr(file.name.lastIndexOf("."))
+        const allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png)$/i
+        const isAllowed = allowedExtensionsRegx.test(extension)
+        console.log(isAllowed)
+        if(isAllowed){
+            const storageRef = ref(storage, `obras-imagenes/${file.name+" "+code}`);
+            setFilename(file.name+" "+code)
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on("state_changed", null, null, () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+                setImageUrl(downloadUrl);
+                });
+            });
+        }else {
+            newErrors.archivo = "Tipo de archivo inválido";
+            setErrors(newErrors);
+        }
     };
     
       // ADD FUNCTION
     async function addArt() {
 
-        
         const newArt = {
         autor,
         descripcion,
@@ -95,10 +110,33 @@ export function AddArtworkPage() {
         }
     }
 
+
     const handleAdd = async (e) => {
 
+
+        /////////////////////////VALIDACIONES
+        e.preventDefault();
+        if(nombre == '' || ubicacion=='' || tipo =='' || fecha =='' || descripcion =='' || autor[0]=="" || imageUrl==""){
+            
+            if (imageUrl == "") {
+                newErrors.vacio = "Por favor cargue una imagen para la obra"
+            }else {
+                newErrors.vacio = "Evite dejar campos vacíos";
+            }
+        
+            if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+            } else {
+                setErrors({});
+            }
+        
+        } else {
+
+//////////////////////////////////
+
         addArt();
-        window.my_modal_5.showModal()
+        window.my_modal_5.showModal()}
 //      
     };
 
@@ -107,7 +145,31 @@ export function AddArtworkPage() {
         setNombre(event.target.value);
     };
 
+
+    const handleFinish=()=>{
+        navigate(ARTPAGE_URL);
+    }
+
   return (
+    <div>
+          {errors.vacio && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.vacio}</span>
+            </div>
+            </div>
+        )
+        }
+        {errors.archivo && (
+            <div className='px-5'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.archivo}</span>
+            </div>
+            </div>
+        )
+        }
     <div className='py-10 lg:px-52 flex flex-col items-center gap-y-7 md:flex-row'>
         <div className='flex flex-col gap-5 md:w-full lg:w-1/3'>
             <h1 className=' font-raleway font-bold text-2xl text-center text-[#001A72]'>
@@ -194,10 +256,10 @@ export function AddArtworkPage() {
                 <textarea className="textarea textarea-bordered h-44 w-full" placeholder="Ej. Pintura de Luis Dominguez Salazar quien se caracterizaba por su estilo inclinado al dominio del claroscuro..." value={descripcion} onChange={(e) => setDescripcion(e.target.value)}></textarea>
             </div>
             <div className='flex gap-3 lg:ms-auto md: justify-around'>
-                <button className="btn md:btn-sm lg:btn-md normal-case" onClick={handleAdd}>Agregar</button>
                 <Link to={`/art`}>
-                <button className="btn btn-error md:btn-sm lg:btn-md normal-case">Cancelar</button>
+                <button className="btn btn-md btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat">Cancelar</button>
                 </Link>
+                <button className="btn btn-md bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat" onClick={handleAdd}>Guardar</button>
             </div>
         </div>
             {/* Open the modal using ID.showModal() method */}
@@ -207,7 +269,7 @@ export function AddArtworkPage() {
                 <p className="py-4">Se ha agregado la obra con éxito</p>
                 <div className="modal-action">
                 {/* if there is a button in form, it will close the modal */}
-                <button className="btn bg-green-500">OK</button>
+                <button className="btn bg-green-500" onClick={()=>handleFinish()} >OK</button>
                 </div>
             </form>
             </dialog>    
@@ -215,45 +277,60 @@ export function AddArtworkPage() {
 
 
 </div>
+</div>
   )
 }
 
 
-
-// export function SnapshotFirebaseAdvanced() {
-
+// const saveChanges = async (event) => {
 
 
+//     event.preventDefault();
+//     const userRef = doc(profilecollection, user.id);
 
-//     setLoading(true);
-//     // const unsub = onSnapshot(q, (querySnapshot) => {
-//     const unsub = onSnapshot(artcollection, (querySnapshot) => {
-//       const items = [];
-//       querySnapshot.forEach((doc) => {
-//         items.push(doc.data());
-//       });
-//       setArts(items);
-//       setLoading(false);
-//     });
-//     return () => {
-//       unsub();
-//     };
+//     if(formData.name !== ''){
+//     if(formData.name.length < 4){
+//       newErrors.name="El mínimo de caracteres para el nombre de usuario es 4"
+//     } else if(formData.name.length > 16){
+//       newErrors.name="El límite es de 16 caracteres"
+//     }else if (formData.name.includes(" ")) { 
+//         newErrors.name = "El nombre de usuario no puede contener espacios en blanco";}
+//         usuarios.map((usuario)=>{
+//       if (usuario.name == formData.name && user.name != usuario.name){
+//         newErrors.name = "El nombre de usuario ya ha sido registrado";}
+//       })}
+    
+//     if( formData.fullname !== ''){
 
-//     // eslint-disable-next-line
-//   }, []);
+//     if (!/^[a-zA-Z\s]+$/.test(formData.fullname)) {
+//         newErrors.fullname = "El nombre y apellido solo pueden contener letras y espacios en blanco";
+//       }
+//      else if (formData.fullname.trim().length !== formData.fullname.length) {
+//       newErrors.fullname = "El nombre y apellido no pueden comenzar ni terminar con espacios en blanco";
+//     }}
 
 
-//   //DELETE FUNCTION
-//   async function deleteArt(art) {
-//     try {
-//       const artRef = doc(artcollection, art.id);
-//       await deleteDoc(artRef, artRef);
-//       const storageRef = ref(storage, `obras-imagenes/${art.filename}`);
-//       await deleteObject(storageRef);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
+//     if (Object.keys(newErrors).length > 0) {
+//         setErrors(newErrors);
+//         return;
+//       } else {
+//         setErrors({});
+//       }
+
+//       if(formData.name !== ''){
+//         await updateDoc(userRef, { "name": formData.name });
+//       }
+      
+//       if( formData.fullname !== ''){
+//         await updateDoc(userRef, { "fullname": formData.fullname });
+//       }
+//     setData({name:"",
+//     fullname:""
+// });
+//     setDisableUser(true);
+//     setDisableName(true);
+//     setDisableEmail(true);
+//     setStyle("hidden");};
 
 
 
