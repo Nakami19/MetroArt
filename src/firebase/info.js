@@ -3,6 +3,7 @@ import { collection, deleteDoc } from 'firebase/firestore';
 import { doc, setDoc, addDoc, updateDoc, getDoc, getDocs } from "firebase/firestore";
 import { firebaseArtsData, firebaseToursData, loadArtsFromFirebase, loadToursFromFirebase } from "./data";
 
+
 export const getToursDocuments= async ()=>{
     let tourss=[];
     firebaseToursData.data_tour.forEach((doc) => {
@@ -43,6 +44,7 @@ export const UpdateUserss= async (data, id)=>{
         await setDoc(docRef, data);
     }
 }
+
 
 export const DeleteTour=async (id,users) => {
     let frecuencia=0;
