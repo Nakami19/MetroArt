@@ -25,8 +25,10 @@ export function AddTourPage() {
     useEffect(()=>{},[buscar])
 
     const handleChange= (e)=>{
+        console.log(checkedValues)
         const ey=e.target.value
         setBuscar(ey);
+        console.log(ey)
         getSearchArt(ey,filtro, firebaseArtsData);     
     }
     const handlerBuscar= (e)=> {
