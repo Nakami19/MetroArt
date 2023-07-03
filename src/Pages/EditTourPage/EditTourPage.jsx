@@ -31,9 +31,12 @@ export function EditTourPage() {
     const [errors, setErrors] = useState({});
     const newErrors = {};
     const navigate = useNavigate();
+    const [arrayLoading, setArrayLoading]=useState();
 
         useEffect(()=>{
+            setArrayLoading(true)
             try{
+                
                 let array= [];
                 tour.obras.map((obra)=>{
                 array.push(obra.nombre)
@@ -45,7 +48,9 @@ export function EditTourPage() {
                 setDescriptionValue(tour.description)
                 setImageUrl(tour.url)
                 
+                
             })
+            setArrayLoading(false)
             }catch(error){
 
             }
@@ -177,7 +182,7 @@ export function EditTourPage() {
         <span className="loading loading-spinner loading-lg"></span>
         </div>
         )
-    } else if (!isLoading && tour.obras) {
+    } else if (!isLoading && tour.obras && !arrayLoading) {
     
         return (
         <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
@@ -268,12 +273,13 @@ export function EditTourPage() {
                             {
                                 arts.map((art) => {
                                     let si = false;
-                                    tour.obras.map((obra)=>{
-                                        if(obra.nombre == art.nombre  ){   
+                                    checkedValues.map((obra)=>{
+                                        if(obra == art.nombre){   
                                             si = true;
                                             
                                         }
                                     })
+                                    console.log(si)
                                 
                                     return (
                                         <li key={art.id}>
