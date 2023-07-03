@@ -63,6 +63,14 @@ export function ReserveCard({reserva}) {
     return id;
   }
 
+  const handleCancelar=(e)=>{
+    e.preventDefault();
+    let reservaciones=user.reservas;
+    let indice=reservaciones.indexOf(reserva)
+    reservaciones.splice(indice,1)
+
+  }
+
   const handleEnviar=(e)=>{
     e.preventDefault();
     let comment=tour.feedbacks;
@@ -114,9 +122,7 @@ useEffect(() => {
   }
 }, [user.reservas, tour.generated_id, reserva]);
 
-useEffect(() => {
-
-}, [fecha]);
+useEffect(() => {}, [fecha]);
 let f = new Date()
 let fechaActual=(f.getMonth()+1)+"/"+f.getDate() + "/" +f.getFullYear()
 let modal=<>
@@ -172,7 +178,7 @@ if(Date.parse(fecha) > Date.parse(fechaActual) || Date.parse(fecha)== Date.parse
                 <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: {reserva.fecha} </p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Hora: {reserva.horario} </p> 
             </Link>
-                <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white'>Cancelar Reserva</button>
+                <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white' onChange={handleCancelar}>Cancelar Reserva</button>
                 
 
             </div>

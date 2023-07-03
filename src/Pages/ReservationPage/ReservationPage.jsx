@@ -43,7 +43,7 @@ export function ReservationPage() {
 
     const [selectedDate, setSelectedDate] = useState(null);
     const handleDateSelect = (date) => {
-      console.log("aaa "+ date)
+
         setSelectedDate(date); 
 
       };

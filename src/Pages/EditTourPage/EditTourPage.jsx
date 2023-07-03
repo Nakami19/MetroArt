@@ -181,7 +181,7 @@ export function EditTourPage() {
         <span className="loading loading-spinner loading-lg"></span>
         </div>
         )
-    } else if (!isLoading && tour.obras && !arrayLoading) {
+    } else if (!isLoading  && !arrayLoading) {
     
         return (
         <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
