@@ -156,7 +156,6 @@ export function EditTourPage() {
 
     const handleChange= (e)=>{
         const ey=e.target.value
-        console.log("holaaaaaa")
         setBuscar(ey);
         getSearchArt(ey,filtro, firebaseArtsData.data_art);     
     }
@@ -279,7 +278,6 @@ export function EditTourPage() {
                                             
                                         }
                                     })
-                                    console.log(si)
                                 
                                     return (
                                         <li key={art.id}>
