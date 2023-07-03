@@ -24,6 +24,7 @@ export function AddTourPage() {
     const [errors, setErrors] = useState({});
     const newErrors = {};
     const navigate = useNavigate();
+   
 
 
     useEffect(()=>{},[buscar])
@@ -32,8 +33,7 @@ export function AddTourPage() {
         console.log(checkedValues)
         const ey=e.target.value
         setBuscar(ey);
-        console.log(ey)
-        getSearchArt(ey,filtro, firebaseArtsData);     
+        getSearchArt(ey,filtro, firebaseArtsData.data_art);     
     }
     const handlerBuscar= (e)=> {
         const option=e.target.value
@@ -67,6 +67,7 @@ export function AddTourPage() {
 
 
     function handleChangeInput(event){
+        
 
         const {value, checked} = event.target
 
@@ -171,6 +172,7 @@ export function AddTourPage() {
     }
 
     useEffect(()=>{
+       
         getArts(firebaseArtsData.data_art)
     },[firebaseArtsData])
 
@@ -276,10 +278,17 @@ export function AddTourPage() {
 
                             {
                                 arts.map((art) => {
+                                    let si = false;
+                                    checkedValues.map((obra)=>{
+                                        if(obra == art.nombre){   
+                                            si = true;
+                                            
+                                        }
+                                    })
                                     return (
                                         <li key={art.id}>
                                             <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                                            <input id="checkbox-item-11" type="checkbox" value={art.nombre} onChange={handleChangeInput} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
+                                            <input id="checkbox-item-11" defaultChecked={si} type="checkbox" value={art.nombre} onChange={handleChangeInput} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
                                             <label htmlFor="checkbox-item-11" className="w-full ml-2 text-sm font-medium text-gray-900 rounded">{art.nombre}</label>
                                             </div>
                                         </li>
