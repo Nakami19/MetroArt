@@ -31,7 +31,7 @@ export function AddTourPage() {
     const handleChange= (e)=>{
         const ey=e.target.value
         setBuscar(ey);
-        getSearchArt(ey,filtro, firebaseArtsData);     
+        getSearchArt(ey,filtro, firebaseArtsData.data_art);     
     }
     const handlerBuscar= (e)=> {
         const option=e.target.value
