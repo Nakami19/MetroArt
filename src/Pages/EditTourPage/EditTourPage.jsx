@@ -191,9 +191,12 @@ export function EditTourPage() {
     } else if (!isLoading && tour.obras && !arrayLoading) {
     
         return (
-        <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
+
+
+        <>
+
             {errors.vacio && (
-            <div className='px-5'>
+            <div className='px-52 hidden lg:block'>
             <div className="alert alert-error mt-5 font-montserrat">
             <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span>{errors.vacio}</span>
@@ -202,7 +205,26 @@ export function EditTourPage() {
         )
         }
             {errors.archivo && (
-            <div className='px-5'>
+            <div className='px-52 hidden lg:block'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.archivo}</span>
+            </div>
+            </div>
+        )
+        }
+        <section className='p-7 md:p-16 flex flex-col gap-5 lg:flex-row lg:justify-center lg:items-center'>
+            {errors.vacio && (
+            <div className='lg:hidden'>
+            <div className="alert alert-error mt-5 font-montserrat">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>{errors.vacio}</span>
+            </div>
+            </div>
+        )
+        }
+            {errors.archivo && (
+            <div className='lg:hidden'>
             <div className="alert alert-error mt-5 font-montserrat">
             <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span>{errors.archivo}</span>
@@ -322,5 +344,6 @@ export function EditTourPage() {
         </div>
             
     </section>
+    </>
         )}
 }
