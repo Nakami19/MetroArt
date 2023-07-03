@@ -3,7 +3,7 @@ import { useTours } from '../../hooks/useTours'
 import { useGlobalContext } from '../../contexts/GlobalContext'
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../contexts/UserContext';
-import { UpdateTour } from '../../firebase/info';
+import { UpdateTour, UpdateUserss } from '../../firebase/info';
 import { PROFILE_URL } from '../../constants/url';
 import {updateDoc } from "firebase/firestore";
 
@@ -25,7 +25,7 @@ export function ReserveCard({reserva}) {
 
   useEffect(()=>{
 
-  },[rating, comentario])
+  },[rating, comentario, user])
 
    const handleChange= (e)=>{
     setRating(e.target.value)
@@ -63,11 +63,49 @@ export function ReserveCard({reserva}) {
     return id;
   }
 
-  const handleCancelar=(e)=>{
+  const handleCancelar= async(e)=>{
     e.preventDefault();
     let reservaciones=user.reservas;
-    let indice=reservaciones.indexOf(reserva)
-    reservaciones.splice(indice,1)
+    reservaciones.map((reservass)=>{
+      if(reservass.id==reserva.id) {
+        let indice=user.reservas.indexOf(reservass)
+        if(indice>-1) {
+          reservaciones.splice(indice,1);
+        }
+        
+
+    const data= {
+      email: user.email,
+      fullname: user.fullname,
+      id: user.id,
+      name: user.name,
+      reservas: reservaciones,
+      url: user.url,
+      usertype: user.usertype
+  }
+ 
+    UpdateUserss(data,user.id)
+
+
+      }  
+    })
+
+
+    // let found=reservaciones.find(element=> element.id==reserva.id)
+    // let indice=reservaciones.indexOf(found)
+  //   reservaciones.splice(indice,1);
+
+  //   const data= {
+  //     email: user.email,
+  //     fullname: user.fullname,
+  //     id: user.id,
+  //     name: user.name,
+  //     reservas: reservaciones,
+  //     url: user.url,
+  //     usertype: user.usertype
+  // }
+
+  //    updateUser(data,user.id)
 
   }
 
@@ -178,7 +216,7 @@ if(Date.parse(fecha) > Date.parse(fechaActual) || Date.parse(fecha)== Date.parse
                 <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: {reserva.fecha} </p>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Hora: {reserva.horario} </p> 
             </Link>
-                <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white' onChange={handleCancelar}>Cancelar Reserva</button>
+                <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white' onClick={handleCancelar}>Cancelar Reserva</button>
                 
 
             </div>
