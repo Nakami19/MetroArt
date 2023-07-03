@@ -285,10 +285,10 @@ async function updateArt() {
                 <textarea defaultValue={art.descripcion} className="textarea textarea-bordered h-44 w-full" onChange={(e)=>(setDescripcion(e.target.value))} ></textarea>
             </div>
             <div className='flex gap-3 lg:ms-auto md: justify-around'>
-                <button className="btn md:btn-sm lg:btn-md normal-case" onClick={handleUpdate}>Confirmar</button>
                 <Link to={`/art`}>
-                <button className="btn btn-error md:btn-sm lg:btn-md normal-case">Cancelar</button>
+                <button className="btn btn-md btn-outline normal-case text-[#FF8C42] hover:bg-[#c45815] font-montserrat">Cancelar</button>
                 </Link>
+                <button className="btn btn-md bg-[#FF8C42] normal-case text-white hover:bg-[#c45815] font-montserrat" onClick={handleUpdate}>Confirmar</button>
             </div>
         </div>
         {/* Open the modal using ID.showModal() method */}
