@@ -80,7 +80,6 @@ export function EditTourPage() {
 
             const {value, checked} = event.target
     
-    
             if(checked){
                 setValue(pre => [...pre, value])
             }else(
@@ -141,7 +140,6 @@ export function EditTourPage() {
                 url: imageUrl,
             }
             const aaaa = UpdateTour(data, tour.generated_id);
-            console.log("ijijij")
             navigate(TOURS_URL);
         }
     
@@ -153,6 +151,7 @@ export function EditTourPage() {
 
     const handleChange= (e)=>{
         const ey=e.target.value
+        console.log("holaaaaaa")
         setBuscar(ey);
         getSearchArt(ey,filtro, firebaseArtsData.data_art);     
     }
@@ -172,11 +171,11 @@ export function EditTourPage() {
     
 
 
-    if(isLoading) {
+    if(isLoading || !tour.obras) {
         return (
-            <>
-            <span className="loading loading-spinner loading-lg"></span>
-            </>
+        <div className="flex text-center justify-center content-center min-h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+        </div>
         )
     } else if (!isLoading && tour.obras) {
     
@@ -270,7 +269,7 @@ export function EditTourPage() {
                                 arts.map((art) => {
                                     let si = false;
                                     tour.obras.map((obra)=>{
-                                        if(obra.nombre == art.nombre){   
+                                        if(obra.nombre == art.nombre  ){   
                                             si = true;
                                             
                                         }
