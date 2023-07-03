@@ -212,9 +212,9 @@ if(Date.parse(fecha) > Date.parse(fechaActual) || Date.parse(fecha)== Date.parse
             <img className="object-cover h-36 w-full md:h-full lg:w-2/5 md:w-2/5 rounded-t-lg lg:h-full md:rounded-none md:rounded-l-lg" src={tour.url} alt=""/>
             <div className="w-3/4 flex flex-col justify-between p-4 leading-normal">
             <Link to={`/tours/${tour.id}`}>
-                <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-raleway">{tour.name}</h5>
-                <p className="mb-1 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Fecha: {reserva.fecha} </p>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 font-montserrat">Hora: {reserva.horario} </p> 
+                <h5 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 ">{tour.name}</h5>
+                <p className="mb-1 font-normal text-gray-700 font-montserrat">Fecha: {reserva.fecha} </p>
+                <p className="mb-3 font-normal text-gray-700 font-montserrat">Hora: {reserva.horario} </p>
             </Link>
                 <button className='btn btn-xs normal-case font-montserrat bg-[#C15100] hover:bg-[#703308] text-white' onClick={handleCancelar}>Cancelar Reserva</button>
                 
