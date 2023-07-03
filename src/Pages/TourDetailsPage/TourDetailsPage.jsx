@@ -132,9 +132,6 @@ export function TourDetailsPage() {
                         
                     })
                 }
-                {/* <ComentContainer/> 
-                <ComentContainer/> 
-                <ComentContainer/>  */}
             </div>
             )}
 
@@ -152,9 +149,9 @@ export function TourDetailsPage() {
   )
     } else {
         return (
-            <>
-            <h1>Cargando...</h1>
-            </>
+            <div className="flex text-center justify-center content-center min-h-screen">
+            <span className="loading loading-spinner loading-lg"></span>
+            </div>
         )
     }
 
