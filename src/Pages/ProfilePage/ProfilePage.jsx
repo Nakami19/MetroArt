@@ -317,11 +317,11 @@ export function ProfilePage() {
             <h1 className='font-raleway font-bold text-2xl ml-4'>Tus reservas</h1>
 
             <Link to={TOURS_URL}>
-            <div className='font-montserrat flex items-center justify-center mt-6 bg-[#FF8C42]/10 w-full text-center rounded-xl h-72 hover:scale-105 transition ease-in-out delay-150'>
+            <div className='font-montserrat flex items-center justify-center mt-6 bg-[#FF8C42]/10 w-full text-center rounded-xl h-72 hover:scale-105 transition ease-in-out duration-200'>
             <div className='flex flex-col gap-2 p-4'>
-                <h1 className='text-[#864317] font-bold'>Aún no ha hecho ninguna reserva</h1>
+                <h1 className='text-[#864317] font-bold'>Aún no has hecho ninguna reserva</h1>
                 
-                <p className='text-[#864317] text-xs'>¡Diríjase a la página de Tours para hacer la primera!</p>
+                <p className='text-[#864317] text-xs'>¡Dirígete a la página de Tours para hacer la primera!</p>
                 
             </div>
             </div>
