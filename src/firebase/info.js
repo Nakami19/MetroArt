@@ -45,13 +45,25 @@ export const UpdateUserss= async (data, id)=>{
 }
 
 export const DeleteTour=async (id,users) => {
-    console.log(id + " id")
+    let frecuencia=0;
+    users.map((one)=>{
+        if(one.reservas.length>0) {
+          one.reservas.map((reserva)=>{
+            if(reserva.id_tour==id) {
+                frecuencia=frecuencia+1
+            }
+          })  
+        }
+        
+    }
+    )
+
     users.map((one)=>{
         if(one.reservas.length>0) {
           one.reservas.map((reserva)=>{
             if(reserva.id_tour==id) {
                 let indice=one.reservas.indexOf(reserva)
-                one.reservas.splice(indice,1)
+                one.reservas.splice(indice,frecuencia)
                 const data= {
                     email: one.email,
                     fullname: one.fullname,
@@ -66,26 +78,27 @@ export const DeleteTour=async (id,users) => {
           })  
         }
         
-    })
+    }
+    )
 
-    // users.map((usuario)=>{
-    //     if (usuario.reservas.length>0) {
-    //         console.log(usuario.name)
-    //         usuario.reservas.map((reserva)=>{
-    //             console.log(reserva)
-    //         })
-            
-    //     }
-    // })
     await deleteDoc(doc(db, "tours", id));
 }
 
 export const deleteArt=async (id, tours) => {
+    let frecuencia=0;
+    tours.map((tour)=>{
+        tour.obras.map((obra)=>{
+            if(obra.id==id){
+                frecuencia=frecuencia+1
+            }
+        })
+    })
+
     tours.map((tour)=>{
         tour.obras.map((obra)=>{
             if(obra.id==id){
                 let indice=tour.obras.indexOf(obra);
-                tour.obras.splice(indice,1);
+                tour.obras.splice(indice,frecuencia);
                 const data = {
                     description: tour.description,
                     disponible: tour.disponible,

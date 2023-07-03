@@ -63,7 +63,6 @@ export function AddArtworkPage() {
         const extension = file.name.substr(file.name.lastIndexOf("."))
         const allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png)$/i
         const isAllowed = allowedExtensionsRegx.test(extension)
-        console.log(isAllowed)
         if(isAllowed){
             const storageRef = ref(storage, `obras-imagenes/${file.name+" "+code}`);
             setFilename(file.name+" "+code)
@@ -226,7 +225,7 @@ export function AddArtworkPage() {
                         { 
                         autor.map( (x,i)=>{
                         return(
-                        <div className="flex row mb-3">
+                        <div className="flex row mb-3" key={i}>
                             <div className="form-group col-md-4">
                             <input type="text"  name="autor" className="form-control input input-bordered input-sm"  placeholder="Ingresa un autor" onChange={ e=>handleinputchange(e,i)} />
                     
