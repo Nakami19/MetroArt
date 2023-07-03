@@ -170,7 +170,7 @@ export function AddArtworkPage() {
         )
         }
     <div className='py-10 lg:px-52 flex flex-col items-center gap-y-7 md:flex-row'>
-        <div className='flex flex-col gap-5 md:w-full lg:w-1/3'>
+        <div className='flex flex-col gap-5 md:w-1/3 lg:w-1/3'>
             <h1 className=' font-raleway font-bold text-2xl text-center text-[#001A72]'>
                 {titulo}
             </h1>
@@ -191,7 +191,7 @@ export function AddArtworkPage() {
 
 
         </div>
-        <div className='font-montserrat grid gap-3 w-2/3 md:p-7'>
+        <div className='font-montserrat grid gap-3 md:w-2/3 lg:w-2/3 md:p-7'>
             <h2 className="font-bold text-center md:text-start">Información de la obra</h2>
             <div className='bg-black w-full h-0.5 '></div>
             <div className='flex gap-x-1 h-fit text-justify'>
