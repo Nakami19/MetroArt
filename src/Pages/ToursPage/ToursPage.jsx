@@ -92,7 +92,7 @@ useEffect(()=> {
                     <h1 className='font-raleway font-bold text-[#C14C00] text-2xl'>Tours</h1>
                     {isAdmin && (
                         <Link to={ADDTOUR_URL}>
-                            <button className='btn btn-sm text-xs normal-case font-montserrat bg-[#001A72] hover:bg-[#051341] text-white'>Agregar tour</button>
+                            <button className='btn btn-sm text-xs normal-case font-montserrat bg-[#001A72]  text-white'>Agregar tour</button>
                         </Link>
                     )}   
                 </div>
