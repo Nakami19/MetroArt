@@ -65,7 +65,8 @@ export function EditArtworkPage() {
     }
 
     useEffect(() => {
-       setautor(art.autor);
+        try {
+        setautor(art.autor);
        setDescripcion(art.descripcion)
        setNombre(art.nombre)
        setTitulo(art.nombre)
@@ -73,6 +74,12 @@ export function EditArtworkPage() {
        setTipo(art.tipo)
        setUbicacion(art.ubicacion)
        setImageUrl(art.url)
+
+            
+        } catch (error) {
+            
+        }
+       
 
     },[art]);
 
@@ -80,14 +87,14 @@ export function EditArtworkPage() {
 
 // EDIT FUNCTION
 async function updateArt() {
-    setautor(art.autor);
-       setDescripcion(art.descripcion)
-       setNombre(art.nombre)
-       setTitulo(art.nombre)
-       setFecha(art.fecha)
-       setTipo(art.tipo)
-       setUbicacion(art.ubicacion)
-       setImageUrl(art.url)
+    // setautor(art.autor);
+    //    setDescripcion(art.descripcion)
+    //    setNombre(art.nombre)
+    //    setTitulo(art.nombre)
+    //    setFecha(art.fecha)
+    //    setTipo(art.tipo)
+    //    setUbicacion(art.ubicacion)
+    //    setImageUrl(art.url)
         
         const newArt = {
             autor,
@@ -158,7 +165,7 @@ async function updateArt() {
         getOneArt(artId, firebaseArtsData.data_art);
     },[firebaseArtsData])
 
-
+    const Probando= ()=>{}
   
 
     const handleOnChange = (event) => {
@@ -194,8 +201,8 @@ async function updateArt() {
             </div>
         )
         }
-    <div className='py-10 lg:px-52 flex flex-col items-center gap-y-7 md:flex-row'>
-        <div className='flex flex-col gap-5 md:w-full lg:w-1/3'>
+    <div className='py-10 lg:px-52 flex flex-col items-center gap-y-7 md:flex-row min-h-screen'>
+        <div className='flex flex-col gap-5 md:w-1/3 lg:w-1/3'>
             <h1 className=' font-raleway font-bold text-2xl text-center text-[#001A72]'>
                 {titulo}
             </h1>
@@ -216,7 +223,7 @@ async function updateArt() {
 
 
         </div>
-        <div className='font-montserrat grid gap-3 p-1 w-2/3 md:p-7'>
+        <div className='font-montserrat grid gap-3 md:w-2/3 lg:w-2/3 md:p-7'>
             <h2 className="font-bold text-center md:text-start">Información de la obra</h2>
             <div className='bg-black w-full h-0.5 '></div>
             <div className='flex gap-x-1 h-fit text-justify'>
@@ -282,7 +289,7 @@ async function updateArt() {
             </div>
             <div className='h-fit text-justify'>
                 <p className='font-bold text-sm'>Descripción </p>
-                <textarea defaultValue={art.descripcion} className="textarea textarea-bordered h-44 w-full" onChange={(e)=>(setDescripcion(e.target.value))} ></textarea>
+                <textarea value={descripcion} className="textarea textarea-bordered h-44 w-full" onChange={(e)=>(setDescripcion(e.target.value))} ></textarea>
             </div>
             <div className='flex gap-3 lg:ms-auto md: justify-around'>
                 <Link to={`/art`}>
