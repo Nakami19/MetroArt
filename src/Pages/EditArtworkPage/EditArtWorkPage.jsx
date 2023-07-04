@@ -62,7 +62,8 @@ export function EditArtworkPage() {
     }
 
     useEffect(() => {
-       setautor(art.autor);
+        try {
+        setautor(art.autor);
        setDescripcion(art.descripcion)
        setNombre(art.nombre)
        setTitulo(art.nombre)
@@ -70,6 +71,12 @@ export function EditArtworkPage() {
        setTipo(art.tipo)
        setUbicacion(art.ubicacion)
        setImageUrl(art.url)
+
+            
+        } catch (error) {
+            
+        }
+       
 
     },[art]);
 
@@ -193,7 +200,7 @@ async function updateArt() {
         getOneArt(artId, firebaseArtsData.data_art);
     },[firebaseArtsData])
 
-
+    const Probando= ()=>{}
   
 
     const handleOnChange = (event) => {
@@ -318,7 +325,7 @@ async function updateArt() {
             </div>
             <div className='h-fit text-justify'>
                 <p className='font-bold text-sm'>Descripción </p>
-                <textarea defaultValue={art.descripcion} className="textarea textarea-bordered h-44 w-full" onChange={(e)=>(setDescripcion(e.target.value))} ></textarea>
+                <textarea value={descripcion} className="textarea textarea-bordered h-44 w-full" onChange={(e)=>(setDescripcion(e.target.value))} ></textarea>
             </div>
             <div className='flex gap-3 lg:ms-auto md: justify-around'>
                 <Link to={`/art`}>
