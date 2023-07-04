@@ -110,17 +110,29 @@ export function AddTourPage() {
 
     function handleForm(){
 
-        if(nameValue == '' || descriptionValue=='' || titulo =='' || checkedValues.length==0 || imageUrl==""){
-            newErrors.vacio = "Evite dejar campos vacíos";
-            
-            if (imageUrl == "") {
-                newErrors.vacio = "Por favor cargue una imagen para el tour"
-            } else if (checkedValues.length==0) {
-                newErrors.vacio = "Por favor añada obras al tour"
-            }
-            else {
-                newErrors.vacio = "Evite dejar campos vacíos";
-            }
+        if(nameValue == ''){
+            newErrors.vacio = "El nombre del tour no puede estar vacío";
+        }
+        else if (nameValue.length > 40){
+            newErrors.vacio = "El nombre del tour no puede tener más de 40 caracteres alfanumericos";
+        }
+        else if (nameValue.trim().length !== nameValue.length) {
+            newErrors.vacio = "El nombre del tour no puede comenzar ni terminar con espacios en blanco";
+          }
+          
+         if(descriptionValue == ''){
+            newErrors.vacio = "La descripción del tour no puede estar vacío";
+        }
+        else if (descriptionValue.trim().length !== descriptionValue.length) {
+            newErrors.vacio = "La descripción no puede comenzar ni terminar con espacios en blanco";
+          }
+
+        if (imageUrl == '') {
+            newErrors.vacio = "Por favor cargue una imagen para el tour"
+        }
+        if  (checkedValues.length==0) {
+            newErrors.vacio = "Por favor añada obras al tour"
+        }
         
             if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -129,7 +141,6 @@ export function AddTourPage() {
                 setErrors({});
             }
         
-        } else {
 
 
 
@@ -173,7 +184,7 @@ export function AddTourPage() {
  
         const add = AddTour(data)
         navigate(TOURS_URL)
-    }
+    
 
     }
 

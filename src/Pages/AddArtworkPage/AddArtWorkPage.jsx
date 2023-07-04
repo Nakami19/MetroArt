@@ -115,12 +115,58 @@ export function AddArtworkPage() {
 
         /////////////////////////VALIDACIONES
         e.preventDefault();
-        if(nombre == '' || ubicacion=='' || tipo =='' || fecha =='' || descripcion =='' || autor[0]=="" || imageUrl==""){
+            if(nombre == ''){
+                newErrors.vacio = "El nombre de la obra no puede estar vacío";
+            }
+            if (nombre.length > 40){
+                newErrors.vacio = "El nombre de la obra no puede tener más de 40 caracteres alfanumericos";
+            }
+            else if (nombre.trim().length !== nombre.length) {
+                newErrors.vacio = "El nombre de la obra no puede comenzar ni terminar con espacios en blanco";
+              }
             
+            if(ubicacion == ''){
+                newErrors.vacio = "La ubicación de la obra no puede estar vacío";
+            }            else if (ubicacion.trim().length !== ubicacion.length) {
+                newErrors.vacio = "La ubicación de la obra no puede comenzar ni terminar con espacios en blanco";
+              }
+
+            if (fecha == ''){
+                newErrors.vacio = "EL año de la obra no puede estar vacío";}
+                else if (!/^\d{4}$/.test(fecha)) {
+                    newErrors.vacio = "El año debe poseer 4 dígitos, en el caso de contener menos completelo con ceros al inicio";
+                  }
+        
+
+            if (autor[0]==""){
+                newErrors.vacio = "La obra debe de tener almenos 1 autor";}
+                else {
+                    for (let i = 0; i < autor.length; i++) {
+                      if (autor[i] === "") {
+                        newErrors.vacio = "Asegurate de tener todos los campos de autores llenos";
+                        break;
+                      }
+                    }
+                  }
+
+            if (tipo ==''){
+                newErrors.vacio = "El tipo de obra no puede estar vacío";}
+                else if (tipo.trim().length !== tipo.length) {
+                    newErrors.vacio = "El tipo de obra no puede comenzar ni terminar con espacios en blanco";
+                }
+            
+            if(descripcion == ''){
+                newErrors.vacio = "El descripción de la obra no puede estar vacío";
+            }
+            else if (descripcion.trim().length !== descripcion.length) {
+                newErrors.vacio = "La descripción no puede comenzar ni terminar con espacios en blanco";
+              }
+            
+
+
+
             if (imageUrl == "") {
                 newErrors.vacio = "Por favor cargue una imagen para la obra"
-            }else {
-                newErrors.vacio = "Evite dejar campos vacíos";
             }
         
             if (Object.keys(newErrors).length > 0) {
@@ -130,12 +176,11 @@ export function AddArtworkPage() {
                 setErrors({});
             }
         
-        } else {
 
 //////////////////////////////////
 
         addArt();
-        window.my_modal_5.showModal()}
+        window.my_modal_5.showModal()
 //      
     };
 

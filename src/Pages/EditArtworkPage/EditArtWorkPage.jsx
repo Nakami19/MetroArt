@@ -38,26 +38,23 @@ export function EditArtworkPage() {
 
     const handleinputchange=(e, index)=>{
         
-        const list= [...art.autor];
+        const list= [...autor];
         list[index]= e.target.value;
-        art.autor = list;
-        setautor(art.autor);
-        
+        setautor(list);
+     
 
     }
 
     const handleremove= index=>{
-        const list=[...art.autor];
+        const list=[...autor];
         if (index>0){
         list.splice(index);
-        art.autor = list;
-        setautor(art.autor);
+        setautor(list);
         }
     }
-
     const handleaddclick=()=>{ 
-        setautor(art.autor.push(""));
-       
+        setautor([...autor, ""]);
+
     }
 
     const handleOk= () => {
@@ -80,14 +77,6 @@ export function EditArtworkPage() {
 
 // EDIT FUNCTION
 async function updateArt() {
-    setautor(art.autor);
-       setDescripcion(art.descripcion)
-       setNombre(art.nombre)
-       setTitulo(art.nombre)
-       setFecha(art.fecha)
-       setTipo(art.tipo)
-       setUbicacion(art.ubicacion)
-       setImageUrl(art.url)
         
         const newArt = {
             autor,
@@ -108,13 +97,59 @@ async function updateArt() {
     }
     const handleUpdate = async (e) => {
         e.preventDefault();
-        if(nombre == '' || ubicacion=='' || tipo =='' || fecha =='' || descripcion =='' || autor[0]=="" || imageUrl==""){
-            
-            if (imageUrl == "") {
-                newErrors.vacio = "Por favor cargue una imagen para la obra"
-            }else {
-                newErrors.vacio = "Evite dejar campos vacíos";
+        if(nombre == ''){
+            newErrors.vacio = "El nombre de la obra no puede estar vacío";
+        }
+        if (nombre.length > 40){
+            newErrors.vacio = "El nombre de la obra no puede tener más de 40 caracteres alfanumericos";
+        }
+        else if (nombre.trim().length !== nombre.length) {
+            newErrors.vacio = "El nombre de la obra no puede comenzar ni terminar con espacios en blanco";
+          }
+        
+        if(ubicacion == ''){
+            newErrors.vacio = "La ubicación de la obra no puede estar vacío";
+        }            else if (ubicacion.trim().length !== ubicacion.length) {
+            newErrors.vacio = "La ubicación de la obra no puede comenzar ni terminar con espacios en blanco";
+          }
+
+        if (fecha == ''){
+            newErrors.vacio = "EL año de la obra no puede estar vacío";}
+            else if (!/^\d{4}$/.test(fecha)) {
+                newErrors.vacio = "El año debe poseer 4 dígitos, en el caso de contener menos completelo con ceros al inicio";
+              }
+    
+
+        if (autor[0]==""){
+            newErrors.vacio = "La obra debe de tener almenos 1 autor";}
+            else {
+                for (let i = 0; i < autor.length; i++) {
+                  if (autor[i] === "") {
+                    newErrors.vacio = "Asegurate de tener todos los campos de autores llenos";
+                    break;
+                  }
+                }
+              }
+
+        if (tipo ==''){
+            newErrors.vacio = "El tipo de obra no puede estar vacío";}
+            else if (tipo.trim().length !== tipo.length) {
+                newErrors.vacio = "El tipo de obra no puede comenzar ni terminar con espacios en blanco";
             }
+        
+        if(descripcion == ''){
+            newErrors.vacio = "El descripción de la obra no puede estar vacío";
+        }
+        else if (descripcion.trim().length !== descripcion.length) {
+            newErrors.vacio = "La descripción no puede comenzar ni terminar con espacios en blanco";
+          }
+        
+
+
+
+        if (imageUrl == "") {
+            newErrors.vacio = "Por favor cargue una imagen para la obra"
+        }
         
             if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -123,10 +158,10 @@ async function updateArt() {
                 setErrors({});
             }
         
-        } else {
+
         updateArt();
         window.my_modal_5.showModal() 
-    }
+    
     }
 
     const handleUpload = async (e) => {
@@ -221,19 +256,19 @@ async function updateArt() {
             <div className='bg-black w-full h-0.5 '></div>
             <div className='flex gap-x-1 h-fit text-justify'>
                 <p className='font-bold text-sm'>Nombre:</p>
-                <input type="text" defaultValue={art.nombre} className="input input-bordered input-sm w-full max-w-xs" onChange={handleOnChange}/>
+                <input type="text" value={nombre} className="input input-bordered input-sm w-full max-w-xs" onChange={handleOnChange}/>
             </div>
             <div className='flex gap-x-1 h-fit text-justify'>
                 <p className='font-bold text-sm'>Ubicación: </p>
-                <input type="text" defaultValue={art.ubicacion} className="input input-bordered input-sm w-full max-w-xs" onChange={(e)=>(setUbicacion(e.target.value))} />
+                <input type="text"  className="input input-bordered input-sm w-full max-w-xs"  value={ubicacion} onChange={(e) => setFecha(e.target.value)} />
             </div>
             <div className='flex gap-x-1 h-fit text-justify'>
                 <p className='font-bold text-sm'>Tipo: </p>
-                <input type="text" defaultValue={art.tipo} className="input input-bordered input-sm w-full max-w-xs" onChange={(e)=>(setTipo(e.target.value))}/>
+                <input type="text" className="input input-bordered input-sm w-full max-w-xs"  value={tipo} onChange={(e) => setFecha(e.target.value)}/>
             </div>
             <div className='flex gap-x-1 h-fit text-justify'>
                 <p className='font-bold text-sm'>Fecha: </p>
-                <input type="text" defaultValue={art.fecha} className="input input-bordered input-sm w-full max-w-xs" onChange={(e)=>(setFecha(e.target.value))}/>
+                <input type="text"  className="input input-bordered input-sm w-full max-w-xs"  value={fecha} onChange={(e) => setFecha(e.target.value)}/>
             </div>
             <div className='flex gap-x-1 h-fit text-justify'>
                 <p className='font-bold text-sm'>Autor: </p>
@@ -247,26 +282,27 @@ async function updateArt() {
             <div className="row">
             <div className="col-sm-12">
                 
-                    { art.autor &&
-                    art.autor.map( (x,i)=>{
+                    { autor &&
+                    autor.map( (x,i)=>{
                     return(
                     <div className="flex row mb-3" key={art.id}>
                         <div className="form-group col-md-4" key={art.id}>
-                        <input type="text" defaultValue={x} name="autor" className="form-control input input-bordered input-sm"  placeholder="Ingresa un autor" onChange={ e=>handleinputchange(e,i)} />
+                        <input type="text" value={x} name="autor" className="form-control input input-bordered input-sm"  placeholder="Ingresa un autor" onChange={ e=>handleinputchange(e,i)} />
                 
-                    </div>
-                    {/* <div className="form-group col-md-2 mt-4"> */}
-                    {
-                        art.autor.length!==1 &&
-                        <button  className="btn btn-error mx-1 btn-xs normal-case" onClick={()=> handleremove(i)}>Eliminar</button>
-                    }
-                    { art.autor.length-1===i &&
-                    <button  className="btn btn-xs mx-1 normal-case" onClick={ handleaddclick}>Agregar</button>
-                    }
-                    {/* </div> */}
-                    </div>
-                    );
-                    } )} 
+                        </div>
+                        {/* <div className="form-group col-md-2 mt-4"> */}
+                        {
+                            autor.length!==1 &&
+                            <button  className="btn btn-error mx-1 btn-xs normal-case" onClick={()=> handleremove(i)}>Eliminar</button>
+                        }
+                        { autor.length-1===i &&
+                        <button  className="btn btn-xs mx-1 normal-case" onClick={ handleaddclick}>Agregar</button>
+                        }
+                        {/* </div> */}
+                        </div>
+                        );
+                        } )} 
+
 
                     
             </div>
